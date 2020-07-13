@@ -10,14 +10,22 @@ const session = require("express-session");
 const path = require("path");
 var app = new express();
 
+
+
 mongoose.Promise = global.Promise
 
-const MONGOLAB_URI = "mongodb+srv://user1:okay@cluster0.diqll.mongodb.net/appointments?retryWrites=true&w=majority";
+const MONGOLAB_URI = "mongodb://dbUser:dbUserPassword@cluster0-shard-00-00-sjlw8.mongodb.net:27017,cluster0-shard-00-01-sjlw8.mongodb.net:27017,cluster0-shard-00-02-sjlw8.mongodb.net:27017/Test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority";
+//mongodb://user1:okay@cluster0-shard-00-00-sjlw8.mongodb.net:27017,cluster0-shard-00-01-sjlw8.mongodb.net:27017,cluster0-shard-00-02-sjlw8.mongodb.net:27017/appointments?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority
 
 mongoose.connect(MONGOLAB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   }).catch(err => console.log(err))
+
+//mongoose.Promise = global.Promise;
+//mongoose.connect("mongodb://localhost:27017/users",{
+//    useNewUrlParser: true
+//})
 
 app.use(urlencoder);
 app.use(session({
