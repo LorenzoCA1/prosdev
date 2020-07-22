@@ -12,7 +12,7 @@ const router = express.Router();
 //   } = require("../model/doctor")
 
 
-router.use("/secretary", require("./secretaryController"));
+router.use("/secretary", require("../app-secretary/secretaryController"));
 
 
 
