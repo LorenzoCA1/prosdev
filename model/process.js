@@ -2,34 +2,32 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
 
 var processSchema = new Schema({
-    processname: String
+    name:{type: String,
+    required: [true, 'Name is required'],
+    unique: true}
 })
 
-processSchema.statics.addProcess = function(process, callback){
-    process.save().then(callback);
-};
-
-processSchema.statics.getAllProcesses = async function(){
+processSchema.statics.getAll = async function(){
     return await this.find();
 }
 
-processSchema.statics.delete = async function(processID){
-    return await this.deleteOne({
-        _id : processID
-    });
-}
-
-processSchema.methods.updateProcess = async function(processID, updated){
-    return await this.updateOne({
-        _id: processID
-    }, {
-        processname
-    }, {
-        new: true
-    }); 
+processSchema.statics.getByID = async function(id){
+    return await this.findOne({ _id: id });
 };
 
-var Process = mongoose.model('process', processSchema)
+processSchema.statics.add = async function(data){
+     return await (new Process(data)).save()
+};
+
+processSchema.statics.delete = async function(data){
+    return await this.findByIdAndRemove(data._id);
+}
+
+processSchema.methods.update = async function(data){
+    return await this.findOneAndUpdate({_id: data._id}, {$set: data.update}, {new: true}); 
+};
+
+const Process = mongoose.model('process', processSchema)
 
 module.exports = {
     Process

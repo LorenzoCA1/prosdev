@@ -8,7 +8,8 @@
     <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
     
     {{!-- <link rel='stylesheet' crossorigin="anonymous"  media='screen' href='main.css'> --}}
-    <link rel='stylesheet'crossorigin="anonymous" type = 'css'media='screen' href='/semantic.css'>
+    <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
+       <link rel='stylesheet' type = 'text/css'media='screen' href='/fullcalendar-api/lib/main.min.css'>
     <script type ='text/javascript' src='/javascript/jquery.js'></script>
     <script type ='text/javascript' src='/javascript/moment.js'></script>
     <script type ='text/javascript' src='/javascript/moment.js'></script>
@@ -33,22 +34,18 @@
                     <span onclick="docform.showAddForm()"><i class="right link plus icon" ></i></span>
                     <span onclick="docform.showEditForm()"><i class="right samll link write icon"></i></span>
                     </div>
-                    <div class="ui divider item"><a>Daniel Louise</a></div>
-                    <div class="ui divider item"><a>Stevie Feliciano</a></div>
-                    <div class="ui divider item"><a>Elliot Fu</a></div>
-                    <div class="ui divider item"><a>Jenny Hess</a></div>
-                    <div class="ui divider item"><a>Veronika Ossi</a></div>
+                   {{#each doctor}}
+                        <div class="ui divider item"><a>{{name}}</a></div>
+                   {{/each}}
             </div>
             <div class="ui content list">
                 <div class="header">Process
                     <span onclick="procform.showAddForm()"><i class="right link plus icon"></i></span>
                     <span onclick="procform.showEditForm()"><i class="right samll link write icon"></i></span>
                 </div>
-                    <div class="ui divider item"><a>Daniel Louise</a></div>
-                    <div class="ui divider item"><a>Stevie Feliciano</a></div>
-                    <div class="ui divider item"><a>Elliot Fu</a></div>
-                    <div class="ui divider item"><a>Jenny Hess</a></div>
-                    <div class="ui divider item"><a>Veronika Ossi</a></div>
+                    {{#each process}}
+                        <div class="ui divider item"><a>{{name}}</a></div>
+                    {{/each}}
             </div>
         </div>
     </div>
@@ -89,12 +86,18 @@
                 <div class="required field fieldDoctors" id = "selDoc">
                     <label>Doctor(s)</label>
                     <select multiple = "" name="doctor" class="ui fluid dropdown" multiple="" id="doctor">
+                        {{#each doctor}}
+                            <option value="{{_id}}-{{name}}">Dr. {{name}}</option>
+                        {{/each}}
                     </select>
                 </div>
 
                 <div class="required field fieldProcedures">
                     <label>Procedure(s)</label>
                     <select name="process" class="ui fluid dropdown" multiple="" id="process">
+                        {{#each process}}
+                            <option value="{{_id}}-{{name}}">{{name}}</option>
+                        {{/each}}
                     </select>
                 </div>
 
@@ -124,6 +127,9 @@
             <div class="required field fieldDoctors" id = "editDoc">
                 <label>Doctor</label>
                 <select name="doctor" class="ui fluid dropdown" id="doctor-edit">
+                      {{#each doctor}}
+                            <option value="{{_id}}-{{name}}">Dr. {{name}}</option>
+                        {{/each}}
                 </select>
             </div>
             <div class="required field fieldName">
@@ -149,6 +155,9 @@
             <div class="required field fieldProcedures">
                 <label>Procedure</label>
                 <select name="process" class="ui fluid dropdown" id="process-edit">
+                     {{#each process}}
+                            <option value="{{_id}}-{{name}}">{{name}}</option>
+                        {{/each}}
                 </select>
             </div>
             <div class="required field fieldName">

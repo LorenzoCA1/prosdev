@@ -20,3 +20,18 @@ let procform = new ProcessForm(proc)
 
 timegrid.setShowAddForm(appform)
 timegrid.setShowEditForm(appform)
+
+
+
+//tests
+
+// DOC_AJAX.add({ name: 'HOY' })
+// DOC_AJAX.add({ name: 'BRANDY' })
+// DOC_AJAX.add({ name: 'ANDY' })
+// DOC_AJAX.fetch()
+//DOC_AJAX.edit( { _id: "5f18e57ae6970e3f248298a8", update: {name: 'RANDY-edit'} })
+// DOC_AJAX.add( {})
+//DOC_AJAX.delete("5f18e57ae6970e3f248298a8")
+
+
+//5f18a0e3685544049c8cf18d

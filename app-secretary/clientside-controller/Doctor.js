@@ -3,32 +3,26 @@ class DoctorController{
   constructor(){
     this.server = DOC_AJAX;
     this.selection = ComponentMap.selDoctor
-    this.update_views()
+    this.init_views()
   }
 
-  delete(id){
-    this.server.delete(id)
-    this.update_views()
+  delete(data){
+    console.log("++++++DELETING DOCTOR++++++"); console.log(data);
+    this.server.delete(data)
+   // this.update_views()
   }
 
   edit(data){
     console.log("++++++EDITING DOCTOR++++++"); console.log(data);
-    this.server.edit_DOC(data)
-    this.update_views()
+    this.server.edit({_id: data._id, update: {name: data.name}})
   }
 
   add(data){
-    this.server.add_DOC(data)
-    this.update_views()
+    console.log("++++++Adding DOCTOR++++++"); console.log(data);
+    this.server.add(data)
   }
 
-  update_views(){
-      let arr_data = this.server.fetch_DOCS()
-      this.selection.html('')
-      arr_data.forEach( (data)=>{ 
-         const option = `<option value= ${data._id}-${data.name}>Dr. ${data.name}</option>)`
-         this.selection.append(option)
-     })
+  init_views(){
      this.selection.dropdown();
   }
 
@@ -38,7 +32,8 @@ class DoctorController{
 
 $.fn.form.settings.rules.uniqueDoctorName = function(param) {
   let names = ComponentMap.selDoctor.children('option')
-  .map((i, e)=>{return e.innerText.toLowerCase().split(".")[1].trim() }).get(); console.log(names)
+  .map((i, e)=>{return e.innerText.toLowerCase().split(".")[1].trim() }).get(); //console.log(names)
+  // console.log(names.indexOf(ComponentMap.txtDoc.val().trim().toLowerCase()) == -1)
   return names.indexOf(ComponentMap.txtDoc.val().trim().toLowerCase()) == -1;
 }
 
@@ -58,30 +53,55 @@ class DoctorForm{
   }
 
   init(){
-    this.field_validation = 
-    {
-      fields:{
-          doctor: {
-            identifier: 'doctor-edit',
-            rules: [{type: 'empty', 
-                    prompt: 'field cannot be empty'}]
-          },
+    this.add_validation = 
+    {fields:{
           name: {
             identifier: 'docname',
             rules: [{type: 'uniqueDoctorName', 
                     prompt: 'Doctor name exists'},
                     {type: 'empty', 
                     prompt: 'field cannot be empty'}]
-          },
+          }
+      }}
+      
+      this.edit_validation = 
+      {
+        fields:{
+            doctor: {
+              identifier: 'doctor-edit',
+              rules: [{type: 'empty', 
+                      prompt: 'field cannot be empty'}]
+            },
+            name: {
+              identifier: 'docname',
+              rules: [{type: 'uniqueDoctorName', 
+                      prompt: 'Doctor name exists'},
+                      {type: 'empty', 
+                      prompt: 'field cannot be empty'}]
+            },
+          }
         }
-      }
-    this.view.form(this.field_validation)
+      
+        this.delete_validation = 
+        {
+          fields:{
+              doctor: {
+                identifier: 'doctor-edit',
+                rules: [{type: 'empty', 
+                        prompt: 'field cannot be empty'}]
+              }
+            }
+          }
+  
     this.view.modal({onApprove: this.submitAddEdit.bind(this), onDeny: this.submitDelete.bind(this)})
   }
 
   submitAddEdit(){
+    if(this.isAddForm()) this.view.form(this.add_validation)
+    else this.view.form(this.edit_validation)
+    console.log(this.isFormValid())
     if(this.isFormValid()){
-      let data = this.parseForm()
+      let data = this.parseForm(); console.log(data);
       if(this.isAddForm()) this.controller.add(data);
       else this.controller.edit(data); 
       return true;
@@ -90,8 +110,13 @@ class DoctorForm{
   }
 
   submitDelete(){
-    this.controller.delete(parseInt(String(this.selection.dropdown('get value'))));
-    return false;
+    this.view.form(this.delete_validation)
+    let data = this.parseForm()
+    if(this.isFormValid()){
+      this.controller.delete({_id: data._id});
+      return true;
+    }
+    else return false;
   }
 
   isFormValid(){
@@ -105,7 +130,7 @@ class DoctorForm{
   parseForm(){
     let data = this.textfield.val().trim().toUpperCase()
     let id = String(this.selection.dropdown('get value')).split("-")[0];
-    return this.isAddForm() ? data: {_id: parseInt(id), name: data}
+    return this.isAddForm() ? {name: data}: {_id: id, name: data}
   }
 
   clearForm(){

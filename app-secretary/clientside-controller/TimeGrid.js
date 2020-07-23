@@ -3,7 +3,6 @@ class TimeGridView extends FullCalendar.Calendar{
     constructor(HTMLELEMENT, options)
     {
         super(HTMLELEMENT, options)
-        this.init()
     }
 
     update(){

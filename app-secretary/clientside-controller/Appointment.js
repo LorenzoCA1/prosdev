@@ -7,29 +7,31 @@ class AppointmentController {
     }
 
     init_views(){
-      let arr_data = this.server.fetch_APPS(); 
-      console.log("++++++FETCHING APPOINTMENTS++++++"); console.log(arr_data);
-      arr_data.forEach((data)=>{this.view.addEvent( this.parser.parseDatabaseObj(data)) })
+      // let arr_data = this.server.fetch_APPS(); 
+      // console.log("++++++FETCHING APPOINTMENTS++++++"); console.log(arr_data);
+      // arr_data.forEach((data)=>{this.view.addEvent( this.parser.parseDatabaseObj(data)) })
       this.view.update();
                            
     }
-    add(data){
+    async add(data){
       console.log("++++++ADDING APPOINTMENT++++++"); console.log(data);
-      data.api.id  = this.server.add_APP(data.db) 
-      if(data.api.id == -1) return false;
-      this.view.addEvent(data.api) 
-      this.view.update()          
-      return true;
+      data.api.id  = await this.server.add(data.db) 
+      if(data.api.id){ 
+        this.view.addEvent(data.api) 
+        this.view.update()
+        return true;
+      }          
+      return false;
     }
     delete(id){
       console.log("++++++DELETING APPOINTMEN++++++"); console.log(id);
-      if(this.server.delete_APP(id) == -1) return false;        
+      if(this.server.delete(id) == -1) return false;        
       this.view.getEventById(id).remove(); return true;
     }
 
     edit(data){
       console.log("++++++EDITING APPOINTMEN++++++"); console.log(data);
-      if(this.server.edit_APP(data.db) == -1) return false 
+      if(this.server.edit(data.db) == -1) return false 
       this.view.getEventById(data.api.id).remove();
       this.view.addEvent(data.api);
       this.view.update(); return true;
@@ -63,8 +65,7 @@ const AppParser = {
   },
   parseDropDownValue: (data)=>{
       return{
-        _id: data.split("-")[0],
-        name:data.split("-")[1]
+        _id: data.split("-")[0]
       }
   },
   formToJSON: ()=>{     //returns JSON representaion of the Appointment form 
@@ -91,7 +92,6 @@ const AppParser = {
     console.log("+++++++PARSE FORM+++++++"); console.log(data);
     return{
       db:{
-         _id: parseInt(data.id),
          firstname: data.firstname,
         lastname: data.lastname,
          process: data.process,

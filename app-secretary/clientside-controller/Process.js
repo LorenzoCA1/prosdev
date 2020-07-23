@@ -13,30 +13,30 @@ class ProcessController{
       this.update_views();
    }
     update_views(){
-        let arr_data = this.server.fetch_PROCS()
+        // let arr_data = this.server.fetch_PROCS()
 
-        this.selection.html('')
-        arr_data.forEach((data)=>{
-            let option = `<option value= ${data._id}-${data.name}>${data.name}</option>)`;
-            this.selection.append(option)
-        })
+        // this.selection.html('')
+        // arr_data.forEach((data)=>{
+        //     let option = `<option value= ${data._id}-${data.name}>${data.name}</option>)`;
+        //     this.selection.append(option)
+        // })
         this.selection.dropdown()
         
     }
     add(data){
         console.log("++++++ADDING PROCESS++++++"); console.log(data);
-        this.server.add_PROC(data)
-        this.update_views()
+        this.server.add(data)
     }
     edit(data){
         console.log("++++++EDITING PROCESS++++++"); console.log(data);
-        this.server.edit_PROC(data)
-        this.update_views()
+        let update = {name: data.name}
+        this.server.edit({_id: data._id, update: update})
+        // this.update_views()
     }
-    delete(id){
+    delete(data){
         console.log("++++++DELETING PROCESS++++++"); console.log(data);
-        this.server.delete_PROC(id)
-        this.update_views()
+        this.server.delete(data)
+        // this.update_views()
     }
   }
 
@@ -63,7 +63,15 @@ class ProcessForm{
         return  !$('.fieldProcedures').is(":visible")
     }
     init(){
-        this.fieldvalidation =  {
+        this.add_validation = {
+          fields:{
+          name: {
+            identifier: 'procname',
+            rules: [{type: 'uniqueProcedureName', prompt: 'Procedure name exists'}]
+          }
+        }
+        }
+        this.edit_validation =  {
           fields:{
             process: {
               identifier: 'process-edit',
@@ -75,13 +83,23 @@ class ProcessForm{
             }
           }
         }
-        this.view.form(this.fieldvalidation)
+        this.delete_validation =  {
+          fields:{
+            process: {
+              identifier: 'process-edit',
+              rules: [{type: 'empty'}]
+            }
+          }
+        }
         this.view.modal({ onApprove: this.submitAddEdit.bind(this), onDeny: this.submitDelete.bind(this) })
     }
 
     submitAddEdit(){
+      if(this.isAddForm()) this.view.form(this.add_validation)
+      else this.view.form(this.edit_validation)
+
       if(this.isFormValid()){
-        let data = this.parseForm(); console.log(data)
+        let data = this.parseForm(); 
         if(this.isAddForm()) this.controller.add(data);
         else this.controller.edit(data); return true; 
       }
@@ -89,13 +107,20 @@ class ProcessForm{
      
     }
     submitDelete(){
-      this.controller.delete(this.parseForm()._id);
-      return true;
+      this.view.form(this.delete_validation)
+
+      let data = this.parseForm()
+      if(this.isFormValid()){
+        this.controller.delete({_id: data._id});
+        return true;
+      }
+      else return false;
+    
     }
     parseForm(){
-      let data = this.textfield.val(); console.log(data)
+      let data = this.textfield.val();// console.log(data)
       let id = String(this.selection.dropdown('get value')).split("-")[0];
-      return this.isAddForm() ? data: {_id: parseInt(is), name: data}
+      return this.isAddForm() ? data: {_id: id, name: data}
     }
       showAddForm(){
         console.log("++++SHOWING ADD FORM+++++");  
