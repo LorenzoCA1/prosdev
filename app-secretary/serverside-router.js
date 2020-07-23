@@ -25,15 +25,19 @@ router.get("/", async function(req, res) {
 
 
 router.post("/adddoc",(req, res) => {
+ console.log("adding doc")
+ console.log(req.body)
   Doctor.add(req.body).catch(err =>{bad_request(err, res)})
 })
 
 router.post("/deletedoc", (req, res) => {
+    console.log("deleting doc")
     console.log(req.body)
     Doctor.delete(req.body).catch(err => bad_request(err, res))
 })
 
 router.post("/editdoc", (req, res) => {
+    console.log("editing doc")
     console.log(req.body)
     Doctor.update(req.body).catch(err => bad_request(err, res))
 })
@@ -42,24 +46,31 @@ router.get("/getprocs", async function(req, res) {
     res.send(Process.getAll())
 })
 router.post("/addproc",(req, res) => {
+    console.log("adding proc")
+    console.log(req.body)
   Process.add(req.body)
          .then(result =>  res.redirect('/'))
          .catch(err => bad_request(err, res))
 })
 
 router.post("/deleteproc", (req, res) => {
+    console.log("deleting proc")
+    console.log(req.body)
     Process.delete(req.body)
            .then(result =>  res.redirect('/'))
            .catch(err => bad_request(err, res))
 })
 
 router.post("/editproc", (req, res) => {
+    console.log("updating proc")
+    console.log(req.body)
    Process.update(req.body)
           .then(result =>  res.redirect('/'))
           .catch(err => bad_request(err, res))
 })
 
 router.post("/addapp", (req, res) => {
+    console.log("adding app")
     console.log(req.body)
     Process.update(req.body)
            .then(result => ok_request(err,res))
@@ -67,11 +78,15 @@ router.post("/addapp", (req, res) => {
  })
 
  router.post("/editapp", (req, res) => {
+    console.log("updating app")
+    console.log(req.body)
     Process.update(req.body)
            .then(result =>  ok_request(err,res))
            .catch(err => bad_request(err, res))
  })
  router.post("/deleteapp", (req, res) => {
+    console.log("deleting app")
+    console.log(req.body)
     Process.update(req.body)
            .then(result =>  ok_request(err,res))
            .catch(err => bad_request(err, res))

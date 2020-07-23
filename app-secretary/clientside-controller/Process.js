@@ -29,8 +29,7 @@ class ProcessController{
     }
     edit(data){
         console.log("++++++EDITING PROCESS++++++"); console.log(data);
-        let update = {name: data.name}
-        this.server.edit({_id: data._id, update: update})
+        this.server.edit({_id: data._id, update: data.update})
         // this.update_views()
     }
     delete(data){
@@ -120,7 +119,7 @@ class ProcessForm{
     parseForm(){
       let data = this.textfield.val();// console.log(data)
       let id = String(this.selection.dropdown('get value')).split("-")[0];
-      return this.isAddForm() ? data: {_id: id, name: data}
+      return this.isAddForm() ? {name: data}: {_id: id, update: {name: data}}
     }
       showAddForm(){
         console.log("++++SHOWING ADD FORM+++++");  

@@ -28,7 +28,7 @@ appointmentSchema.statics.delete = async function(id){
 }
 
 
-appointmentSchema.methods.update = async function(data){
+appointmentSchema.statics.update = async function(data){
     return await this.findByIdandUpdate(data.id, {$set: data.update}, {new: true}); 
 };
 

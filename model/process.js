@@ -23,7 +23,7 @@ processSchema.statics.delete = async function(data){
     return await this.findByIdAndRemove(data._id);
 }
 
-processSchema.methods.update = async function(data){
+processSchema.statics.update = async function(data){
     return await this.findOneAndUpdate({_id: data._id}, {$set: data.update}, {new: true}); 
 };
 

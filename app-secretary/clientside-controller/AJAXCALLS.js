@@ -11,9 +11,9 @@ const APP_AJAX = {
                                  .fail((xhr, status,err)=>{ return false })
         return new_data;
     },
-    delete:(id)=>{
-      data = {_id: id}
-      $.post("/deleteappc", data).done((data)=>{ console.log(data); return true })
+    delete:(data)=>{
+      console.log("AJAX"); console.log(data)
+      $.post("/deleteapp", data).done((data)=>{ console.log(data); return true })
                                 .fail((xhr, status,err)=>{ console.log(xhr); return false })
     },
     fetch:()=>{
