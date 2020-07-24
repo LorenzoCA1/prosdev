@@ -15,8 +15,8 @@ doctorSchema.statics.getAll = async function(){
     return await this.find();
 }
 
-doctorSchema.statics.getByID = async function(id){
-    return await this.findOne({ _id: id });
+doctorSchema.statics.getByID = async function(data){
+    return await this.findOne({ _id: data });
 };
 
 doctorSchema.statics.add = async function(data){

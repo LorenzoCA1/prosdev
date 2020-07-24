@@ -1,35 +1,43 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
 
+
+const {Doctor} = require("./doctor");
+const {Process} = require("./process");
+
+
 var appointmentSchema = new Schema({
     firstname: String,
     lastname: String,
-    process: [{type: Schema.Types.ObjectId,ref: "Process"}],
+    process: [{type: Schema.Types.ObjectId,ref:Process}],
     notes: String,
     time: String,
     date: String,
-    doctor: [{type: Schema.Types.ObjectId,ref: "Doctor"}]
+    doctor: [{type: Schema.Types.ObjectId,ref: Doctor}]
 })
 
 appointmentSchema.statics.getAll = async function(){
     return await this.find();
 }
+appointmentSchema.statics.get = function(data){
+    return this.findById(data._id).populate('doctor').populate('process')
+};
 
-appointmentSchema.statics.getByID = async function(id){
-    return await this.findOne({ _id: id });
+appointmentSchema.statics.getByID = function(id){
+    return this.findOne({ _id: id });
 };
 
 appointmentSchema.statics.add = async function(data){
      return await (new Appointment(data)).save()
 };
 
-appointmentSchema.statics.delete = async function(id){
-    return await this.deleteOne({ _id : id });
+appointmentSchema.statics.delete = async function(data){
+   return await this.findByIdAndRemove(data._id);
 }
 
 
 appointmentSchema.statics.update = async function(data){
-    return await this.findByIdandUpdate(data.id, {$set: data.update}, {new: true}); 
+    return await this.findOneAndUpdate({_id: data._id}, {$set: data.update}, {new: true}); 
 };
 
 

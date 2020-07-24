@@ -11,8 +11,8 @@ processSchema.statics.getAll = async function(){
     return await this.find();
 }
 
-processSchema.statics.getByID = async function(id){
-    return await this.findOne({ _id: id });
+processSchema.statics.getByID = async function(data){
+    return await this.findOne({ _id: data });
 };
 
 processSchema.statics.add = async function(data){

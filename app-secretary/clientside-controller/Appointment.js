@@ -13,28 +13,35 @@ class AppointmentController {
       this.view.update();
                            
     }
-    async add(data){
+    add(data){
       console.log("++++++ADDING APPOINTMENT++++++"); console.log(data);
-      data.api.id  = await this.server.add(data.db) 
-      if(data.api.id){ 
+      const on_success = (data) => {  
         this.view.addEvent(data.api) 
         this.view.update()
-        return true;
-      }          
-      return false;
+      }
+      this.server.add(data, on_success.bind(this))
     }
-    delete(id){
-      console.log("++++++DELETING APPOINTMEN++++++"); console.log(id);
-      if(this.server.delete(id) == -1) return false;        
-      this.view.getEventById(id).remove(); return true;
+    delete(data){
+      console.log("++++++DELETING APPOINTMEN++++++"); console.log(data);
+      const on_success = (data) =>{
+        this.view.getEventById(data._id).remove();
+        this.view.update()
+      }
+
+      this.server.delete({_id: data}, on_success.bind(this))
     }
 
     edit(data){
       console.log("++++++EDITING APPOINTMEN++++++"); console.log(data);
-      if(this.server.edit(data.db) == -1) return false 
-      this.view.getEventById(data.api.id).remove();
-      this.view.addEvent(data.api);
-      this.view.update(); return true;
+      const on_success = (data)=>{
+        this.view.getEventById(data.api.id).remove();
+        this.view.addEvent(data.api);
+        this.view.update(); 
+      }
+
+      data.db = {_id: data.api.id, update: data.db};
+      this.server.edit(data, on_success.bind(this))
+
     }
 }
 
@@ -65,13 +72,16 @@ const AppParser = {
   },
   parseDropDownValue: (data)=>{
       return{
-        _id: data.split("-")[0]
+        _id: data.split("-")[0],
+        name: data.split("-")[1]
       }
   },
   formToJSON: ()=>{     //returns JSON representaion of the Appointment form 
     const jsonData = {doctor: [], process:[], name: '', time: '', date:''}
     let formdata = ComponentMap.frmApp.serializeArray();
-    
+    if($('#app-id').val() != -1)
+      jsonData.id = $('#app-id').val()
+
         formdata.forEach((field)=> { 
 
             if( field['name'] === 'doctor') 
@@ -89,13 +99,16 @@ const AppParser = {
   },
   parseForm: ()=>{ //Form values to FullCalendar API EventObject and DatabaseObject
     let data = AppParser.formToJSON();
+    let arr_docID = []; data.doctor.forEach(doc =>arr_docID.push({_id: doc._id}));
+    let arr_procID = [];  data.process.forEach(proc =>arr_procID.push({_id: proc._id}));
     console.log("+++++++PARSE FORM+++++++"); console.log(data);
+
     return{
       db:{
          firstname: data.firstname,
         lastname: data.lastname,
-         process: data.process,
-         doctor: data.doctor,
+         process: arr_procID,
+         doctor: arr_docID,
         time: data.time,
         date: data.date
       },
@@ -155,7 +168,7 @@ class AppointmentForm{
     return $('#app-id').val() == -1
   }
   init_forms(){
-    this.view.form(this.field_validation),
+    this.view.form(),
     this.view.modal({onApprove: this.submitAddEdit.bind(this), onDeny: this.submitDelete.bind(this)})
   }
   submitAddEdit(){
@@ -163,7 +176,8 @@ class AppointmentForm{
     return false;
     
     let data = this.cleanFormData();
-    console.log("==========" + this.isAddForm())
+    console.log("==========CLEAN FORM DATA")
+    console.log(data)
     console.log( $('#app-id').val() == -1)
     if(data && this.isAddForm()) this.controller.add(data);
     else if(data) this.controller.edit(data);

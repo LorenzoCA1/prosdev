@@ -1,27 +1,32 @@
 //change functions with AJAX calls to Server
 const APP_AJAX = {  
-    add:(data)=>{
-        console.log("AJAX"); console.log(data)
-        $.post("/addapp", data,(data)=>{ console.log(data); return data._id } )
-        .fail((xhr, status,err)=>{ return false })
-    },
-    edit:(data)=>{
+    add:(data,callback)=>{
       console.log("AJAX"); console.log(data)
-        $.post("/editapp", data).done((data)=>{console.log(data); return data })
-                                 .fail((xhr, status,err)=>{ return false })
-        return new_data;
+      $.post("/addapp",  data).always((res)=>{console.log('client recieving data');
+                                              data.api.id = res.responseJSON._id
+                                callback(data)})
+                               .fail((xhr, status,err)=>{ console.log(err);})
+
     },
-    delete:(data)=>{
+    edit:(data, callback)=>{
+       console.log("AJAX"); console.log(data)
+        $.post("/editapp", data.db).always((res)=>{ console.log('client recieving data'); 
+                                                    console.log(res); 
+                                    callback(data) })
+                                   .fail((xhr, status,err)=>{ console.log(err); })
+    },
+    delete:(data,callback)=>{
       console.log("AJAX"); console.log(data)
-      $.post("/deleteapp", data).done((data)=>{ console.log(data); return true })
-                                .fail((xhr, status,err)=>{ console.log(xhr); return false })
+      $.post("/deleteapp", data).always((res)=>{ console.log('client recieving data'); 
+                                                  console.log(res); 
+                                 callback(data) })
+                                .fail((xhr, status,err)=>{ console.log(err); })
     },
     fetch:()=>{
-        $.get("/getapps").done((data)=>{ console.log(data); return data})
+        $.get("/getapps").done((data)=>{ console.log('client recieving data'); console.log(data); return data})
                          .fail((xhr, status,err)=>{ console.log(xhr); return [] })
     }
 }
-
 
 const DOC_AJAX = {
     add:(data)=>{

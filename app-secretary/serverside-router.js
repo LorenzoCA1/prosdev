@@ -9,7 +9,7 @@ const {Process} = require("../model/process");
 
 const bad_request = (err, res) => {let x = ''; if(err)for(field in err.errors) x += (err.errors[field].message + '-')
                                      console.log(err); res.status(400).send(x)}
-const ok_request = (data, res) => {  res.status(300).send(data) }
+const ok_request = (data, res) => { console.log("sending back to client"); console.log(data); res.status(300).send(data) }
 
 const refresh = (req, res) => {
     const doctors =  Doctor.getAll();
@@ -39,7 +39,8 @@ router.post("/deletedoc", (req, res) => {
 router.post("/editdoc", (req, res) => {
     console.log("editing doc")
     console.log(req.body)
-    Doctor.update(req.body).catch(err => bad_request(err, res))
+    Doctor.update(req.body)
+          .catch(err => bad_request(err, res))
 })
 
 router.get("/getprocs", async function(req, res) {
@@ -49,7 +50,6 @@ router.post("/addproc",(req, res) => {
     console.log("adding proc")
     console.log(req.body)
   Process.add(req.body)
-         .then(result =>  res.redirect('/'))
          .catch(err => bad_request(err, res))
 })
 
@@ -57,40 +57,40 @@ router.post("/deleteproc", (req, res) => {
     console.log("deleting proc")
     console.log(req.body)
     Process.delete(req.body)
-           .then(result =>  res.redirect('/'))
            .catch(err => bad_request(err, res))
 })
 
 router.post("/editproc", (req, res) => {
     console.log("updating proc")
     console.log(req.body)
-   Process.update(req.body)
-          .then(result =>  res.redirect('/'))
-          .catch(err => bad_request(err, res))
+    Process.update(req.body)
+           .catch(err => bad_request(err, res))
 })
 
 router.post("/addapp", (req, res) => {
     console.log("adding app")
-    console.log(req.body)
-    Process.update(req.body)
-           .then(result => ok_request(err,res))
-           .catch(err => bad_request(err, res))
+
+    Appointment.add(req.body)
+               .then(result =>{
+    Appointment.findById(result._id).populate('doctor').populate('process')
+               .exec((err, app)=>{ if(!err)ok_request(app, res)} )})
+               .catch(err => bad_request(err, res))
  })
 
  router.post("/editapp", (req, res) => {
     console.log("updating app")
     console.log(req.body)
-    Process.update(req.body)
-           .then(result =>  ok_request(err,res))
-           .catch(err => bad_request(err, res))
+    Appointment.update(req.body)
+               .then(result =>  ok_request(result,res))
+               .catch(err => bad_request(err, res))
  })
- router.post("/deleteapp", (req, res) => {
+router.post("/deleteapp", (req, res) => {
     console.log("deleting app")
     console.log(req.body)
-    Process.update(req.body)
-           .then(result =>  ok_request(err,res))
-           .catch(err => bad_request(err, res))
- })
+    Appointment.delete(req.body)
+               .then(result =>  ok_request(result,res))
+               .catch(err => bad_request(err, res))
+})
 
 module.exports = router;
 
