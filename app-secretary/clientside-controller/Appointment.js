@@ -35,8 +35,8 @@ class AppointmentController {
     edit(data){
       console.log("++++++EDITING APPOINTMEN++++++"); console.log(data);
       const on_success = (data)=>{
-        // this.view.getEventById(data.api.id).remove();
-        // this.view.addEvent(data.api);
+        this.view.getEventById(data.api.id).remove();
+        this.view.addEvent(data.api);
         this.view.update(); 
       }
 
