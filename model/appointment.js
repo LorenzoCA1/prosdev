@@ -16,8 +16,10 @@ var appointmentSchema = new Schema({
     doctor: [{type: Schema.Types.ObjectId,ref: Doctor}]
 })
 
-appointmentSchema.statics.getAll = async function(){
-    return await this.find();
+appointmentSchema.statics.getAll = async function(callback){
+    return await this.find()
+    .populate('doctor').populate('process')
+    .exec((err, data)=>{callback(data) })
 }
 appointmentSchema.statics.get = function(data){
     return this.findById(data._id).populate('doctor').populate('process')

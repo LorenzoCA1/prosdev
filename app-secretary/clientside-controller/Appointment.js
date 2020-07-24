@@ -3,15 +3,16 @@ class AppointmentController {
       this.server = APP_AJAX;
       this.view = ComponentMap.timegrid;
       this.parser = AppParser
-      this.init_views()
+      this.update_views()
     }
 
-    init_views(){
-      // let arr_data = this.server.fetch_APPS(); 
-      // console.log("++++++FETCHING APPOINTMENTS++++++"); console.log(arr_data);
-      // arr_data.forEach((data)=>{this.view.addEvent( this.parser.parseDatabaseObj(data)) })
-      this.view.update();
-                           
+    update_views(){
+      const callback = (arr_data)=>{
+        if(arr_data)
+          arr_data.forEach((data)=>{this.view.addEvent( this.parser.parseDatabaseObj(data)) })
+          this.view.update();
+      }
+      this.server.fetch(callback.bind(this));
     }
     add(data){
       console.log("++++++ADDING APPOINTMENT++++++"); console.log(data);
@@ -34,8 +35,8 @@ class AppointmentController {
     edit(data){
       console.log("++++++EDITING APPOINTMEN++++++"); console.log(data);
       const on_success = (data)=>{
-        this.view.getEventById(data.api.id).remove();
-        this.view.addEvent(data.api);
+        // this.view.getEventById(data.api.id).remove();
+        // this.view.addEvent(data.api);
         this.view.update(); 
       }
 

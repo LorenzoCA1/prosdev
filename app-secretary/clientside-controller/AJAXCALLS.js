@@ -2,7 +2,7 @@
 const APP_AJAX = {  
     add:(data,callback)=>{
       console.log("AJAX"); console.log(data)
-      $.post("/addapp",  data).always((res)=>{console.log('client recieving data');
+      $.post("/addapp",  data.db).always((res)=>{console.log('client recieving data');
                                               data.api.id = res.responseJSON._id
                                 callback(data)})
                                .fail((xhr, status,err)=>{ console.log(err);})
@@ -11,20 +11,27 @@ const APP_AJAX = {
     edit:(data, callback)=>{
        console.log("AJAX"); console.log(data)
         $.post("/editapp", data.db).always((res)=>{ console.log('client recieving data'); 
-                                                    console.log(res); 
+                                                    console.log(res.responseJSON); 
                                     callback(data) })
                                    .fail((xhr, status,err)=>{ console.log(err); })
     },
     delete:(data,callback)=>{
       console.log("AJAX"); console.log(data)
       $.post("/deleteapp", data).always((res)=>{ console.log('client recieving data'); 
-                                                  console.log(res); 
+
+                                                  console.log(res.responseJSON); 
+                              
                                  callback(data) })
                                 .fail((xhr, status,err)=>{ console.log(err); })
     },
-    fetch:()=>{
-        $.get("/getapps").done((data)=>{ console.log('client recieving data'); console.log(data); return data})
-                         .fail((xhr, status,err)=>{ console.log(xhr); return [] })
+    fetch:(callback)=>{
+        $.get("/getapps").always((res)=>{console.log('client recieving data');
+                                         console.log(res.responseJSON);
+
+                                         let data = res.responseJSON;
+                          if(Object.keys(res.responseJSON).length != 0 )
+                          callback(data)})
+                         .fail((xhr, status,err)=>{ console.log(xhr);})
     }
 }
 

@@ -12,15 +12,6 @@ const api_options = {
   selectable: true,
   selectMirror: false,
   dayMaxEvents: true, // allow "more" link when too many events
-  eventContent: function(arg) {
-    console.log(arg)
-    let time = `${arg.timeText}- `
-    let name = `<b>${arg.event._def.extendedProps.lastname},  ${arg.event._def.extendedProps.firstname}</b><br>`
-    let doctor = ``; let process = ` `
-    arg.event._def.extendedProps.doctor.forEach(doc=>{ doctor +=(doc.name + ', '); console.log(doc)})
-    arg.event._def.extendedProps.process.forEach(proc=>{ process += ( proc.name+' ')})
-    return {html: time + name + doctor + process}
-  },
   slotMinTime:  '06:00:00',
   slotMaxTime:  '20:00:00',
   height: 520

@@ -3,6 +3,7 @@ class TimeGridView extends FullCalendar.Calendar{
     constructor(HTMLELEMENT, options)
     {
         super(HTMLELEMENT, options)
+        this.initEventRenderer()
     }
 
     update(){
@@ -20,6 +21,20 @@ class TimeGridView extends FullCalendar.Calendar{
         }
         this.setOption('customButtons', customButtons)
 
+    }
+
+    initEventRenderer(){
+        const eventContent = (arg)=> {
+            console.log(arg)
+            let time = `${arg.timeText}- `
+            let name = `<b>${arg.event._def.extendedProps.lastname},  ${arg.event._def.extendedProps.firstname}</b><br>`
+            let doctor = ``; let process = ` `
+            arg.event._def.extendedProps.doctor.forEach(doc=>{ doctor +=(doc.name + ', '); console.log(doc)})
+            arg.event._def.extendedProps.process.forEach(proc=>{ process += ( proc.name+' ')})
+            return {html: time + name + doctor + process}
+        }
+
+        this.setOption('eventContent', eventContent)
     }
 
 

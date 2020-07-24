@@ -11,22 +11,16 @@ const bad_request = (err, res) => {let x = ''; if(err)for(field in err.errors) x
                                      console.log(err); res.status(400).send(x)}
 const ok_request = (data, res) => { console.log("sending back to client"); console.log(data); res.status(300).send(data) }
 
-const refresh = (req, res) => {
-    const doctors =  Doctor.getAll();
-    const processes = Process.getAll()
-    res.render('main.hbs', {doctor: doctors, process: processes});
-}
-
 router.get("/", async function(req, res) {
     let doctors =   await Doctor.getAll();
-    let processes = await Process.getAll()
+    let processes = await Process.getAll();
+
     res.render('main.hbs', {doctor: doctors, process: processes});
 });
 
-
 router.post("/adddoc",(req, res) => {
- console.log("adding doc")
- console.log(req.body)
+  console.log("adding doc")
+  console.log(req.body)
   Doctor.add(req.body).catch(err =>{bad_request(err, res)})
 })
 
@@ -49,8 +43,8 @@ router.get("/getprocs", async function(req, res) {
 router.post("/addproc",(req, res) => {
     console.log("adding proc")
     console.log(req.body)
-  Process.add(req.body)
-         .catch(err => bad_request(err, res))
+    Process.add(req.body)
+           .catch(err => bad_request(err, res))
 })
 
 router.post("/deleteproc", (req, res) => {
@@ -60,16 +54,15 @@ router.post("/deleteproc", (req, res) => {
            .catch(err => bad_request(err, res))
 })
 
-router.post("/editproc", (req, res) => {
-    console.log("updating proc")
-    console.log(req.body)
-    Process.update(req.body)
-           .catch(err => bad_request(err, res))
+router.get("/getapps",(req, res) => {
+    console.log("======getting all apps====")
+    const callback = (data) => { ok_request(data,res)} 
+    Appointment.getAll(callback)
 })
 
 router.post("/addapp", (req, res) => {
     console.log("adding app")
-
+    console.log(req.body)
     Appointment.add(req.body)
                .then(result =>{
     Appointment.findById(result._id).populate('doctor').populate('process')
@@ -95,34 +88,3 @@ router.post("/deleteapp", (req, res) => {
 module.exports = router;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // let doctor = await Doctor.getAllDoctors();
-    // let process = await Process.getAllProcesses();
