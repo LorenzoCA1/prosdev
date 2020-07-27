@@ -10,8 +10,11 @@ const moment = require('moment');
 const config = require("/authConfig.js");
 const {Account} = require("../model/account");
 
-router.get("/auth", async function(req, res) {
-    res.render('login.hbs');
+
+router.post("/auth", async function(req, res) {
+    
+    console.log(req.body)
+  //  res.render('login.hbs');
 });
 
 router.post("/register", async function (req, res) => {

@@ -15,7 +15,7 @@
 
     </head>
 <body style = "background-color:steelblue">
-    <form class = "ui centered card form" style = "margin-top: 20px;">
+    <form class = "ui centered card form" style = "margin-top: 20px;" method = "POST" action = "/auth">
         <div class="ui content">
             <div class="field" id="fieldUsername">
                 <label>Username</label>
@@ -26,8 +26,9 @@
                 <input type="password" name="password" id="password" placeholder="Password">
             </div>
                  <div class="ui grid"><div class="actions column">
-                <div id = "btn-signin" class="ui right primary floated submit icon button fluid">
-                    Sign in</div>
+                <input type = "submit" id = "btn-signin" class="ui right primary floated submit icon button fluid">
+                    Sign in
+                </input>
                 </div></div>
         </div>
     </form>

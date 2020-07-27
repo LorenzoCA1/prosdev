@@ -41,18 +41,20 @@
     </nav>
     
     <div class="ui centered">
-        <div class="ui container cards sixteen column grid centered">
-              <div class="card eight wide column">
-                <b> January 20, 2020 @1pm</b>
-                <div class="content">
-                  <a class="header">Dental Cleaning</a>   
-                  <div class = "description"><b>
-                      DR. PHOEBE CHEN, 
-                      DR. JOHN CHEN
-                   </b></div>
-                </div>
-              </div>
-        </div>
+            <div class="ui container cards sixteen column grid centered">
+                {{#each appointment}}
+                   <div class="card eight wide column">
+                     <b>{{date}} @{{time}}</b>
+                     <div class="content">
+                       <a class="header">
+                           {{process}}
+                       </a>   
+                       <div class = "description"><b>
+                        {{doctor}}</b></div>
+                     </div>
+                   </div>
+                {{/each}}
+             </div>
     </div>
     
 
