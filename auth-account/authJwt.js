@@ -19,9 +19,9 @@ verifyToken = (req, res, next) => {
 };
 
 isAdmin = (req, res, next) => {
-	Account.getAccountById(req.accountId).exec((err, account) {
+	Account.getAccountById(req.accountId).exec((err, account) => {
 		if(err) {
-			res.status(500).send({message: err});
+			res.status(500).send({ message: err });
 			return;
 		}
 		
@@ -33,10 +33,10 @@ isAdmin = (req, res, next) => {
 		res.status(403).send({ message: "Admin role required" });
 		return;
 	});	
-}
+};
 
 isSecretary = (req, res, next) => {
-	Account.getAccountById(req.accountId).exec((err, account) {
+	Account.getAccountById(req.accountId).exec((err, account) => {
 		if(err) {
 			res.status(500).send({message: err});
 			return;
@@ -50,10 +50,10 @@ isSecretary = (req, res, next) => {
 		res.status(403).send({ message: "Secretary role required" });
 		return;
 	});
-}
+};
 
 isPatient = (req, res, next) => {
-	Account.getAccountById(req.accountId).exec((err, account) {
+	Account.getAccountById(req.accountId).exec((err, account) => {
 		if(err) {
 			res.status(500).send({message: err});
 			return;
@@ -67,7 +67,7 @@ isPatient = (req, res, next) => {
 		res.status(403).send({ message: "Patient role required" });
 		return;
 	});
-}
+};
 
 const authJwt = {
 	verifyToken,
