@@ -28,6 +28,16 @@ class SimpleNavigation(unittest.TestCase):
         print(self.doctorWindow[0].text)
         assert self.doctorWindow[0].text == "Doctors"
     
+    def test_add_process_popup(self):
+        print("Proccess Add PopUp Test")
+        self.driver.implicitly_wait(10)
+        self.addBtn = self.driver.find_element_by_xpath("/html/body/div[1]/div[2]/div[2]/div[1]/span[1]/i")
+        self.addBtn.click()
+        self.driver.implicitly_wait(10)
+        self.processWindow = self.driver.find_elements_by_class_name("header")
+        print(self.processWindow[0].text)
+        assert self.processWindow[0].text == "Procedure"
+    
     @classmethod
     def tearDownClass(inst):
         inst.driver.quit()
