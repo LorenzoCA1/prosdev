@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const config = require("./authConfig.js");
+const {Account} = ("../models/account");
 
 
 module.exports = function(req, res, next) {
@@ -11,7 +12,7 @@ module.exports = function(req, res, next) {
 	
 	try {
 		const decoded = jwt.verify(token, config.key);
-		req.accountId = decoded.accountId;
+		req.account = decoded.account;
 		next();
 	} catch (err) {
 		console.error(err);

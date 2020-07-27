@@ -8,6 +8,7 @@ const router = express.Router();
 const moment = require('moment');
 
 const config = require("./authConfig.js");
+const auth = require("./auth.js");
 const {Account} = require("../model/account");
 
 
@@ -21,9 +22,12 @@ router.post(
 	"/register", 
 	[
 		check("username", "Please Enter a Valid Username").not().isEmpty(),
-        check("password", "Please enter a valid password (At least 6 characters)").isLength({ min: 6 })
+        check("password", "Please enter a valid password (At least 6 characters)").isLength({ min: 6 }),
+		check("accountType", "Please enter a valid account type").not().isEmpty()
 	],
 	async (req, res) => {
+		console.log("Registering...");
+		console.log(req.body);
 		const errors = validationResult(req);
 		if(!errors.isEmpty()) {
 			return res.status(400).json({
@@ -129,6 +133,17 @@ router.post(
 			console.error(err);
 			res.status(500).send({ message: "Server error." });
 		}
+});
+
+router.get("/me", auth, async (req, res) => {
+	try {
+		console.log("sent token: " + req.header("token"));
+		console.log("")
+		const account = await Account.findById(req.account.id);
+		res.json(account);
+	} catch(e) {
+		res.send({message: "Couldn't fetch user."});
+	}
 });
 
 router.get("/admin", async (req, res) => {
