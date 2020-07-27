@@ -25,16 +25,16 @@ class ProcessController{
     }
     add(data){
         console.log("++++++ADDING PROCESS++++++"); console.log(data);
-        this.server.add(data)
+        this.server.add(data);
     }
     edit(data){
         console.log("++++++EDITING PROCESS++++++"); console.log(data);
-        this.server.edit({_id: data._id, update: data.update})
+        this.server.edit({_id: data._id, update: data.update});
         // this.update_views()
     }
     delete(data){
         console.log("++++++DELETING PROCESS++++++"); console.log(data);
-        this.server.delete(data)
+        this.server.delete(data);
         // this.update_views()
     }
   }
