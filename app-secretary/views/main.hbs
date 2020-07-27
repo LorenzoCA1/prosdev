@@ -5,9 +5,6 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-   <meta http-equiv='cache-control' content='no-cache'> 
-<meta http-equiv='expires' content='0'> 
-<meta http-equiv='pragma' content='no-cache'> 
     <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
     
     {{!-- <link rel='stylesheet' crossorigin="anonymous"  media='screen' href='main.css'> --}}
@@ -18,7 +15,6 @@
     <script type ='text/javascript' src='/javascript/moment.js'></script>
     <script type ='text/javascript' src='/fullcalendar-api/lib/main.min.js'></script>
     <script type ='text/javascript'src='/semantic/dist/semantic.js'></script>
-    <meta http-equiv="Expires" content="-1">
 </head>
 <body>
     <nav class="ui secondary pointing menu">
@@ -37,7 +33,7 @@
                     <span onclick="docform.showEditForm()"><i class="right samll link write icon"></i></span>
                     </div>
                    {{#each doctor}}
-                        <div class="ui divider item"><a>{{name}}</a></div>
+                        <div class="ui divider item" name = {{name}}><a>{{name}}</a></div>
                    {{/each}}
             </div>
             <div class="ui content list">
@@ -53,7 +49,7 @@
     </div>
 </body>
 
-<form class="ui  modal small app-form form" id = 'app-form' onsubmit="return true" >
+<form class="ui  modal small app-form form" id = 'app-form' onsubmit="return false" >
     <i class="close icon"></i>
     <div class="header">Appointment</div>
 
@@ -150,7 +146,7 @@
 </form>
 
 
-<form id="proc-form" class="ui small modal proc-form form">
+<form id="proc-form" class="ui small modal proc-form form" onsubmit="return true">
     <i class="close icon"></i>
     <div class="header">Procedure</div>
         <div class="content">

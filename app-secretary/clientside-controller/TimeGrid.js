@@ -31,7 +31,7 @@ class TimeGridView extends FullCalendar.Calendar{
             let doctor = ``; let process = ` `
             arg.event._def.extendedProps.doctor.forEach(doc=>{ doctor +=(doc.name + ', '); console.log(doc)})
             arg.event._def.extendedProps.process.forEach(proc=>{ process += ( proc.name+' ')})
-            return {html: time + name + doctor + process}
+            return {html: time + name}
         }
 
         this.setOption('eventContent', eventContent)

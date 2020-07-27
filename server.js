@@ -35,17 +35,21 @@ app.use(express.static(path.join(__dirname, '/app-secretary/clientside-controlle
 app.set('view engine', 'hbs');
 
 //SET VIEWS DIRECTORIES
-app.set('views', 
-        path.join(__dirname, '/app-secretary/views'),
-        path.join(__dirname, '/app-patient/views'),
-        path.join(__dirname, '/auth-account/views'),
-        //path.join(__dirname, 'app-superadmin/views')
-        );
+
+app.use(function (req, res, next) {
+    if (req.path === '/') 
+        app.set('views',path.join(__dirname, '/app-secretary/views'))
+    else if(req.path === '/auth')
+        app.set('views', path.join(__dirname,'/auth-account/views'));
+    next()
+})
+
 
 
 //SET APP/ROUTER DIRECTORIES
 app.use(require("./app-secretary/router"),
-        require("./app-patient/router")
+        require("./app-patient/router"),
+        require("./auth-account/router")
         //app.use(require("./app-superadmin"));
        );
 
