@@ -8,22 +8,52 @@
         <meta http-equiv='cache-control' content='no-cache'> 
         <meta http-equiv='expires' content='0'> 
         <meta http-equiv='pragma' content='no-cache'> 
-        <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
+        <!-- <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
         <link rel='stylesheet' type = 'text/css'media='screen' href='/fullcalendar-api/lib/main.min.css'>
         <script type ='text/javascript' src='/javascript/jquery.js'></script>
         <script type ='text/javascript' src='/javascript/moment.js'></script>
         <script type ='text/javascript' src='/javascript/moment.js'></script>
         <script type ='text/javascript' src='/fullcalendar-api/lib/main.min.js'></script>
-        <script type ='text/javascript'src='/semantic/dist/semantic.js'></script>
+        <script type ='text/javascript'src='/semantic/dist/semantic.js'></script> -->
+
+        <link rel='stylesheet' type = 'text/css'media='screen' href='../../public/semantic/dist/semantic.css'>
+        <link rel='stylesheet' type = 'text/css'media='screen' href='../../public/fullcalendar-api/lib/main.min.css'>
+        <script type ='text/javascript' src='../../public/javascript/jquery.js'></script>
+        <script type ='text/javascript' src='../../public/javascript/moment.js'></script>
+        <script type ='text/javascript' src='../../public/javascript/moment.js'></script>
+        <script type ='text/javascript' src='../../public/fullcalendar-api/lib/main.min.js'></script>
+        <script type ='text/javascript'src='../../public/semantic/dist/semantic.js'></script>
+
         <meta http-equiv="Expires" content="-1">
+
     </head>
+
+    <style>
+        .ui.cards { display: inline-block; overflow-x: scroll; }
+        
+                </style>
 <body>
     <nav class="ui secondary pointing menu">
-        <a class="item active">Appointment</a>
+        <a class="item active">Appointments</a>
         <a class="item">Requests</a>
+        <a class="item">History</a>
         <div class="right menu"><a class="ui item">Logout</a></div>
     </nav>
-
+    
+    <div class="ui centered">
+        <div class="ui container cards sixteen column grid centered">
+              <div class="card eight wide column">
+                <b> January 20, 2020 @1pm</b>
+                <div class="content">
+                  <a class="header">Dental Cleaning</a>   
+                  <div class = "description"><b>
+                      DR. PHOEBE CHEN, 
+                      DR. JOHN CHEN
+                   </b></div>
+                </div>
+              </div>
+        </div>
+    </div>
     
 
 </body>
