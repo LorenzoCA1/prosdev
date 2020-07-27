@@ -21,7 +21,7 @@ class DoctorFunction(unittest.TestCase):
         self.saveBtn = self.driver.find_elements_by_id("add-doc")
         self.saveBtn[0].click()
         self.driver.refresh()
-        self.doctorList = self.driver.find_elements_by_id("UNITTEST")
+        self.doctorList = self.driver.find_elements_by_name("UNITTEST")
         assert self.doctorList[0].text == "UNITTEST"
     
     def tearDown(self):
