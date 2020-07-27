@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const {Doctor} = require("./doctor");
 const {Process} = require("./process");
+const {Account} = require("./account");
 
 
 var appointmentSchema = new Schema({
@@ -13,7 +14,9 @@ var appointmentSchema = new Schema({
     notes: String,
     time: String,
     date: String,
-    doctor: [{type: Schema.Types.ObjectId,ref: Doctor}]
+    doctor: [{type: Schema.Types.ObjectId,ref: Doctor}],
+    //patient_id:  [{type: Schema.Types.ObjectId,account}],
+   // status: Boolean,  //Approved, Not Approved
 })
 
 appointmentSchema.statics.getAll = async function(callback){
@@ -28,6 +31,16 @@ appointmentSchema.statics.get = function(data){
 appointmentSchema.statics.getByID = function(id){
     return this.findOne({ _id: id });
 };
+
+appointmentSchema.statics.getAppointmentRequests = function(){
+    return this.find({isPending: true});
+}
+
+appointmentSchema.statics.getPatientAppointment = function(user){
+    return this.find({ patient_id: user._id });
+};
+
+
 
 appointmentSchema.statics.add = async function(data){
      return await (new Appointment(data)).save()

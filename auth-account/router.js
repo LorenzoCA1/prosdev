@@ -9,5 +9,11 @@ router.get("/auth", async function(req, res) {
     res.render('login.hbs');
 });
 
+router.post("/auth", async function(req, res) {
+    
+    console.log(req.body)
+  //  res.render('login.hbs');
+});
+
 
 module.exports = router;
