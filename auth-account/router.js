@@ -134,7 +134,10 @@ router.post(
 				},
 				(err, token) => {
 					if(err) throw err;
-					res.status(200).json({token});
+					req.session.token = token;
+					console.log("Session token: " + req.session.token);
+					res.redirect("/me");
+					//res.status(200).json({token});
 				}
 			);
 		} catch (err) {
@@ -145,7 +148,8 @@ router.post(
 
 router.get("/me", auth, async (req, res) => {
 	try {
-		console.log("sent token: " + req.header("token"));
+		//console.log("sent token: " + req.header("token"));
+		console.log("/me Received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
 		res.json(account);
 	} catch(e) {
@@ -155,7 +159,8 @@ router.get("/me", auth, async (req, res) => {
 
 router.get("/patient", auth, async (req, res) => {
 	try {
-		console.log("sent token: " + req.header("token"));
+		// console.log("sent token: " + req.header("token"));
+		console.log("/patient received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
 		console.log("Account found. Checking role...");
 		if(account.accountType === "patient") {
@@ -170,7 +175,8 @@ router.get("/patient", auth, async (req, res) => {
 
 router.get("/secretary", auth, async (req, res) => {
 	try {
-		console.log("sent token: " + req.header("token"));
+		// console.log("sent token: " + req.header("token"));
+		console.log("/secretary received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
 		console.log("Account found. Checking role...");
 		if(account.accountType === "secretary") {
@@ -185,7 +191,8 @@ router.get("/secretary", auth, async (req, res) => {
 
 router.get("/admin", auth, async (req, res) => {
 	try {
-		console.log("sent token: " + req.header("token"));
+		//console.log("sent token: " + req.header("token"));
+		console.log("/admin received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
 		console.log("Account found. Checking role...");
 		if(account.accountType === "admin") {
@@ -199,7 +206,12 @@ router.get("/admin", auth, async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-
+	try {
+		req.session.token = null;
+		res.redirect("/auth");
+	} catch(e) {
+		res.send({ message: "Couldn't log out." });
+	}
 
 });
 

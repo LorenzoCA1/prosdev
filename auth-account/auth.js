@@ -3,7 +3,8 @@ const config = require("./authConfig.js");
 const {Account} = require("../model/account");
 
 module.exports = function(req, res, next) {
-	const token = req.header("token");
+	// const token = req.header("token");
+	const token = req.session.token;
 	
 	if(!token) {
 		return res.status(401).send({ message: "No token provided." });
