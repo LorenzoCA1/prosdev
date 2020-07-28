@@ -31,8 +31,7 @@ router.post(
 	"/register", 
 	[
 		check("username", "Please Enter a Valid Username").not().isEmpty(),
-        check("password", "Please enter a valid password (At least 6 characters)").isLength({ min: 6 }),
-		check("accountType", "Please enter a valid account type").not().isEmpty()
+        check("password", "Please enter a valid password (At least 6 characters)").isLength({ min: 6 })
 	],
 	async (req, res) => {
 		console.log("Registering...");
@@ -64,7 +63,7 @@ router.post(
 			
 			const salt = await bcrypt.genSalt(10);
 			account.password = await bcrypt.hash(password, salt);
-			account.accountType = accountType;
+			account.accountType = "patient";
 			
 			await account.save();
 			
