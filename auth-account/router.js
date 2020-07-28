@@ -23,6 +23,10 @@ router.get("/auth", async function(req, res) {
 	res.render('login.hbs');
 });
 
+router.get("/registration", async function(req, res) {
+	res.render('register.hbs');
+});
+
 router.post(
 	"/register", 
 	[
