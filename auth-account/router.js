@@ -138,7 +138,6 @@ router.post(
 router.get("/me", auth, async (req, res) => {
 	try {
 		console.log("sent token: " + req.header("token"));
-		console.log("")
 		const account = await Account.findById(req.account.id);
 		res.json(account);
 	} catch(e) {
@@ -146,9 +145,49 @@ router.get("/me", auth, async (req, res) => {
 	}
 });
 
-router.get("/admin", async (req, res) => {
+router.get("/patient", auth, async (req, res) => {
+	try {
+		console.log("sent token: " + req.header("token"));
+		const account = await Account.findById(req.account.id);
+		console.log("Account found. Checking role...");
+		if(account.accountType === "patient") {
+			res.send({message: "Patient verified."});
+		} else {
+			res.send({message: "Access denied: Not a patient."});
+		}
+	} catch(e) {
+		res.send({message: "Couldn't fetch user."});
+	}
+});
 
+router.get("/secretary", auth, async (req, res) => {
+	try {
+		console.log("sent token: " + req.header("token"));
+		const account = await Account.findById(req.account.id);
+		console.log("Account found. Checking role...");
+		if(account.accountType === "secretary") {
+			res.send({message: "Secretary verified."});
+		} else {
+			res.send({message: "Access denied: Not a secretary."});
+		}
+	} catch(e) {
+		res.send({message: "Couldn't fetch user."});
+	}
+});
 
+router.get("/admin", auth, async (req, res) => {
+	try {
+		console.log("sent token: " + req.header("token"));
+		const account = await Account.findById(req.account.id);
+		console.log("Account found. Checking role...");
+		if(account.accountType === "admin") {
+			res.send({message: "Admin verified."});
+		} else {
+			res.send({message: "Access denied: Not an admin."});
+		}
+	} catch(e) {
+		res.send({message: "Couldn't fetch user."});
+	}
 });
 
 router.get("/logout", async (req, res) => {
