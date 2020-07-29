@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 import time
+from datetime import datetime
 
 class AppointmentView(unittest.TestCase):
 
@@ -13,8 +14,8 @@ class AppointmentView(unittest.TestCase):
         inst.driver.maximize_window()
         inst.driver.get("localhost:3000")
 
-    def test_1_add_doctor(self):
-        print("View Appointments Test")
+    def test_1_view_appointment_week(self):
+        print("View Appointments by Week Test")
         self.dateElement = self.driver.find_element_by_xpath("//*[@id=\"timetable\"]/div[1]/div[2]/h2")
         self.date = self.dateElement.text
         self.rightArrow = self.driver.find_element_by_xpath("//*[@id=\"timetable\"]/div[1]/div[1]/div[1]/button[2]")
@@ -30,6 +31,39 @@ class AppointmentView(unittest.TestCase):
         self.txt = self.lastname.get_attribute('value')
         print(self.txt)
         assert self.txt == 'Unit'
+        self.driver.refresh()
+        time.sleep(1)
+
+    def test_2_view_appointment_day(self):
+        print("View Appointments by Day Test")
+        self.dayBtn = self.driver.find_element_by_xpath('//*[@id="timetable"]/div[1]/div[1]/div[2]/button[1]')
+        self.rightArrow = self.driver.find_element_by_xpath("//*[@id=\"timetable\"]/div[1]/div[1]/div[1]/button[2]")
+        self.leftArrow  = self.driver.find_element_by_xpath("//*[@id=\"timetable\"]/div[1]/div[1]/div[1]/button[1]")
+        self.dayBtn.click()
+        time.sleep(1)
+        self.date = self.driver.find_element_by_xpath('//*[@id="timetable"]/div[1]/div[2]/h2')
+        self.date_string = datetime.strptime('August 11, 2020', '%B %d, %Y')
+        print(self.date_string)
+        while True:
+            self.tmp_date =  self.date.text
+            self.tmp_date = datetime.strptime(self.tmp_date, '%B %d, %Y')
+            if self.tmp_date == self.date_string:
+                break
+            elif self.tmp_date < self.date_string:
+                self.rightArrow.click()
+                time.sleep(1.5)
+            else:
+                self.leftArrow.click()
+                time.sleep(1.5)
+        self.appointment = self.driver.find_element_by_xpath('//*[@id="timetable"]/div[2]/div/table/tbody/tr[3]/td/div/div/div/div[2]/table/tbody/tr/td[2]/div/div[2]/div/a/div[1]')
+        self.appointment.click()
+        self.lastname = self.driver.find_element_by_xpath("//*[@id=\"lastname\"]")
+        self.txt = self.lastname.get_attribute('value')
+        print(self.txt)
+        assert self.txt == 'Unit'
+        self.driver.refresh()
+        time.sleep(1)
+
 
     @classmethod
     def tearDownClass(inst):
