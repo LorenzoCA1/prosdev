@@ -13,6 +13,9 @@ class AppointmentView(unittest.TestCase):
         inst.driver.implicitly_wait(30)
         inst.driver.maximize_window()
         inst.driver.get("localhost:3000")
+        inst.driver.find_element_by_name("username").send_keys('regpagetest')
+        inst.driver.find_element_by_name("password").send_keys('regpagetest')
+        inst.driver.find_element_by_id('btn-signin').click()
 
     def test_1_view_appointment_week(self):
         print("View Appointments by Week Test")
@@ -51,10 +54,10 @@ class AppointmentView(unittest.TestCase):
                 break
             elif self.tmp_date < self.date_string:
                 self.rightArrow.click()
-                time.sleep(1.5)
+                time.sleep(1)
             else:
                 self.leftArrow.click()
-                time.sleep(1.5)
+                time.sleep(1)
         self.appointment = self.driver.find_element_by_xpath('//*[@id="timetable"]/div[2]/div/table/tbody/tr[3]/td/div/div/div/div[2]/table/tbody/tr/td[2]/div/div[2]/div/a/div[1]')
         self.appointment.click()
         self.lastname = self.driver.find_element_by_xpath("//*[@id=\"lastname\"]")
