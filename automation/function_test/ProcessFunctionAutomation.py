@@ -16,6 +16,9 @@ class ProcessFunction(unittest.TestCase):
         inst.driver.implicitly_wait(30)
         inst.driver.maximize_window()
         inst.driver.get("localhost:3000")
+        inst.driver.find_element_by_name("username").send_keys('regpagetest')
+        inst.driver.find_element_by_name("password").send_keys('regpagetest')
+        inst.driver.find_element_by_id('btn-signin').click()
 
     def test_1_add_process(self):
         print("Adding Process Test")
