@@ -48,8 +48,8 @@ class ProcessFunction(unittest.TestCase):
         self.procList = self.driver.find_elements_by_id("test proc")
         assert self.procList[0].text == "TEST"
 
-    def test_3_delete_doctor(self):
-        print("Delete Doctors Test")
+    def test_3_delete_process(self):
+        print("Delete Process Test")
         self.driver.implicitly_wait(10)
         self.editBtn = self.driver.find_element_by_xpath("/html/body/div[1]/div[2]/div[2]/div[1]/span[2]")
         self.editBtn.click()
