@@ -151,7 +151,11 @@ router.get("/me", loggedIn, async (req, res) => {
 		//console.log("sent token: " + req.header("token"));
 		console.log("/me Received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
-		res.json(account);
+		if(account.accountType === "secretary") {
+			res.redirect("/");
+		} else {
+			res.json(account);
+		}
 	} catch(e) {
 		res.send({message: "Couldn't fetch user."});
 	}
