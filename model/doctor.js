@@ -1,43 +1,45 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var doctorSchema = new Schema({
-    firstname: String,
-    lastname: String
-})
+const doctorSchema = new Schema({
+    name: {
+        type: String,
+        required: [true, 'Name is required'],
+        unique: true,
+    }
+},  { versionKey: false })
 
-doctorSchema.statics.getDoctorByID = async function(doctorID){
-    return await this.findOne({
-        _id: doctorID
-    });
-};
 
-doctorSchema.statics.addDoctor = function(doctor, callback){
-    doctor.save().then(callback);
-};
 
-doctorSchema.statics.getAllDoctors = async function(){
+doctorSchema.statics.getAll = async function(){
     return await this.find();
 }
 
-doctorSchema.statics.delete = async function(doctorID){
-    return await this.deleteOne({
-        _id : doctorID
-    });
-}
-
-doctorSchema.methods.updateDoctor = async function(doctorID, updated){
-    return await this.updateOne({
-        _id: doctorID
-    }, {
-        firstname,
-        lastname
-    }, {
-        new: true
-    }); 
+doctorSchema.statics.getByID = async function(data){
+    return await this.findOne({ _id: data });
 };
 
-var Doctor = mongoose.model("doctor", doctorSchema)
+
+doctorSchema.statics.getAppointmentDoctor = async function(data){
+    return await (new Doctor(data)).save()
+};
+
+doctorSchema.statics.add = async function(data){
+     return await (new Doctor(data)).save()
+};
+
+
+
+
+doctorSchema.statics.delete = async function(data){
+    return await this.findByIdAndRemove(data._id);
+}
+
+doctorSchema.statics.update = async function(data){
+    return await this.findOneAndUpdate({_id: data._id}, {$set: data.update}, {new: true}); 
+};
+
+const Doctor = mongoose.model("doctor", doctorSchema)
 
 module.exports = {
     Doctor

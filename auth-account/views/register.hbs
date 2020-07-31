@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Page Title</title>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
+        <link rel='stylesheet' type = 'text/css'media='screen' href='/fullcalendar-api/lib/main.min.css'>
+        <script type ='text/javascript' src='/javascript/jquery.js'></script>
+        <script type ='text/javascript' src='/javascript/moment.js'></script>
+        <script type ='text/javascript' src='/javascript/moment.js'></script>
+        <script type ='text/javascript' src='/fullcalendar-api/lib/main.min.js'></script>
+        <script type ='text/javascript'src='/semantic/dist/semantic.js'></script>
+
+    </head>
+<body style = "background-color:steelblue">
+    <form class = "ui centered card form" style = "margin-top: 20px;" method = "POST" action = "/register">
+        <div class="ui content">
+            <div class="field" id="fieldUsername">
+                <label>Username</label>
+                <input type="text" name="username" id="username" placeholder="Username">
+            </div>
+            <div class="field" id="fieldPassword">
+                <label>Password</label>
+                <input type="password" name="password" id="password" placeholder="Password">
+            </div>
+                 <div class="ui grid"><div class="actions column">
+                <input type = "submit" id = "btn-signin" class="ui right primary floated submit icon button fluid">
+                    Sign in
+                </input>
+                </div></div>
+        </div>
+    </form>
+
+</body>
+</html>
