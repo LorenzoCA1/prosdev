@@ -92,6 +92,11 @@ router.post("/deleteapp", (req, res) => {
                .catch(err => bad_request(err, res))
 })
 
+
+router.get("/logout", (req,res)=>{
+    
+    res.redirect('/auth')
+})
 module.exports = router;
 
 

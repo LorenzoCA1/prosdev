@@ -20,7 +20,7 @@
     <nav class="ui secondary pointing menu">
         <a class="item active">Appointment</a>
         <a class="item">Requests</a>
-        <div class="right menu"><a class="ui item">Logout</a></div>
+        <div class="right menu" ><a class="ui item" href = "/logout">Logout</a></div>
     </nav>
     <div class = "ui centered padded grid">
         <div class="ui card ten wide column" style = "height: 550px; z-index: 2">
@@ -33,7 +33,7 @@
                     <span onclick="docform.showEditForm()"><i class="right samll link write icon"></i></span>
                     </div>
                    {{#each doctor}}
-                        <div class="ui divider item" name = {{name}}><a>{{name}}</a></div>
+                        <div class="ui divider item" id = "{{name}}"><a>{{name}}</a></div>
                    {{/each}}
             </div>
             <div class="ui content list">
@@ -42,7 +42,7 @@
                     <span onclick="procform.showEditForm()"><i class="right samll link write icon"></i></span>
                 </div>
                     {{#each process}}
-                        <div class="ui divider item" id="{{name}} proc"><a>{{name}}</a></div>
+                        <div class="ui divider item" id="{{name}}"><a>{{name}}</a></div>
                     {{/each}}
             </div>
         </div>
