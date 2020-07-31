@@ -99,10 +99,6 @@ router.post("/deleteapp", (req, res) => {
 })
 
 
-router.get("/logout", (req,res)=>{
-
-    res.redirect('/auth')
-})
 module.exports = router;
 
 
