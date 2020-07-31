@@ -62,9 +62,15 @@ router.post("/editproc", (req, res) => {
 })
 
 router.get("/getapps",(req, res) => {
-    console.log("======getting all apps====")
-    const callback = (data) => { ok_request(data,res)} 
-    Appointment.getAll(callback)
+    // if(req.query.filterbydoc){
+    //     Appointment.
+    // }
+    // else{
+        console.log("======getting all apps====")
+        const callback = (data) => { ok_request(data,res)} 
+        Appointment.getAll(callback)
+  //  }
+
 })
 
 router.post("/addapp", (req, res) => {
@@ -94,7 +100,7 @@ router.post("/deleteapp", (req, res) => {
 
 
 router.get("/logout", (req,res)=>{
-    
+
     res.redirect('/auth')
 })
 module.exports = router;
