@@ -43,11 +43,7 @@ router.post(
 			});
 		}
 		
-		const {
-			username,
-			password,
-			accountType
-		} = req.body;
+		const { username, password, accountType	} = req.body;
 		
 		try {
 			let user = await Account.findOne({username});
@@ -68,7 +64,7 @@ router.post(
 			await account.save();
 			
 			const payload = {
-				user: {
+				account: {
 					id: account.id
 				}
 			};
@@ -80,7 +76,10 @@ router.post(
 				},
 				(err, token) => {
 					if (err) throw err;
-					res.status(200).json({token});
+					req.session.token = token;
+					console.log("Session token: " + req.session.token);
+					//res.status(200).json({token});
+					res.redirect("/me");
 				}
 			);
 		} catch (err) {
@@ -134,28 +133,40 @@ router.post(
 				},
 				(err, token) => {
 					if(err) throw err;
-					res.status(200).json({token});
+					req.session.token = token;
+					console.log("Session token: " + req.session.token);
+					//res.status(200).json({token});
+					res.redirect("/me");
 				}
 			);
+			//console.log("Redirecting...");
 		} catch (err) {
 			console.error(err);
 			res.status(500).send({ message: "Server error." });
 		}
 });
 
-router.get("/me", auth, async (req, res) => {
+router.get("/me", loggedIn, async (req, res) => {
 	try {
-		console.log("sent token: " + req.header("token"));
+		//console.log("sent token: " + req.header("token"));
+		console.log("/me Received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
-		res.json(account);
+		if(account.accountType === "secretary") {
+			res.redirect("/");
+		} else {
+			res.json(account);
+		}
 	} catch(e) {
 		res.send({message: "Couldn't fetch user."});
 	}
 });
 
-router.get("/patient", auth, async (req, res) => {
-	try {
-		console.log("sent token: " + req.header("token"));
+router.get("/patient", isPatient, async (req, res) => {
+	
+	res.send({message: "WELCOME PATIENT"});
+	/*try {
+		// console.log("sent token: " + req.header("token"));
+		console.log("/patient received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
 		console.log("Account found. Checking role...");
 		if(account.accountType === "patient") {
@@ -165,12 +176,15 @@ router.get("/patient", auth, async (req, res) => {
 		}
 	} catch(e) {
 		res.send({message: "Couldn't fetch user."});
-	}
+	}*/
 });
 
-router.get("/secretary", auth, async (req, res) => {
+router.get("/secretary", isSecretary, async (req, res) => {
+	res.send({message: "WELCOME SECRETARY"});
+	/*
 	try {
-		console.log("sent token: " + req.header("token"));
+		// console.log("sent token: " + req.header("token"));
+		console.log("/secretary received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
 		console.log("Account found. Checking role...");
 		if(account.accountType === "secretary") {
@@ -180,12 +194,15 @@ router.get("/secretary", auth, async (req, res) => {
 		}
 	} catch(e) {
 		res.send({message: "Couldn't fetch user."});
-	}
+	}*/
 });
 
-router.get("/admin", auth, async (req, res) => {
+router.get("/admin", isAdmin, async (req, res) => {
+	res.send({message: "WELCOME ADMIN"});
+	/*
 	try {
-		console.log("sent token: " + req.header("token"));
+		//console.log("sent token: " + req.header("token"));
+		console.log("/admin received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
 		console.log("Account found. Checking role...");
 		if(account.accountType === "admin") {
@@ -195,11 +212,16 @@ router.get("/admin", auth, async (req, res) => {
 		}
 	} catch(e) {
 		res.send({message: "Couldn't fetch user."});
-	}
+	}*/
 });
 
 router.get("/logout", async (req, res) => {
-
+	try {
+		req.session.token = null;
+		res.redirect("/auth");
+	} catch(e) {
+		res.send({ message: "Couldn't log out." });
+	}
 
 });
 
