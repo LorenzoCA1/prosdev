@@ -96,7 +96,6 @@ class ProcessForm{
     submitAddEdit(){
       if(this.isAddForm()) this.view.form(this.add_validation)
       else this.view.form(this.edit_validation)
-
       if(this.isFormValid()){
         let data = this.parseForm(); 
         if(this.isAddForm()) this.controller.add(data);

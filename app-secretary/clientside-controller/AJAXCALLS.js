@@ -61,7 +61,7 @@ const PROC_AJAX = {
     PROC_AJAX.fetch()
   },
   edit:(data)=>{
-    $.post("/editproc", data).fail((xhr, status,err)=>{ return false })
+    $.post("/editproc", data).fail((xhr, status,err)=>{console.log(xhr)})
     PROC_AJAX.fetch()
   },
   delete:(data)=>{
