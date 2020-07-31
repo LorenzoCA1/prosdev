@@ -21,7 +21,7 @@ doctorSchema.statics.getByID = async function(data){
 
 
 doctorSchema.statics.getAppointmentDoctor = async function(data){
-    return await (new Doctor(data)).save()
+    return await this.find({})
 };
 
 doctorSchema.statics.add = async function(data){
