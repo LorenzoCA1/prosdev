@@ -49,9 +49,9 @@ router.post("/addproc",(req, res) => {
 
 router.post("/deleteproc", (req, res) => {
     console.log("editing proc")
-    // console.log(req.body)
-    // Process.delete(req.body)
-    //        .catch(err => bad_request(err, res))
+    console.log(req.body)
+    Process.delete(req.body)
+           .catch(err => bad_request(err, res))
 })
 
 router.post("/editproc", (req, res) => {
