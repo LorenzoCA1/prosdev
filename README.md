@@ -34,7 +34,10 @@ You must go to project repo in command line and run:
 ```sh
 node server.js 
 ```
-put credentials here 
+Enter link in browser
+```sh
+http://localhost:3000/
+```
 
 ## testing
 
