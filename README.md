@@ -44,7 +44,7 @@ http://localhost:3000/
 Log in as Secretary
 ```sh
 Username : regpagetest
-Password :
+Password : regpagetest
 ```
 
 ## Unit Testing
