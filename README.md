@@ -41,6 +41,12 @@ Enter link in browser
 http://localhost:3000/
 ```
 
+Log in as Secretary
+```sh
+Username : regpagetest
+Password :
+```
+
 ## Unit Testing
 
 1. Install Python Dependencies
