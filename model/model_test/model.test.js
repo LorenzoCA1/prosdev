@@ -7,71 +7,82 @@ const {Process} = require("../process");
 
 describe("DOCTOR MODEL TEST", ()=>{
 
-    beforeAll(async ()=>{
+    beforeAll(async done=>{
         await Doctor.deleteOne({name:"TEST"})
+        done()
     });
 
-    afterAll(async ()=>{
+    afterAll(async done=>{
         await Doctor.deleteOne({name:"UPDATED TEST"})
+        done()
     });
 
-    test("Adds Doctor", async ()=>{
+    test("Adds Doctor", async done=>{
         const doctor = new Doctor({name:'TEST'});
         const savedDoctor = await doctor.save();
         const expected = "TEST";
         const actual = savedDoctor.name;
         expect(actual).toEqual(expected);
+        done()
     });
 
-    test("Gets Doctor", async()=>{
+    test("Gets Doctor", async done=>{
         const foundDoctor = await Doctor.findOne({name:"TEST"})
         const expected  = "TEST";
         const actual = foundDoctor.name;
         expect(actual).toEqual(expected);
+        done()
     });
 
-    test("Update Doctor", async()=>{
+    test("Update Doctor", async done=>{
         const foundDoctor = await Doctor.findOne({name: "TEST"});
         foundDoctor.name = "UPDATED TEST"
         const updatedDoctor = await foundDoctor.save();
         const expected = "UPDATED TEST";
         const actual = updatedDoctor.name;
         expect(actual).toEqual(expected);
+        done()
     });
 });
 
 describe("PROCESS MODEL TEST", ()=>{
 
-    beforeAll(async ()=>{
+    beforeAll(async done=>{
         await Process.deleteOne({name:"TEST PROCESS"})
+        done()
     });
 
-    afterAll(async ()=>{
+    afterAll(async done=>{
         await Process.deleteOne({name:"UPDATED TEST PROCESS"})
+        mongoose.connection.close()
+        done()
     });
 
-    test("Adds Process", async ()=>{
+    test("Adds Process", async done=>{
         const process = new Process({name:'TEST PROCESS'});
         const savedprocess = await process.save();
         const expected = "TEST PROCESS";
         const actual = savedprocess.name;
         expect(actual).toEqual(expected);
+        done()
     });
 
-    test("Gets Process", async()=>{
+    test("Gets Process", async done=>{
         const foundProcess = await Process.findOne({name:"TEST PROCESS"})
         const expected  = "TEST PROCESS";
         const actual = foundProcess.name;
         expect(actual).toEqual(expected);
+        done()
     });
 
-    test("Update Process", async()=>{
+    test("Update Process", async done=>{
         const foundProcess = await Process.findOne({name: "TEST PROCESS"});
         foundProcess.name = "UPDATED TEST PROCESS"
         const updatedProcess = await foundProcess.save();
         const expected = "UPDATED TEST PROCESS";
         const actual = updatedProcess.name;
         expect(actual).toEqual(expected);
+        done()
     });
 });
 
