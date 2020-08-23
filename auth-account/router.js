@@ -103,7 +103,7 @@ router.post(
 			});
 		}
 		
-		const { username, password } = req.body;
+		const { username, password, accountType } = req.body;
 		
 		try {
 			let account = await Account.findOne({
@@ -117,6 +117,10 @@ router.post(
 			const isMatch = await bcrypt.compare(password, account.password);
 			if(!isMatch) {
 				return res.status(400).send({ message: "Incorrect password." });
+			}
+			
+			if(account.accountType != accountType) {
+				return res.status(400).send({ message: "Incorrect Role." });
 			}
 			
 			const payload = {
