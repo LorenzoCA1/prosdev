@@ -8,13 +8,22 @@
         <meta http-equiv='cache-control' content='no-cache'> 
         <meta http-equiv='expires' content='0'> 
         <meta http-equiv='pragma' content='no-cache'> 
-      <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
+         <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
         <link rel='stylesheet' type = 'text/css'media='screen' href='/fullcalendar-api/lib/main.min.css'>
         <script type ='text/javascript' src='/javascript/jquery.js'></script>
         <script type ='text/javascript' src='/javascript/moment.js'></script>
         <script type ='text/javascript' src='/javascript/moment.js'></script>
         <script type ='text/javascript' src='/fullcalendar-api/lib/main.min.js'></script>
         <script type ='text/javascript'src='/semantic/dist/semantic.js'></script> 
+
+        <!-- <link rel='stylesheet' type = 'text/css'media='screen' href='../../public/semantic/dist/semantic.css'>
+        <link rel='stylesheet' type = 'text/css'media='screen' href='../../public/fullcalendar-api/lib/main.min.css'>
+        <script type ='text/javascript' src='../../public/javascript/jquery.js'></script>
+        <script type ='text/javascript' src='../../public/javascript/moment.js'></script>
+        <script type ='text/javascript' src='../../public/javascript/moment.js'></script>
+        <script type ='text/javascript' src='../../public/fullcalendar-api/lib/main.min.js'></script>
+        <script type ='text/javascript'src='../../public/semantic/dist/semantic.js'></script> -->
+
         <meta http-equiv="Expires" content="-1">
 
     </head>
@@ -25,10 +34,9 @@
                 </style>
 <body>
     <nav class="ui secondary pointing menu">
-        <a href = "/appointments" class="item">Appointments</a>
+        <a class="item">Appointments</a>
         <a class="item active">Request</a>
-        <a href = "/history" class="item">History</a>
-
+        <a class="item">History</a>
         <div class="right menu"><a class="ui item">Logout</a></div>
     </nav>
      
@@ -75,9 +83,9 @@
                     <div class="required field fieldProcedures">
                         <label>Procedure(s)</label>
                         <select name="process" class="ui fluid dropdown" multiple="" id="process">
-                            {{#each process}}
+                      
                                 <option value="{{_id}}-{{name}}">{{name}}</option>
-                            {{/each}}
+                          
                         </select>
                     </div>
     
@@ -96,6 +104,3 @@
     </form>
     </div>
     
-
-</body>
-</html>

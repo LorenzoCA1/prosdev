@@ -15,8 +15,8 @@ var appointmentSchema = new Schema({
     time: String,
     date: String,
     doctor: [{type: Schema.Types.ObjectId,ref: Doctor}],
-    //patient_id:  [{type: Schema.Types.ObjectId,account}],
-   // status: Boolean,  //Approved, Not Approved
+    patient_id:  [{type: Schema.Types.ObjectId, Account}],
+    status: Boolean,  //Approved, Not Approved
 })
 
 appointmentSchema.statics.getAll = async function(callback){
