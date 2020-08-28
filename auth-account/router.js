@@ -243,7 +243,7 @@ router.get("/admin", isAdmin, async (req, res) => {
 router.get("/logout", async (req, res) => {
 	try {
 		req.session.token = null;
-		res.redirect("/auth");
+		res.redirect("/secretaryLogin");
 	} catch(e) {
 		res.send({ message: "Couldn't log out." });
 	}

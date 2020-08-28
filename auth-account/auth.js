@@ -7,7 +7,7 @@ loggedIn = async (req, res, next) => {
 	
 	if(!token) {
 		// return res.status(401).send({ message: "No token provided." });
-		res.redirect("/auth");
+		res.redirect("/");
 	}
 	
 	try {
@@ -17,7 +17,7 @@ loggedIn = async (req, res, next) => {
 	} catch (err) {
 		console.error(err);
 		// res.status(500).send({ message: "Invalid token" });
-		res.redirect("/auth");
+		res.redirect("/");
 	}
 }
 
@@ -26,7 +26,7 @@ isPatient = async (req, res, next) => {
 	
 	if(!token) {
 		// return res.status(401).send({ message: "No token provided." });
-		res.redirect("/auth");
+		res.redirect("/patientLogin");
 	}
 	
 	try {
@@ -37,13 +37,13 @@ isPatient = async (req, res, next) => {
 			console.log("Patient verified.");
 		} else {
 			console.log("Access denied: Not a patient.")
-			res.redirect("/auth");
+			res.redirect("/patientLogin");
 		}
 		next();
 	} catch (err) {
 		console.error(err);
 		// res.status(500).send({ message: "Invalid token" });
-		res.redirect("/auth");
+		res.redirect("/patientLogin");
 	}
 }
 
@@ -52,7 +52,7 @@ isSecretary = async (req, res, next) => {
 	
 	if(!token) {
 		// return res.status(401).send({ message: "No token provided." });
-		res.redirect("/auth");
+		res.redirect("/secretaryLogin");
 	}
 	
 	try {
@@ -63,13 +63,13 @@ isSecretary = async (req, res, next) => {
 			console.log("Secretary verified.");
 		} else {
 			console.log("Access denied: Not a secretary.")
-			res.redirect("/auth");
+			res.redirect("/secretaryLogin");
 		}
 		next();
 	} catch (err) {
 		console.error(err);
 		// res.status(500).send({ message: "Invalid token" });
-		res.redirect("/auth");
+		res.redirect("/secretaryLogin");
 	}
 }
 
@@ -78,7 +78,7 @@ isAdmin = async (req, res, next) => {
 	
 	if(!token) {
 		// return res.status(401).send({ message: "No token provided." });
-		res.redirect("/auth");
+		res.redirect("/adminLogin");
 	}
 	
 	try {
@@ -89,13 +89,13 @@ isAdmin = async (req, res, next) => {
 			console.log("Admin verified.");
 		} else {
 			console.log("Access denied: Not an admin.")
-			res.redirect("/auth");
+			res.redirect("/adminLogin");
 		}
 		next();
 	} catch (err) {
 		console.error(err);
 		// res.status(500).send({ message: "Invalid token" });
-		res.redirect("/auth");
+		res.redirect("/adminLogin");
 	}
 }
 
