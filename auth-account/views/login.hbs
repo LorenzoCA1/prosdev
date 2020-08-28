@@ -25,14 +25,7 @@
                 <label>Password</label>
                 <input type="password" name="password" id="password" placeholder="Password">
             </div>
-			<div class="field" id="fieldRole">
-				<label>Role</label>
-				<select name="accountType" id="accountType">
-					<option value="patient">Patient</option>
-					<option value="secretary">Secretary</option>
-					<option value="admin">Admin</option>
-				</select>
-			</div>
+			<input type="hidden" name="accountType" id="accountType" value="{{loginType}}">
 			
                  <div class="ui grid"><div class="actions column">
                 <input type = "submit" value = "Sign in"id = "btn-signin" class="ui right primary floated submit icon button fluid">

@@ -17,10 +17,31 @@ const bad_request = (err, res) => {let x = ''; if(err)for(field in err.errors) x
                                      console.log(err); res.status(400).send(x)}
 const ok_request = (data, res) => { console.log("sending back to client"); console.log(data); res.status(300).send(data) }
 
+
+/*
 router.get("/auth", async function(req, res) {
     
     console.log(req.body);
 	res.render('login.hbs');
+});
+*/
+
+router.get("/patientLogin", async function(req, res) {
+	console.log(req.body);
+	loginType = "patient";
+	res.render('login.hbs', {loginType : loginType});
+});
+
+router.get("/secretaryLogin", async function(req, res) {
+	console.log(req.body);
+	loginType = "secretary";
+	res.render('login.hbs', {loginType : loginType});
+});
+
+router.get("/adminLogin", async function(req, res) {
+	console.log(req.body);
+	loginType = "admin";
+	res.render('login.hbs', {loginType : loginType});
 });
 
 router.get("/registration", async function(req, res) {
