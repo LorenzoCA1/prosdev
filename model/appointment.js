@@ -15,9 +15,13 @@ var appointmentSchema = new Schema({
     time: String,
     date: String,
     doctor: [{type: Schema.Types.ObjectId,ref: Doctor}],
-    //patient_id:  [{type: Schema.Types.ObjectId,account}],
-   // status: Boolean,  //Approved, Not Approved
+    patient:  /*[{type: Schema.Types.ObjectId, ref: Account}]*/ String,
+    status: String,  //approved, cancelled, pending
+    notes: String,
+
 })
+
+
 
 appointmentSchema.statics.getAll = async function(callback){
     return await this.find()
@@ -31,15 +35,6 @@ appointmentSchema.statics.get = function(data){
 appointmentSchema.statics.getByID = function(id){
     return this.findOne({ _id: id });
 };
-
-appointmentSchema.statics.getAppointmentRequests = function(){
-    return this.find({isPending: true});
-}
-
-appointmentSchema.statics.getPatientAppointment = function(user){
-    return this.find({ patient_id: user._id });
-};
-
 
 
 appointmentSchema.statics.add = async function(data){

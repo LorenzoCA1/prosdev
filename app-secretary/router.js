@@ -15,7 +15,6 @@ const ok_request = (data, res) => { console.log("sending back to client"); conso
 router.get("/", isSecretary, async function(req, res) {
     let doctors =   await Doctor.getAll();
     let processes = await Process.getAll();
-
     res.render('main.hbs', {doctor: doctors, process: processes});
 });
 
@@ -97,6 +96,26 @@ router.post("/deleteapp", (req, res) => {
     Appointment.delete(req.body)
                .then(result =>  ok_request(result,res))
                .catch(err => bad_request(err, res))
+})
+
+router.get("/requestapp", async(req,res)=>{
+    let appointments = await Appointment.find({status: "pending"})
+    .populate('doctor')
+    .populate('process')
+    .exec()
+    res.render('requests.hbs', {appointment: appointments})
+})
+
+router.post("/requestapp", async(req,res)=>{
+    console.log(req.body)
+    Appointment.findOneAndUpdate(
+        { _id: req.body._id },
+        { $set: { status: req.body.status} }, 
+        { new: true }, 
+         function(err, result) {
+               if (err) bad_request(err,res);
+               else ok_request(result, res)
+    });
 })
 
 

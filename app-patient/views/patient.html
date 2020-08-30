@@ -8,13 +8,22 @@
         <meta http-equiv='cache-control' content='no-cache'> 
         <meta http-equiv='expires' content='0'> 
         <meta http-equiv='pragma' content='no-cache'> 
-      <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
+         <!-- <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
         <link rel='stylesheet' type = 'text/css'media='screen' href='/fullcalendar-api/lib/main.min.css'>
         <script type ='text/javascript' src='/javascript/jquery.js'></script>
         <script type ='text/javascript' src='/javascript/moment.js'></script>
         <script type ='text/javascript' src='/javascript/moment.js'></script>
         <script type ='text/javascript' src='/fullcalendar-api/lib/main.min.js'></script>
-        <script type ='text/javascript'src='/semantic/dist/semantic.js'></script> 
+        <script type ='text/javascript'src='/semantic/dist/semantic.js'></script>  -->
+
+        <link rel='stylesheet' type = 'text/css'media='screen' href='../../public/semantic/dist/semantic.css'>
+        <link rel='stylesheet' type = 'text/css'media='screen' href='../../public/fullcalendar-api/lib/main.min.css'>
+        <script type ='text/javascript' src='../../public/javascript/jquery.js'></script>
+        <script type ='text/javascript' src='../../public/javascript/moment.js'></script>
+        <script type ='text/javascript' src='../../public/javascript/moment.js'></script>
+        <script type ='text/javascript' src='../../public/fullcalendar-api/lib/main.min.js'></script>
+        <script type ='text/javascript'src='../../public/semantic/dist/semantic.js'></script>
+
         <meta http-equiv="Expires" content="-1">
 
     </head>
@@ -25,16 +34,15 @@
                 </style>
 <body>
     <nav class="ui secondary pointing menu">
-        <a href = "/appointments" class="item">Appointments</a>
+        <a class="item">Appointments</a>
         <a class="item active">Request</a>
-        <a href = "/history" class="item">History</a>
-
+        <a class="item">History</a>
         <div class="right menu"><a class="ui item">Logout</a></div>
     </nav>
      
     <div class="ui centered grid" style="margin-top: 20px;">
-    <form class="ui card app-form form  container ten wide column" id = 'app-form' method = "POST" action = "/request" >
-        <div class="header">Request an Appointment</div>
+    <!-- <form class="ui app-form form  container ten wide column" id = 'app-form' method = "POST" action = "/requestapp" >
+        <div class="divider"></div>
             <div class="ui very padded grid content">
                 <div class="six wide column">
                     <input type = "hidden" id = "app-id" name = "id" value = -1 /> 
@@ -67,7 +75,7 @@
                         <label>Doctor(s)</label>
                         <select multiple = "" name="doctor" class="ui fluid dropdown" multiple="" id="doctor">
                             {{#each doctor}}
-                                <option value="{{_id}}">Dr. {{name}}</option>
+                                <option value="{{_id}}-{{name}}">Dr. {{name}}</option>
                             {{/each}}
                         </select>
                     </div>
@@ -75,9 +83,9 @@
                     <div class="required field fieldProcedures">
                         <label>Procedure(s)</label>
                         <select name="process" class="ui fluid dropdown" multiple="" id="process">
-                            {{#each process}}
-                                <option value="{{_id}}">{{name}}</option>
-                            {{/each}}
+                      
+                                <option value="{{_id}}-{{name}}">{{name}}</option>
+                          
                         </select>
                     </div>
     
@@ -87,23 +95,26 @@
                     </div>
     
                     <div class="ui grid"><div class="actions column">
-                    <input type = "submit" id = "add-app" class="ui primary fluid right floated submit icon button very padded">
+                    <input type = "submit"id = "add-app" class="ui primary fluid right floated submit icon button very padded">
                     </input>
                     </div></div>
     
                 </div>
             </div>
-    </form>
+    </form> -->
+
+
+    <div class="ui container cards sixteen column grid centered">
+           <div class="card eight wide column centered" style="min-width: 400px;">
+            <a class="ui gray ribbon label">Pending</a>
+           <b> <span>12/20/2019@13:40</span></b>
+            <div class="content">
+               <div class="header">
+                 <b>Root Canal</b> 
+               </div>   
+               <div class = "meta">
+                    Dr. Phoebe</div>
+             </div>
+     </div>
     </div>
     
-
-</body>
-</html>
-
-
-
-<script>
-     $(".dropdown").dropdown()
-
-
-</script>

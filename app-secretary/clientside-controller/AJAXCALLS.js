@@ -2,10 +2,9 @@
 const APP_AJAX = {  
     add:(data,callback)=>{
       console.log("AJAX"); console.log(data)
-      $.post("/addapp",  data.db).always((res)=>{console.log('client recieving data');
-                                              data.api.id = res.responseJSON._id
-                                callback(data)})
-                               .fail((xhr, status,err)=>{ console.log(err);})
+      $.post("/addapp",  data.db).always((res)=>{console.log('client recieving data'); data.api.id = res.responseJSON._id
+                                  callback(data)})
+                                  .fail((xhr, status,err)=>{ console.log(err);})
 
     },
     edit:(data, callback)=>{

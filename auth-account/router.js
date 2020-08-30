@@ -186,23 +186,23 @@ router.get("/me", loggedIn, async (req, res) => {
 	}
 });
 
-router.get("/patient", isPatient, async (req, res) => {
+// router.get("/patient", isPatient, async (req, res) => {
 	
-	res.send({message: "WELCOME PATIENT"});
-	/*try {
-		// console.log("sent token: " + req.header("token"));
-		console.log("/patient received token: " + req.session.token);
-		const account = await Account.findById(req.account.id);
-		console.log("Account found. Checking role...");
-		if(account.accountType === "patient") {
-			res.send({message: "Patient verified."});
-		} else {
-			res.send({message: "Access denied: Not a patient."});
-		}
-	} catch(e) {
-		res.send({message: "Couldn't fetch user."});
-	}*/
-});
+// 	res.send({message: "WELCOME PATIENT"});
+// 	/*try {
+// 		// console.log("sent token: " + req.header("token"));
+// 		console.log("/patient received token: " + req.session.token);
+// 		const account = await Account.findById(req.account.id);
+// 		console.log("Account found. Checking role...");
+// 		if(account.accountType === "patient") {
+// 			res.send({message: "Patient verified."});
+// 		} else {
+// 			res.send({message: "Access denied: Not a patient."});
+// 		}
+// 	} catch(e) {
+// 		res.send({message: "Couldn't fetch user."});
+// 	}*/
+// });
 
 router.get("/secretary", isSecretary, async (req, res) => {
 	res.send({message: "WELCOME SECRETARY"});
