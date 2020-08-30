@@ -33,7 +33,7 @@
     </nav>
      
     <div class="ui centered grid" style="margin-top: 20px;">
-    <form class="ui card app-form form  container ten wide column" id = 'app-form' method = "POST" action = "/requestapp" >
+    <form class="ui card app-form form  container ten wide column" id = 'app-form' method = "POST" action = "/request" >
         <div class="header">Request an Appointment</div>
             <div class="ui very padded grid content">
                 <div class="six wide column">
@@ -67,7 +67,7 @@
                         <label>Doctor(s)</label>
                         <select multiple = "" name="doctor" class="ui fluid dropdown" multiple="" id="doctor">
                             {{#each doctor}}
-                                <option value="{{_id}}-{{name}}">Dr. {{name}}</option>
+                                <option value="{{_id}}">Dr. {{name}}</option>
                             {{/each}}
                         </select>
                     </div>
@@ -76,7 +76,7 @@
                         <label>Procedure(s)</label>
                         <select name="process" class="ui fluid dropdown" multiple="" id="process">
                             {{#each process}}
-                                <option value="{{_id}}-{{name}}">{{name}}</option>
+                                <option value="{{_id}}">{{name}}</option>
                             {{/each}}
                         </select>
                     </div>
@@ -99,3 +99,11 @@
 
 </body>
 </html>
+
+
+
+<script>
+     $(".dropdown").dropdown()
+
+
+</script>

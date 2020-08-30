@@ -2,7 +2,13 @@
 const express = require("express");
 const router = express.Router();
 const moment = require('moment');
+const hbs = require('hbs');
 
+
+hbs.registerHelper('ifeq', function (v1,v2,options) {  if(v1 === v2) {
+  return options.fn(this);
+}
+return options.inverse(this); });
   
 const {Appointment} = require("../model/appointment");
 const {Doctor} = require("../model/doctor");
@@ -22,13 +28,26 @@ const ok_request = (data, res) => { console.log("sending back to client"); conso
     res.render('patient-request.hbs',  {doctor: doctors, process: processes});
   })
 
-  router.get("/appointments", (req, res) => {
-    res.render('patient-appointment.hbs');
-      
+  router.get("/appointments", async(req, res) => {
+    let appointments = await Appointment.find({patient: "1"})
+          .populate('doctor')
+          .populate('process')
+          .exec()
+          res.render('patient-appointment.hbs', {appointment: appointments})
+ 
   })
   
   router.post("/request", (req, res) => {
-      
+      console.log(req.body)
+      req.body.patient = "1"
+      req.body.status = "pending"
+      Appointment.add(req.body)
+      .then(result =>{
+      Appointment.findById(result._id).populate('doctor').populate('process')
+      .exec((err, app)=>{ if(!err) res.redirect("/request")} )
+    
+    })
+      .catch(err => bad_request(err, res))
   })
   
 
