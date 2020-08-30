@@ -177,6 +177,8 @@ router.get("/me", loggedIn, async (req, res) => {
 		console.log("/me Received token: " + req.session.token);
 		const account = await Account.findById(req.account.id);
 		if(account.accountType === "secretary") {
+			res.redirect("/secretary");
+		} else if(account.accountType === "patient") {
 			res.redirect("/");
 		} else {
 			res.json(account);

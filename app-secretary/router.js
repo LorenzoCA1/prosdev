@@ -12,7 +12,7 @@ const bad_request = (err, res) => {let x = ''; if(err)for(field in err.errors) x
                                      console.log(err); res.status(400).send(x)}
 const ok_request = (data, res) => { console.log("sending back to client"); console.log(data); res.status(300).send(data) }
 
-router.get("/", isSecretary, async function(req, res) {
+router.get("/secretary", isSecretary, async function(req, res) {
     let doctors =   await Doctor.getAll();
     let processes = await Process.getAll();
     res.render('main.hbs', {doctor: doctors, process: processes});

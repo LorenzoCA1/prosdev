@@ -18,6 +18,11 @@ const bad_request = (err, res) => {let x = ''; if(err)for(field in err.errors) x
                                      console.log(err); res.status(400).send(x)}
 const ok_request = (data, res) => { console.log("sending back to client"); console.log(data); res.status(300).send(data) }
 
+router.get("/", isPatient, async function(req, res) {
+    let doctors =   await Doctor.getAll();
+    let processes = await Process.getAll();
+    res.redirect("/appointments");
+});
 
   router.get("/history",(req, res) => {
     res.render('patient-history.hbs');
@@ -28,7 +33,7 @@ const ok_request = (data, res) => { console.log("sending back to client"); conso
     res.render('patient-request.hbs',  {doctor: doctors, process: processes});
   })
 
-  router.get("/appointments", async(req, res) => {
+  router.get("/appointments", isPatient, async(req, res) => {
     let appointments = await Appointment.find({patient: "1"})
           .populate('doctor')
           .populate('process')
