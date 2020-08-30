@@ -132,16 +132,16 @@ router.post(
 			});
 			
 			if(!account) {
-				return res.status(400).send({ message: "Account does not exist." });
+				return res.status(400).send({ message: "Invalid username/password." });
 			}
 			
 			const isMatch = await bcrypt.compare(password, account.password);
 			if(!isMatch) {
-				return res.status(400).send({ message: "Incorrect password." });
+				return res.status(400).send({ message: "Invalid username/password." });
 			}
 			
 			if(account.accountType != accountType) {
-				return res.status(400).send({ message: "Incorrect Role." });
+				return res.status(400).send({ message: "Invalid username/password." });
 			}
 			
 			const payload = {
@@ -167,7 +167,7 @@ router.post(
 			//console.log("Redirecting...");
 		} catch (err) {
 			console.error(err);
-			res.status(500).send({ message: "Server error." });
+			res.status(500).send({ message: "Invalid username/password." });
 		}
 });
 
