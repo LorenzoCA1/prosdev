@@ -29,7 +29,7 @@ router.get("/auth", async function(req, res) {
 router.get("/patientLogin", async function(req, res) {
 	console.log(req.body);
 	loginType = "patient";
-	res.render('login.hbs', {loginType : loginType});
+	res.render('loginpatient.hbs', {loginType : loginType});
 });
 
 router.get("/secretaryLogin", async function(req, res) {
