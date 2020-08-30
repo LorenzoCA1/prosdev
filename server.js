@@ -38,9 +38,9 @@ app.set('view engine', 'hbs');
 
 app.use(function (req, res, next) {
     if (req.path === '/') 
-        app.set('views',path.join(__dirname, '/app-secretary/views'))
+        app.set('views',[path.join(__dirname, '/app-secretary/views'),path.join(__dirname, '/app-patient/views') ])
     else if(req.path === '/secretaryLogin')
-        app.set('views',[path.join(__dirname, '/app-secretary/views'), path.join(__dirname, '/app-patient/views')])
+        app.set('views',[path.join(__dirname, '/app-secretary/views')])
     else if(req.path === '/auth')
         app.set('views', path.join(__dirname,'/auth-account/views'));
     next()
