@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/LorenzoCA1/prosdev.svg?branch=Development)](https://travis-ci.com/LorenzoCA1/prosdev)
 
 ## About The Project
-The project by Team HOLDAP is a rework of a Dental Clinic Appointment System. The team plans to make it a web application for appointment scheduling. The initial goal of the project was to automate and simplify the tracking of the appointments in the clinic by providing a user interface for quick navigation, wherein the secretary can add, edit and delete appointments and view the appointments for all the dentists to see. The goal of our team is to continue the work of the previous team and make improvements. Proposed improvements include online capabilities of making appointments for the secretary and online capabilities of making appointment requests for the patients.
+The project by Team HOLDAP is a rework of a Dental Clinic Appointment System. The team plans to make it a web application for appointment scheduling. The initial goal of the project was to automate and simplify the tracking of the appointments in the clinic by providing a user interface for quick navigation, wherein the secretary can add, edit and delete appointments and view the appointments for all the dentists to see. The goal of our team is to continue the work of the previous team and make improvements. Proposed improvements include online capabilities of making appointments for the secretary and online capabilities of making appointment requests for the patients. test
 
 ### Built With
 
