@@ -24,12 +24,14 @@ router.get("/", isPatient, async function(req, res) {
     res.redirect("/appointments");
 });
 
-  router.get("/history",(req, res) => {
+  router.get("/history", isPatient, (req, res) => {
     res.render('patient-history.hbs');
   })
 
-  router.get("/request", async(req,res)=>{
+  router.get("/request", isPatient, loggedIn, async(req,res)=>{
     let doctors =   await Doctor.getAll(); let processes = await Process.getAll();
+	accountId = req.account.id;
+	console.log("Account ID: " + accountId);
     res.render('patient-request.hbs',  {doctor: doctors, process: processes});
   })
 
@@ -42,7 +44,7 @@ router.get("/", isPatient, async function(req, res) {
  
   })
   
-  router.post("/request", (req, res) => {
+  router.post("/request", isPatient, (req, res) => {
       console.log(req.body)
       req.body.patient = "1"
       req.body.status = "pending"
