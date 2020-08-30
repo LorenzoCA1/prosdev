@@ -46,13 +46,12 @@ app.use(function (req, res, next) {
     next()
 })
 
-
-//SET APP/ROUTER DIRECTORIES
-app.use(require("./app-secretary/router"),
-        require("./app-patient/router"),
-        require("./auth-account/router")
-        //app.use(require("./app-superadmin"));
-       );
+// //SET APP/ROUTER DIRECTORIES
+// app.use(require("./app-secretary/router"),
+//         require("./app-patient/router"),
+//         require("./auth-account/router")
+//         //app.use(require("./app-superadmin"));
+//        );
 
 //docs on routers https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
 //docs on regex route parameters https://stackoverflow.com/questions/51144781/route-parameters-in-express-js
