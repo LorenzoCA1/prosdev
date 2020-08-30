@@ -36,22 +36,14 @@ app.set('view engine', 'hbs');
 
 //SET VIEWS DIRECTORIES
 
-app.use(function (req, res, next) {
-    if (req.path === '/') 
-        app.set('views',[path.join(__dirname, '/app-secretary/views'),path.join(__dirname, '/app-patient/views') ])
-    else if(req.path === '/secretaryLogin')
-        app.set('views',[path.join(__dirname, '/app-secretary/views')])
-    else if(req.path === '/auth')
-        app.set('views', path.join(__dirname,'/auth-account/views'));
-    next()
-})
+app.set('views', [path.join(__dirname, '/app-secretary/views'), path.join(__dirname,'/auth-account/views'), path.join(__dirname, '/app-patient/views')])
 
-// //SET APP/ROUTER DIRECTORIES
-// app.use(require("./app-secretary/router"),
-//         require("./app-patient/router"),
-//         require("./auth-account/router")
-//         //app.use(require("./app-superadmin"));
-//        );
+//SET APP/ROUTER DIRECTORIES
+app.use(require("./app-secretary/router"),
+        require("./app-patient/router"),
+        require("./auth-account/router")
+        //app.use(require("./app-superadmin"));
+       );
 
 //docs on routers https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs/routes
 //docs on regex route parameters https://stackoverflow.com/questions/51144781/route-parameters-in-express-js
