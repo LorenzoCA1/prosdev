@@ -36,7 +36,7 @@ router.get("/", isPatient, async function(req, res) {
   })
 
   router.get("/appointments", isPatient, async(req, res) => {
-    let appointments = await Appointment.find({patient: "1"})
+    let appointments = await Appointment.find({patient: req.account.id})
           .populate('doctor')
           .populate('process')
           .exec()
@@ -46,8 +46,9 @@ router.get("/", isPatient, async function(req, res) {
   
   router.post("/request", isPatient, (req, res) => {
       console.log(req.body)
-      req.body.patient = "1"
+      req.body.patient = 	req.account.id;
       req.body.status = "pending"
+
       Appointment.add(req.body)
       .then(result =>{
       Appointment.findById(result._id).populate('doctor').populate('process')
