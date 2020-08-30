@@ -17,7 +17,7 @@
 <body style = "background-color:steelblue">
     <form class = "ui centered card form" style = "margin-top: 20px;" method = "POST" action = "/login">
         <div class="ui content">
-            <div class="field" id="fieldUsername">
+               <div class="field" id="fieldUsername">
                 <label>Username</label>
                 <input type="text" name="username" id="username" placeholder="Username">
             </div>
@@ -26,15 +26,12 @@
                 <input type="password" name="password" id="password" placeholder="Password">
             </div>
 			<input type="hidden" name="accountType" id="accountType" value="{{loginType}}">
-			
-                 <div class="ui grid"><div class="actions column">
-                <input type = "submit" value = "Sign in"id = "btn-signin" class="ui right primary floated submit icon button fluid">
-                 <a href = "/register" id = "btn-register" class="ui right primary floated submit icon button fluid">Register</a>
+			<div class="ui grid"><div class="actions column">
+            <input style ="margin-bottom: 10px;" type = "submit" value = "Sign in"id = "btn-signin" class="ui right primary floated submit icon button fluid">
+            <a href = "/registration" id = "btn-register" class="ui right primary floated submit icon button fluid">Register</a>
             </input>
             </div></div>
-                
         </div>
     </form>
-
 </body>
 </html>

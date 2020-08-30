@@ -15,23 +15,59 @@
 
     </head>
 <body style = "background-color:steelblue">
-    <form class = "ui centered card form" style = "margin-top: 20px;" method = "POST" action = "/register">
+    <form id = "frmRegister" class = "ui centered card form" style = "margin-top: 20px;" method = "POST" onsubmit="return register()">
         <div class="ui content">
             <div class="field" id="fieldUsername">
                 <label>Username</label>
-                <input type="text" name="username" id="username" placeholder="Username">
+                <input class ="inputfield" type="text" name="username" id="username" placeholder="Username">
             </div>
             <div class="field" id="fieldPassword">
                 <label>Password</label>
-                <input type="password" name="password" id="password" placeholder="Password">
+                <input  class ="inputfield" type="password" name="password" id="password" placeholder="Password">
             </div>
-                 <div class="ui grid"><div class="actions column">
-                <input type = "submit" id = "btn-signin" class="ui right primary floated submit icon button fluid">
-                    Sign in
-                </input>
-                </div></div>
+
+            <div class="ui negative message" id = 'msgError' hidden = "true">
+            
+            </div>
+            
+            <div class="ui grid"><div class="actions column">
+            <input type = "submit" id = "btn-register" value = "Register"class="ui right primary floated submit icon button fluid"></input>
+            </input></div></div>
         </div>
     </form>
-
 </body>
 </html>
+
+<script>
+    function register(){
+        let $inputs = $("#frmRegister .inputfield")
+        var values = {};
+        let response = false;
+
+        $inputs.each(function() {
+            values[this.name] = $(this).val();
+        });
+        
+        $.post("/register",values).always((res)=>{
+            console.log(res.responseJSON)
+            if(res.responseJSON){
+                if(res.responseJSON.errors){
+                    $(".negative").show()
+                    $(".negative").append(JSON.stringify(res.responseJSON.errors[0].msg))
+                    return false;
+                }else if(res.responseJSON.message){
+                    $(".negative").show()
+                    $(".negative").append(JSON.stringify(res.responseJSON.message))
+                    return false;
+                }
+            }
+            
+            window.location.href = "/patientLogin"
+                
+        })
+        .fail((xhr, status,err)=>{ /*console.log(err);*/ })
+        return response
+    }
+   
+
+</script>
