@@ -122,7 +122,7 @@ router.post(
 		if(!errors.isEmpty()) {
 			return res.status(400).send({
 				//errors: errors.array()
-				return res.status(400).send({ message: "Invalid username/password."
+				message: "Invalid username/password."
 			});
 		}
 		
