@@ -175,7 +175,7 @@ class AppointmentForm{
     return $('#app-id').val() == -1
   }
   init_forms(){
-    this.view.form(),
+    this.view.form(appoinment_field_rules)
     this.view.modal({onApprove: this.submitAddEdit.bind(this), onDeny: this.submitDelete.bind(this)})
   }
   submitAddEdit(){

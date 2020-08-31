@@ -106,6 +106,7 @@
 <script>
      $(".dropdown").dropdown()
 
+
 function cancel(){
     $.post("/requestapp", {_id: data.name, status: "cancelled"})
     .always((res)=>{ console.log('client recieving data'); 
@@ -116,4 +117,17 @@ function cancel(){
 
     return false;
 }
+
+const appoinment_field_rules = {
+  fields:{
+    firstname: 'empty',
+    lastname: 'empty',
+    date: 'empty',
+    time: 'empty',
+    doctor: ['minLength[1]','empty'],
+    process: ['minLength[1]','empty'],
+  }
+}
+
+$(".form").form(appoinment_field_rules)
 </script>
