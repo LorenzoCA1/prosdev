@@ -4,7 +4,7 @@ import unittest
 import time
 
 
-class LoginFunction(unittest.TestCase):
+class PatientLoginFunction(unittest.TestCase):
     @classmethod
     def setUpClass(inst):
         inst.driver = webdriver.Chrome("D:\\Programs\\PROSDEV\\prosdev\\automation\\chromedriver.exe")
