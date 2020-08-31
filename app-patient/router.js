@@ -59,6 +59,18 @@ router.get("/", isPatient, async function(req, res) {
       .catch(err => bad_request(err, res))
   })
   
+  router.post("/cancelapp", async(req,res)=>{
+    console.log(req.body)
+    Appointment.findOneAndUpdate(
+        { _id: req.body._id },
+        { $set: { status: req.body.status} }, 
+        { new: true }, 
+         function(err, result) {
+               if (err) bad_request(err,res);
+               else ok_request(result, res)
+        }
+    );
+})
 
 
 

@@ -32,27 +32,47 @@
            {{#each appointment}}
               <div class="ui card eight wide column">
                 <div>
-
+                
+                {{#ifeq status "approved"}}
                 <span class="ui top teal attached label">
-                    {{#ifeq status "approved"}}
-                     <span  id = "status" class="ui orange label">
-                         upcoming
+                     <span  id = "status" class="ui">
+                         upcoming |
                     </span>
-                     {{/ifeq}}
-                     {{#ifeq status "pending"}}
-                     <span  id = "status" class="ui label">
-                         pending
-                    </span>
-                     {{/ifeq}}
-                     {{#ifeq status "cancelled"}}
-                     <span id = "status"class="ui red label">
-                         cancelled
-                    </span>
-                     {{/ifeq}}
-
                     <span class = 'datetime' id = "datetime">{{date}}@{{time}} </span>
-                    
-                </span>
+                 </span>
+                 
+                {{/ifeq}}
+
+                 {{#ifeq status "pending"}}
+                <span class="ui top gray attached label">
+                     <span  id = "status" class="ui">
+                         pending |
+                    </span>
+                    <span class = 'datetime' id = "datetime">{{date}}@{{time}} </span>
+                 </span>
+                {{/ifeq}}
+
+                 {{#ifeq status "cancelled"}}
+                <span class="ui top red attached label">
+                     <span  id = "status" class="ui">
+                         cancelled |
+                    </span>
+                    <span class = 'datetime' id = "datetime">{{date}}@{{time}} </span>
+                 </span>
+                {{/ifeq}}
+
+                {{#ifeq status "approved"}}
+                    <a class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
+                    <i class="minus icon"></i>Cancel
+                    </a>
+                {{/ifeq}}
+
+                {{#ifeq status "pending"}}
+                    <span class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
+                    <i class="minus icon"></i>Cancel
+                    </span>
+                {{/ifeq}}
+               
                 </div>
                 <br>
                 <div class="content">
@@ -74,6 +94,7 @@
                        Notes: {{notes}}
                      </b></div> 
                     {{/if}}
+
                      
                 </div>
               </div>
@@ -93,6 +114,19 @@ for(let i=0; i<datetimes.length; i++){
     console.log(temp)
     datetimes[i].innerHTML = `<b> ${temp.format('MMM. DD, YYYY')}</b> <span> | ${temp.format('hh:mm A')} <span>`
 } 
+
+function cancel(data){
+    console.log(data.name)
+    $.post("/cancelapp", {_id: data.name, status: "cancelled"})
+    .always((res)=>{ console.log('client recieving data'); 
+               console.log(res.responseJSON); 
+               window.location.reload(true);
+               /*callback(data)*/ })
+    .fail((xhr, status,err)=>{ console.log(err); })
+
+    return false;
+}
+
 
 
 </script>
