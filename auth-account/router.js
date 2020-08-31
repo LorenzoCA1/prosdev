@@ -244,10 +244,17 @@ router.get("/admin", isAdmin, async (req, res) => {
 	}*/
 });
 
-router.get("/logout", async (req, res) => {
+router.get("/logout", loggedIn, async (req, res) => {
 	try {
 		req.session.token = null;
-		res.redirect("/secretaryLogin");
+		const account = await Account.findById(req.account.id);
+		if(account.accountType === "secretary") {
+			res.redirect("/secretaryLogin");
+		} else if(account.accountType === "admin") {
+			res.redirect("/adminLogin");
+		} else {
+			res.redirect("/patientLogin");
+		}
 	} catch(e) {
 		res.send({ message: "Couldn't log out." });
 	}
