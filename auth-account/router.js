@@ -93,7 +93,7 @@ router.post(
 			jwt.sign(
 				payload,
 				config.key, {
-					expiresIn: 10000
+					expiresIn: 60000
 				},
 				(err, token) => {
 					if (err) throw err;
@@ -154,7 +154,7 @@ router.post(
 				payload,
 				config.key,
 				{
-					expiresIn: 3600
+					expiresIn: 60000
 				},
 				(err, token) => {
 					if(err) throw err;
