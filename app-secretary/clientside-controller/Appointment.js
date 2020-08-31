@@ -56,7 +56,8 @@ const AppParser = {
       extendedProps:{ firstname: data.firstname, 
                       lastname: data.lastname, 
                       doctor: data.doctor, 
-                      process: data.process   },
+                      process: data.process,
+                      notes: data.notes  },
     }
   },
   parseAPIObj: (event)=>{ //FullCalendar API EventObject to DatabaseObject
@@ -68,7 +69,8 @@ const AppParser = {
         doctor: event._def.extendedProps.doctor,
         process: event._def.extendedProps.process,
         time: moment(event.start.getHours() + ":" + event.start.getMinutes(), "HH:mm").format("HH:mm"),
-        date: moment(event.start.getFullYear() + "-"  + (event.start.getMonth()+1) + "-" + event.start.getDate(), 'YYYY-MM-DD').format('YYYY-MM-DD')
+        date: moment(event.start.getFullYear() + "-"  + (event.start.getMonth()+1) + "-" + event.start.getDate(), 'YYYY-MM-DD').format('YYYY-MM-DD'),
+        notes: event._def.extendedProps.notes
     }
   },
   parseDropDownValue: (data)=>{
@@ -80,6 +82,7 @@ const AppParser = {
   formToJSON: ()=>{     //returns JSON representaion of the Appointment form 
     const jsonData = {doctor: [], process:[], name: '', time: '', date:''}
     let formdata = ComponentMap.frmApp.serializeArray();
+    console.log(formdata)
     if($('#app-id').val() != -1)
       jsonData.id = $('#app-id').val()
 
@@ -111,7 +114,8 @@ const AppParser = {
          process: arr_procID,
          doctor: arr_docID,
         time: data.time,
-        date: data.date
+        date: data.date,
+        notes: data.notes
       },
       api:{
         id: data.id,
@@ -121,7 +125,8 @@ const AppParser = {
           firstname: data.firstname,
           lastname: data.lastname,
           doctor: data.doctor,
-          process: data.process
+          process: data.process,
+          notes: data.notes
         }
       }
     }
@@ -163,6 +168,7 @@ class AppointmentForm{
    
 
     this.controller = controller
+    this.notes = ComponentMap.txtNotes
     this.init_forms()
   }
   isAddForm() {
@@ -208,6 +214,9 @@ class AppointmentForm{
     const doctor = []; info.doctor.forEach(e=>{ doctor.push(e._id+'-' + e.name)})
     this.selection_process.dropdown('set selected', process)
     this.selection_doctor.dropdown('set selected', doctor)
+    
+    if(info.notes)
+    this.notes.val(info.notes);
   }
   clearForm(){
     console.log("++++++CLEARING FORM+++++++"); 

@@ -46,6 +46,8 @@ const ComponentMap = {
   frmApp: $('#app-form'),
   frmDoc: $('#doc-form'),
   frmProc: $('#proc-form'),
+
+  txtNotes: $('#notes'),
 }
 
 let sample_database = {
