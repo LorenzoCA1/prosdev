@@ -63,14 +63,14 @@ router.post("/editproc", (req, res) => {
 
 router.get("/getapps",(req, res) => {
         console.log("======getting all apps====")
-        const callback = (data) => { ok_request(data,res)} 
+        const callback = (data) => { console.log(data); ok_request(data,res)} 
         Appointment.getAll(callback)
 })
 
 router.post("/addapp", (req, res) => {
     console.log("adding app")
     console.log(req.body)
-    req.body.status = 'approved'
+    req.body.status = "approved"
     Appointment.add(req.body)
                .then(result =>{
     Appointment.findById(result._id).populate('doctor').populate('process')
@@ -100,7 +100,6 @@ router.get("/requestapp", async(req,res)=>{
     .exec()
     res.render('requests.hbs', {appointment: appointments})
 })
-
 router.post("/requestapp", async(req,res)=>{
     console.log(req.body)
     Appointment.findOneAndUpdate(
@@ -113,7 +112,6 @@ router.post("/requestapp", async(req,res)=>{
         }
     );
 })
-
 
 module.exports = router;
 

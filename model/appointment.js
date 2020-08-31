@@ -22,7 +22,7 @@ var appointmentSchema = new Schema({
 })
 
 appointmentSchema.statics.getAll = async function(callback){
-    return await this.find({status: 'approved'})
+    return await this.find({status: "approved"})
     .populate('doctor').populate('process')
     .exec((err, data)=>{callback(data) })
 }

@@ -40,7 +40,8 @@ router.get("/", isPatient, async function(req, res) {
           .populate('doctor')
           .populate('process')
           .exec()
-          res.render('patient-appointment.hbs', {appointment: appointments})
+    console.log(appointments)
+    res.render('patient-appointment.hbs', {appointment: appointments})
  
   })
   

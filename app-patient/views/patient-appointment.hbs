@@ -85,8 +85,8 @@ const datetimes = $(".datetime")
 for(let i=0; i<datetimes.length; i++){
     let temp = moment(datetimes[i].innerHTML,  'YYYY-MM-DD@HH:mm')
     console.log(temp)
-    datetimes[i].innerHTML = `<b> ${temp.format('MMM. d, YYYY')}</b> <span> | ${temp.format('hh:mm A')} <span>`
-}
+    datetimes[i].innerHTML = `<b> ${temp.format('MMM. DD, YYYY')}</b> <span> | ${temp.format('hh:mm A')} <span>`
+} 
 
 
 </script>
