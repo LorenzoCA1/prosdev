@@ -62,15 +62,21 @@
                 {{/ifeq}}
 
                 {{#ifeq status "approved"}}
-                    <a class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
-                    <i class="minus icon"></i>Cancel
+                    <a style = "color: teal" class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
+                    <i class="minus icon"></i>cancel
                     </a>
                 {{/ifeq}}
 
                 {{#ifeq status "pending"}}
-                    <span class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
-                    <i class="minus icon"></i>Cancel
-                    </span>
+                    <a class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
+                    <i class="minus icon"></i>cancel
+                    </a>
+                {{/ifeq}}
+
+                 {{#ifeq status "cancelled"}}
+                    <a style = "color: red" class="ui icon right floated white" onclick="return remove(this)" name = "{{_id}}"> 
+                    <i class="trash icon"></i>remove
+                    </a>
                 {{/ifeq}}
                
                 </div>
@@ -118,6 +124,18 @@ for(let i=0; i<datetimes.length; i++){
 function cancel(data){
     console.log(data.name)
     $.post("/cancelapp", {_id: data.name, status: "cancelled"})
+    .always((res)=>{ console.log('client recieving data'); 
+               console.log(res.responseJSON); 
+               window.location.reload(true);
+               /*callback(data)*/ })
+    .fail((xhr, status,err)=>{ console.log(err); })
+
+    return false;
+}
+
+function remove(data){
+    console.log(data.name)
+    $.post("/deleteapp", {_id: data.name})
     .always((res)=>{ console.log('client recieving data'); 
                console.log(res.responseJSON); 
                window.location.reload(true);
