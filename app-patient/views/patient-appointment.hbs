@@ -35,41 +35,42 @@
 
                 <span class="ui top teal attached label">
                     {{#ifeq status "approved"}}
-                     <span class="ui orange label">
+                     <span  id = "status" class="ui orange label">
                          upcoming
                     </span>
                      {{/ifeq}}
                      {{#ifeq status "pending"}}
-                     <span class="ui label">
+                     <span  id = "status" class="ui label">
                          pending
                     </span>
                      {{/ifeq}}
                      {{#ifeq status "cancelled"}}
-                     <span class="ui red label">
+                     <span id = "status"class="ui red label">
                          cancelled
                     </span>
                      {{/ifeq}}
 
-                    <span class = 'datetime'>{{date}}@{{time}} </span></span>
-                
+                    <span class = 'datetime' id = "datetime">{{date}}@{{time}} </span>
+                    
+                </span>
                 </div>
                 <br>
                 <div class="content">
                 
-                    <span style = "color: teal;" class="header">
+                    <span id ="processes" style = "color: teal;" class="header">
                      {{#each process}}
                         {{name}}, 
                     {{/each}}
                     </span>   
                    
-                  <div class = "meta"><b>
+                  <div id = "doctors"class = "meta"><b>
                       {{#each doctor}}
                         Dr. {{name}}
                       {{/each}}
                      </b></div> 
 
-                      {{#if notes}}
-                      <div class = "description"><b>
+                    {{#if notes}}
+                      <div id = "notes"class = "description"><b>
                        Notes: {{notes}}
                      </b></div> 
                     {{/if}}

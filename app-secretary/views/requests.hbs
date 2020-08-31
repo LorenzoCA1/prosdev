@@ -32,15 +32,21 @@
         <form class="card eight wide column centered {{_id}}" style="min-width: 400px;" >
             <input type = "hidden" id = "app-id" name = "_id" value = {{_id}} /> 
             <span class="ui top teal attached label">
-                <span class = 'datetime'>{{date}}@{{time}} </span></span>
+                <span id = 'datetime' class = 'datetime'>{{date}}@{{time}} </span>|  <span id ='patientname'>{{lastname}}, {{firstname}} </span></span>
             <div class="content">
-                <span style = "color: teal;" class="header">
+                <span id = 'processes'style = "color: teal;" class="header">
                  {{#each process}}{{name}}, {{/each}} 
                 </span>
-              <div class = "meta"><b>
+              <div id = 'doctors' class = "meta"><b>
                 {{#each doctor}}Dr. {{name}}{{/each}}
               </b></div> 
-            </div>    
+            </div>
+             {{#if notes}}
+                <div id = "notes" class = "description"><b>
+                       Notes: {{notes}}
+                </b></div> 
+                    {{/if}}
+
             <div class="extra content">
                 <div class="ui two buttons">
                   <input type = "submit"  id = "btnApprove" onclick="return approve(this)" name = "{{_id}}" value = "Approve" class="ui basic green button">
@@ -55,10 +61,11 @@
 <script>
     const format1 = "YYYY-MM-d@HH:mm:ss"
     const format2 = "MMM-d-YYY@hh:mm a"
-    const datetimes = $(".datetime") 
-    for(let i=0; i<datetimes.length; i++){
-        let temp = moment(datetimes[i].innerHTML,  'YYYY-MM-DD@HH:mm')
-        console.log(temp)
-        datetimes[i].innerHTML = `<b> ${temp.format('MMM. dd, YYYY')}</b> <span> | ${temp.format('hh:mm A')} <span>`
-    }
+  const datetimes = $(".datetime")
+
+for(let i=0; i<datetimes.length; i++){
+    let temp = moment(datetimes[i].innerHTML,  'YYYY-MM-DD@HH:mm')
+    console.log(temp)
+    datetimes[i].innerHTML = `<b> ${temp.format('MMM. DD, YYYY')}</b> <span> | ${temp.format('hh:mm A')} <span>`
+} 
 </script>
