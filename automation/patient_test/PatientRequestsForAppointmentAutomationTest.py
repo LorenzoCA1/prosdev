@@ -47,6 +47,20 @@ class PatientRequestFunction(unittest.TestCase):
         self.text = re.search(r'QA TEST NOTES', self.src)
         self.assertNotEqual(self.text, None)
 
+    def test_2_incomplete_form_(self):
+        print('Patient Request Incomplete Form Validation')
+        self.driver.find_element_by_xpath('/html/body/nav/a[2]').click()
+        self.driver.find_element_by_xpath('//*[@id="add-app"]').click()
+        time.sleep(3)
+        assert self.driver.current_url == 'http://localhost:3000/request'
+
+    def test_3_cancel_appointment(self):
+        print('Patient Cancel Request Test')
+        self.driver.find_element_by_xpath('/html/body/div/div/div/div[1]/span[2]').click()
+        self.src = self.driver.page_source
+        self.text = re.search(r'cancelled', self.src)
+        self.assertNotEqual(self.text, None)
+
     @classmethod
     def tearDownClass(inst):
         inst.driver.quit()
