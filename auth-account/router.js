@@ -60,7 +60,8 @@ router.post(
 		const errors = validationResult(req);
 		if(!errors.isEmpty()) {
 			return res.status(400).json({
-				errors: errors.array()
+				//errors: errors.array()
+				message: "Invalid input. Please enter a valid username or password."
 			});
 		}
 		
@@ -120,7 +121,8 @@ router.post(
 		
 		if(!errors.isEmpty()) {
 			return res.status(400).send({
-				errors: errors.array()
+				//errors: errors.array()
+				return res.status(400).send({ message: "Invalid username/password."
 			});
 		}
 		
@@ -167,7 +169,7 @@ router.post(
 			//console.log("Redirecting...");
 		} catch (err) {
 			console.error(err);
-			res.status(500).send({ message: "Invalid username/password." });
+			res.status(500).send({ message: "Server error." });
 		}
 });
 
