@@ -74,10 +74,10 @@ Sprint 1
 * Viewing of Appointments
 
 Sprint 2
-*Patient Log-In and Log-out
-*Patient requests for Appointment
-*Patient View User Appointment Details
-*Secretary - Accept/Decline Patient Appointment Request
+* Patient Log-In and Log-out
+* Patient requests for Appointment
+* Patient View User Appointment Details
+* Secretary - Accept/Decline Patient Appointment Request
 
 ## Contact
 
