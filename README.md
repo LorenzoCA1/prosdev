@@ -1,4 +1,3 @@
-![Version](https://img.shields.io/badge/Version-1-brightgreen)
 
 [![Build Status](https://travis-ci.com/LorenzoCA1/prosdev.svg?branch=Development)](https://travis-ci.com/LorenzoCA1/prosdev)
 
@@ -73,6 +72,12 @@ Sprint 1
 * User Authentication for the secretary
 * Adding, Editing, Deleting Records
 * Viewing of Appointments
+
+Sprint 2
+*Patient Log-In and Log-out
+*Patient requests for Appointment
+*Patient View User Appointment Details
+*Secretary - Accept/Decline Patient Appointment Request
 
 ## Contact
 
