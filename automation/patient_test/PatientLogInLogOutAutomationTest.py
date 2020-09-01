@@ -25,7 +25,7 @@ class PatientLoginFunction(unittest.TestCase):
         print('Patient Signs Out from Page')
         self.driver.find_element_by_xpath('/html/body/nav/div/a').click()
         time.sleep(1)
-        assert self.driver.current_url == 'localhost:3000/patientLogin'
+        assert self.driver.current_url == 'http://localhost:3000/patientLogin'
 
     def test_3_invalid_credentials(self):
         print('User Signs in As Patiend with Invalid Credentials')
