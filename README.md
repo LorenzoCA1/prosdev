@@ -38,17 +38,25 @@ You must go to project repo in command line and run:
 ```sh
 node server.js 
 ```
-Enter link in browser
+Enter link in browser:
+- If secretary account
 ```sh
-http://localhost:3000/
+http://localhost:3000/secretaryLogin
 ```
-
-Log in as Secretary
+  Log in with these secretary credentials
 ```sh
 Username : regpagetest
 Password : regpagetest
 ```
-
+- If patient account
+```sh
+http://localhost:3000/patientLogin
+```
+  Log in with these patient credentials
+```sh
+Username : feebeef
+Password : 5527834
+```
 ## Unit Testing
 
 1. Install Python Dependencies
