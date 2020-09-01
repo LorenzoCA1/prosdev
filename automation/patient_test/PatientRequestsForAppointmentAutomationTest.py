@@ -37,7 +37,6 @@ class PatientRequestFunction(unittest.TestCase):
         #Procedure Clicking
         self.driver.find_element_by_xpath('//*[@id="app-form"]/div[2]/div[2]/div[2]/div').click()
         self.driver.find_element_by_css_selector('#app-form > div.ui.very.padded.grid.content > div.ten.wide.column.ui.form > div.required.field.fieldProcedures > div > div.menu.transition.visible >  div:nth-last-child(1)').click()
-        self.notes.click()
         self.driver.find_element_by_xpath('//*[@id="add-app"]').click()
         time.sleep(3)
         self.driver.find_element_by_xpath('/html/body/nav/a[1]').click()
@@ -53,10 +52,11 @@ class PatientRequestFunction(unittest.TestCase):
         self.driver.find_element_by_xpath('//*[@id="add-app"]').click()
         time.sleep(3)
         assert self.driver.current_url == 'http://localhost:3000/request'
+        self.driver.find_element_by_xpath('/html/body/nav/a[1]').click()
 
     def test_3_cancel_appointment(self):
         print('Patient Cancel Request Test')
-        self.driver.find_element_by_xpath('/html/body/div/div/div/div[1]/span[2]').click()
+        self.driver.find_element_by_xpath('/html/body/div/div/div/div[1]/a').click()
         self.src = self.driver.page_source
         self.text = re.search(r'cancelled', self.src)
         self.assertNotEqual(self.text, None)
