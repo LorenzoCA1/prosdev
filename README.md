@@ -38,20 +38,20 @@ You must go to project repo in command line and run:
 node server.js 
 ```
 Enter link in browser:
-- If secretary account
+> If secretary account
 ```sh
 http://localhost:3000/secretaryLogin
 ```
-  Log in with these secretary credentials
+>> Log in with these secretary credentials
 ```sh
 Username : regpagetest
 Password : regpagetest
 ```
-- If patient account
+> If patient account
 ```sh
 http://localhost:3000/patientLogin
 ```
-  Log in with these patient credentials
+>> Log in with these patient credentials
 ```sh
 Username : feebeef
 Password : 5527834
