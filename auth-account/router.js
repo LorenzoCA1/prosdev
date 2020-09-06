@@ -180,6 +180,8 @@ router.get("/me", loggedIn, async (req, res) => {
 		const account = await Account.findById(req.account.id);
 		if(account.accountType === "secretary") {
 			res.redirect("/secretary");
+		} else if(account.accountType === "admin") {
+			res.redirect("/admin");
 		} else if(account.accountType === "patient") {
 			res.redirect("/");
 		} else {
