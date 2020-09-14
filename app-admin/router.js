@@ -18,7 +18,7 @@ router.get("/admin", isAdmin, async function(req, res) {
 
 });
 
-router.post("/addsec", async function(req, res) {
+router.post("/addsec", isAdmin, async (req, res) => {
 	console.log("Adding secretary...");
 	console.log(req.body);
 	
@@ -48,7 +48,7 @@ router.post("/addsec", async function(req, res) {
 	}
 });
 
-router.post("/addpatient", (req, res) {
+router.post("/addpatient", async (req, res)  => {
 	console.log("Adding patient...");
 	console.log(req.body);
 	
