@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const moment = require('moment');
+
+const bcrypt = require("bcryptjs");
+
 const auth = require("../auth-account/auth.js");
 
 const {Appointment} = require("../model/appointment");
@@ -15,10 +18,62 @@ router.get("/admin", isAdmin, async function(req, res) {
 
 });
 
-router.post("/addsec", (req, res) {
+router.post("/addsec", async function(req, res) {
+	console.log("Adding secretary...");
+	console.log(req.body);
 	
+	const { username, password, accountType } = req.body;
+	
+	try {
+		let user = await Account.findOne({username});
+		if(user) {
+			return res.status(400).send({message: "Username taken."})
+		}
+		
+		account = new Account({
+			username,
+			password,
+			accountType
+		});
+		
+		const salt = await bcrypt.genSalt(10);
+		account.password = await bcrypt.hash(password, salt);
+		account.accountType = "secretary";
+		
+		await account.save();
+		
+	} catch (err) {
+		console.log(err.message);
+		res.status(500).send("Could not save.");
+	}
 });
 
 router.post("/addpatient", (req, res) {
+	console.log("Adding patient...");
+	console.log(req.body);
 	
+	const { username, password, accountType } = req.body;
+	
+	try {
+		let user = await Account.findOne({username});
+		if(user) {
+			return res.status(400).send({message: "Username taken."})
+		}
+		
+		account = new Account({
+			username,
+			password,
+			accountType
+		});
+		
+		const salt = await bcrypt.genSalt(10);
+		account.password = await bcrypt.hash(password, salt);
+		account.accountType = "patient";
+		
+		await account.save();
+		
+	} catch (err) {
+		console.log(err.message);
+		res.status(500).send("Could not save.");
+	}
 });
