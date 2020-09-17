@@ -50,3 +50,5 @@ router.post("/addaccount", isAdmin, async function (req, res) {
 		res.status(500).send("Could not save.");
 	}
 });
+
+module.exports = router;
