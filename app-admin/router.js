@@ -3,9 +3,9 @@ const router = express.Router();
 const moment = require('moment');
 
 const bcrypt = require("bcryptjs");
-
 const auth = require("../auth-account/auth.js");
 
+const {Account} = require("../model/account");
 const {Appointment} = require("../model/appointment");
 const {Doctor} = require("../model/doctor");
 const {Process} = require("../model/process");
@@ -18,8 +18,11 @@ router.get("/admin", isAdmin, async function(req, res) {
 	
 });
 
+router.get("/createaccount", isAdmin, async function(req,res) {
+	res.render('createaccount.hbs');
+});
 
-router.post("/addaccount", isAdmin, async (req, res) => {
+router.post("/addaccount", isAdmin, async function (req, res) {
 	console.log("Adding secretary...");
 	console.log(req.body);
 	
