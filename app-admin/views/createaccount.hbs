@@ -43,37 +43,3 @@
     </form>
 </body>
 </html>
-
-<script>
-    function addaccount(){
-        let $inputs = $("#frmRegister .inputfield")
-        var values = {};
-        let response = false;
-
-        $inputs.each(function() {
-            values[this.name] = $(this).val();
-        });
-        
-        $.post("/addaccount",values).always((res)=>{
-            console.log(res.responseJSON)
-            if(res.responseJSON){
-                if(res.responseJSON.errors){
-                    $(".negative").show()
-                    $(".negative").append(JSON.stringify(res.responseJSON.errors[0].msg))
-                    return false;
-                }else if(res.responseJSON.message){
-                    $(".negative").show()
-                    $(".negative").append(JSON.stringify(res.responseJSON.message))
-                    return false;
-                }
-            }
-            
-            window.location.href = "/admin"
-                
-        })
-        .fail((xhr, status,err)=>{ /*console.log(err);*/ })
-        return response
-    }
-   
-
-</script>

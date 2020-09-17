@@ -42,7 +42,7 @@ app.set('views', [path.join(__dirname, '/app-secretary/views'), path.join(__dirn
 app.use(require("./app-secretary/router"),
         require("./app-patient/router"),
         require("./auth-account/router"),
-		require("./app-admin/router"),
+		//require("./app-admin/router"),
         //app.use(require("./app-superadmin"));
        );
 
