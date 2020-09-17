@@ -210,8 +210,8 @@ router.get("/me", loggedIn, async (req, res) => {
 // 	}*/
 // });
 
-router.get("/secretary", isSecretary, async (req, res) => {
-	res.send({message: "WELCOME SECRETARY"});
+//router.get("/secretary", isSecretary, async (req, res) => {
+//	res.send({message: "WELCOME SECRETARY"});
 	/*
 	try {
 		// console.log("sent token: " + req.header("token"));
@@ -226,10 +226,10 @@ router.get("/secretary", isSecretary, async (req, res) => {
 	} catch(e) {
 		res.send({message: "Couldn't fetch user."});
 	}*/
-});
+//});
 
-router.get("/admin", isAdmin, async (req, res) => {
-	res.send({message: "WELCOME ADMIN"});
+//router.get("/admin", isAdmin, async (req, res) => {
+//	res.send({message: "WELCOME ADMIN"});
 	/*
 	try {
 		//console.log("sent token: " + req.header("token"));
@@ -244,7 +244,7 @@ router.get("/admin", isAdmin, async (req, res) => {
 	} catch(e) {
 		res.send({message: "Couldn't fetch user."});
 	}*/
-});
+//});
 
 router.get("/logout", loggedIn, async (req, res) => {
 	try {

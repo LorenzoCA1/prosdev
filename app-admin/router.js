@@ -15,7 +15,7 @@ const bad_request = (err, res) => {let x = ''; if(err)for(field in err.errors) x
 const ok_request = (data, res) => { console.log("sending back to client"); console.log(data); res.status(300).send(data) }
 
 router.get("/admin", isAdmin, async function(req, res) {
-	
+	console.log("Admin login");
 });
 
 router.get("/createaccount", isAdmin, async function(req,res) {
