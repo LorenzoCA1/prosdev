@@ -15,10 +15,11 @@ const bad_request = (err, res) => {let x = ''; if(err)for(field in err.errors) x
 const ok_request = (data, res) => { console.log("sending back to client"); console.log(data); res.status(300).send(data) }
 
 router.get("/admin", isAdmin, async function(req, res) {
-
+	
 });
 
-router.post("/addsec", isAdmin, async (req, res) => {
+
+router.post("/addaccount", isAdmin, async (req, res) => {
 	console.log("Adding secretary...");
 	console.log(req.body);
 	
@@ -38,37 +39,6 @@ router.post("/addsec", isAdmin, async (req, res) => {
 		
 		const salt = await bcrypt.genSalt(10);
 		account.password = await bcrypt.hash(password, salt);
-		account.accountType = "secretary";
-		
-		await account.save();
-		
-	} catch (err) {
-		console.log(err.message);
-		res.status(500).send("Could not save.");
-	}
-});
-
-router.post("/addpatient", async (req, res)  => {
-	console.log("Adding patient...");
-	console.log(req.body);
-	
-	const { username, password, accountType } = req.body;
-	
-	try {
-		let user = await Account.findOne({username});
-		if(user) {
-			return res.status(400).send({message: "Username taken."})
-		}
-		
-		account = new Account({
-			username,
-			password,
-			accountType
-		});
-		
-		const salt = await bcrypt.genSalt(10);
-		account.password = await bcrypt.hash(password, salt);
-		account.accountType = "patient";
 		
 		await account.save();
 		
