@@ -15,7 +15,7 @@
 
     </head>
 <body style = "background-color:steelblue">
-    <form id = "frmRegister" class = "ui centered card form" style = "margin-top: 20px;" method = "POST" onsubmit="return addaccount()">
+    <form id = "frmCreate" class = "ui centered card form" style = "margin-top: 20px;" method = "POST" onsubmit="return addaccount()">
         <div class="ui content">
             <div class="field" id="fieldUsername">
                 <label>Username</label>
@@ -27,7 +27,7 @@
             </div>
 			<div class="field" id="fieldRole">
 				<label>Role</label>
-				<select name="accountType" id="accountType">
+				<select class="inputField" name="accountType" id="accountType">
 					<option value="patient">Patient</option>
 					<option value="secretary">Secretary</option>
 				</select>
@@ -43,3 +43,40 @@
     </form>
 </body>
 </html>
+
+<script>
+    function addaccount(){
+        let $inputs = $("#frmCreate .inputfield");
+		let $role = $("#accountType");
+		console.log($role.val());
+        var values = {};
+        let response = false;
+
+        $inputs.each(function() {
+            values[this.name] = $(this).val();
+        });
+		values["accountType"] = $role.val();
+        
+        $.post("/addAccount",values).always((res)=>{
+            console.log(res.responseJSON)
+            if(res.responseJSON){
+                if(res.responseJSON.errors){
+                    $(".negative").show()
+                    $(".negative").append(JSON.stringify(res.responseJSON.errors[0].msg))
+                    return false;
+                }else if(res.responseJSON.message){
+                    $(".negative").show()
+                    $(".negative").append(JSON.stringify(res.responseJSON.message))
+                    return false;
+                }
+            }
+            
+            window.location.href = "/createAccount"
+                
+        })
+        .fail((xhr, status,err)=>{ /*console.log(err);*/ })
+        return response
+    }
+   
+
+</script>

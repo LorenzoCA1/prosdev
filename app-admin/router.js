@@ -23,7 +23,7 @@ router.get("/createaccount", isAdmin, async function(req,res) {
 });
 
 router.post("/addaccount", isAdmin, async function (req, res) {
-	console.log("Adding secretary...");
+	console.log("Adding account...");
 	console.log(req.body);
 	
 	const { username, password, accountType } = req.body;
