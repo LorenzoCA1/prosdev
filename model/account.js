@@ -27,8 +27,16 @@ accountSchema.statics.getAccountByUsername = async function(name) {
 	return await this.findOne({username: name});
 };
 
-accountSchema.statics.getAllAcounts = async function(){
+accountSchema.statics.getAllAccounts = async function(){
     return await this.find();
+};
+
+accountSchema.statics.getSecretaries = async function() {
+	return await this.find({accountType: "secretary"});
+};
+
+accountSchema.statics.getPatients = async function() {
+	return await this.find({accountType: "patient"});
 };
 
 accountSchema.statics.deleteAccount = async function(accountID){

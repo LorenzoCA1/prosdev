@@ -16,6 +16,11 @@ const ok_request = (data, res) => { console.log("sending back to client"); conso
 
 router.get("/admin", isAdmin, async function(req, res) {
 	console.log("Admin login");
+	let doctors = await Doctor.getAll();
+	let processes = await Process.getAll();
+	let secretaries = await Account.getSecretaries();
+	let patients = await Account.getPatients();
+	res.render('admin.hbs', {doctor: doctors, process: processes, secretary: secretaries, patient: patients});
 });
 
 router.get("/createaccount", isAdmin, async function(req,res) {
