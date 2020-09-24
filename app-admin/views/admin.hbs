@@ -26,7 +26,7 @@
         <div class="ui card ten wide column" style = "height: 550px; z-index: 2">
             <div class="ui content"><div id="timetable"></div></div>
         </div>
-        <div class="ui card four wide column" style = "height: 550px;">
+        <div class="ui card four wide column">
             <div class="ui content list">
                     <div class="header">Doctors
                     <span onclick="docform.showAddForm()"><i class="right link plus icon" ></i></span>
@@ -56,6 +56,16 @@
                         <div class="ui divider item" id="{{username}}"><a>{{username}}</a></div>
                     {{/each}}
             </div>
+			
+            <div class="ui content list">
+                <div class="header">Patients
+				
+                </div>
+                    {{#each patient}}
+                        <div class="ui divider item" id="{{username}}"><a>{{username}}</a></div>
+                    {{/each}}
+            </div>
+			
 			
         </div>
     </div>
