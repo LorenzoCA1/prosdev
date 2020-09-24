@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+    
+    {{!-- <link rel='stylesheet' crossorigin="anonymous"  media='screen' href='main.css'> --}}
+    <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
+       <link rel='stylesheet' type = 'text/css'media='screen' href='/fullcalendar-api/lib/main.min.css'>
+    <script type ='text/javascript' src='/javascript/jquery.js'></script>
+    <script type ='text/javascript' src='/javascript/moment.js'></script>
+    <script type ='text/javascript' src='/javascript/moment.js'></script>
+    <script type ='text/javascript' src='/fullcalendar-api/lib/main.min.js'></script>
+    <script type ='text/javascript'src='/semantic/dist/semantic.js'></script>
+</head>
+<body>
+    <nav class="ui secondary pointing menu">
+        <a class="item active">Appointment</a>
+        <a class="item" href ="/requestapp">Requests</a>
+        <div class="right menu" ><a class="ui item" href = "/logout">Logout</a></div>
+    </nav>
+    <div class = "ui centered padded grid">
+        <div class="ui card ten wide column" style = "height: 550px; z-index: 2">
+            <div class="ui content"><div id="timetable"></div></div>
+        </div>
+        <div class="ui card four wide column" style = "height: 550px;">
+            <div class="ui content list">
+                    <div class="header">Doctors
+                    <span onclick="docform.showAddForm()"><i class="right link plus icon" ></i></span>
+                    <span onclick="docform.showEditForm()"><i class="right samll link write icon"></i></span>
+                    </div>
+                   {{#each doctor}}
+                        <div class="ui divider item" id = "{{name}}"><a>{{name}}</a></div>
+                   {{/each}}
+            </div>
+            <div class="ui content list">
+                <div class="header">Process
+                    <span onclick="procform.showAddForm()"><i class="right link plus icon"></i></span>
+                    <span onclick="procform.showEditForm()"><i class="right samll link write icon"></i></span>
+                </div>
+                    {{#each process}}
+                        <div class="ui divider item" id="{{name}}"><a>{{name}}</a></div>
+                    {{/each}}
+            </div>
+			
+			
+            <div class="ui content list">
+                <div class="header">Secretaries
+                    <span onclick="secform.showAddForm()"><i class="right link plus icon"></i></span>
+                    <span onclick="secform.showEditForm()"><i class="right samll link write icon"></i></span>
+                </div>
+                    {{#each secretary}}
+                        <div class="ui divider item" id="{{username}}"><a>{{username}}</a></div>
+                    {{/each}}
+            </div>
+			
+        </div>
+    </div>
+</body>
+
+<form class="ui  modal small app-form form" id = 'app-form' onsubmit="return false" >
+    <i class="close icon"></i>
+    <div class="header">Appointment</div>
+
+        <div class="ui very padded grid">
+            <div class="six wide column">
+                <input type = "hidden" id = "app-id" name = "id" value = -1 /> 
+                <div class="required field" id="fieldLastName">
+                    <label>Last name</label>
+                    <input type="text" name="lastname" id="lastname" placeholder="Last Name">
+                </div>
+                <div class="required field" id="fieldFirstName">
+                    <label>First name</label>
+                    <input type="text" name="firstname" id="firstname" placeholder="First Name">
+                </div>
+                <div class="required field" id="fieldDateCalendar">
+                    <label>Date</label>
+                        <div class="ui fluid input left icon">
+                            <i id="calendaricon" class="calendar icon"></i>
+                            <input type="date" id="date" name="date" placeholder="Date">
+                        </div>
+                </div>
+                <div class="required field" id="fieldTimeCalendar">
+                    <label>Time</label>
+                        <div class="ui fluid input left icon">
+                            <i class="time icon"></i>
+                            <input type="time" id="time" name="time" placeholder="Time">
+                        </div>
+                </div>
+            </div>
+
+            <div class="ten wide column ui form">
+                <div class="required field fieldDoctors" id = "selDoc">
+                    <label>Doctor(s)</label>
+                    <select multiple = "" name="doctor" class="ui fluid dropdown" multiple="" id="doctor">
+                        {{#each doctor}}
+                            <option value="{{_id}}-{{name}}">Dr. {{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="required field fieldProcedures">
+                    <label>Procedure(s)</label>
+                    <select name="process" class="ui fluid dropdown" multiple="" id="process">
+                        {{#each process}}
+                            <option value="{{_id}}-{{name}}">{{name}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Notes</label>
+                    <textarea name ="notes" id="notes"></textarea>
+                </div>
+
+                <div class="ui grid"><div class="actions column">
+                <div id = "add-app" class="ui positive right floated submit icon button very padded">
+                    ADD</div>
+                <div id = "save-app" class="ui positive right floated submit icon button very padded">
+                    SAVE</div>
+                <div id = "del-app"class="ui red deny button right submit floated very padded" >
+                    DELETE</div>
+                </div></div>
+
+            </div>
+        </div>
+</form>
+
+
+<form id="doc-form" class="ui small modal doc-form form" onsubmit = "return true">
+    <i class="close icon"></i>
+    <div class="header">Doctor</div>
+        <div class="content">
+            <div class="required field fieldDoctors" id = "editDoc">
+                <label>Doctor</label>
+                <select name="doctor" class="ui fluid dropdown" id="doctor-edit">
+                      {{#each doctor}}
+                            <option value="{{_id}}-{{name}}">Dr. {{name}}</option>
+                        {{/each}}
+                </select>
+            </div>
+            <div class="required field fieldName">
+            <label>Name</label>
+            <input type="text" name="name" id="docname" placeholder="Name">
+            </div>
+            <div class="ui grid"><div class="actions column">
+            <div class="ui positive submit right floated icon button very padded" id="add-doc">
+                ADD</div>
+            <div class="ui positive submit right floated icon button very padded" id="edit-doc">
+                SAVE</div>
+            <div class="ui red deny right floated icon button very padded" id="del-doc">
+                Delete</div>
+            </div></div>
+        </div>
+</form>
+
+
+<form id="proc-form" class="ui small modal proc-form form" onsubmit="return true">
+    <i class="close icon"></i>
+    <div class="header">Procedure</div>
+        <div class="content">
+            <div class="required field fieldProcedures">
+                <label>Procedure</label>
+                <select name="process" class="ui fluid dropdown" id="process-edit">
+                     {{#each process}}
+                            <option value="{{_id}}-{{name}}">{{name}}</option>
+                        {{/each}}
+                </select>
+            </div>
+            <div class="required field fieldName">
+            <label>Name</label>
+            <input type="text" name="name" id="procname" placeholder="Name">
+            </div>
+            <div class="ui grid"><div class="actions column">
+            <div class="ui positive right floated icon button very padded" id="add-proc">
+                ADD</div>
+            <div class="ui positive right floated icon button very padded" id="edit-proc">
+                SAVE</div>
+            <div class="ui red deny right floated icon button very padded" id="del-proc">
+                Delete</div>
+            </div></div>
+        </div>
+</form>
+
+<form id="sec-form" class="ui small modal sec-form form" onsubmit="return true">
+    <i class="close icon"></i>
+    <div class="header">Secretary</div>
+        <div class="content">
+            <div class="required field fieldSecretary">
+                <label>Secretary</label>
+                <select name="secretary" class="ui fluid dropdown" id="secretary-edit">
+                     {{#each secretary}}
+                            <option value="{{_id}}-{{username}}">{{username}}</option>
+                        {{/each}}
+                </select>
+            </div>
+            <div class="required field fieldName">
+            <label>Name</label>
+            <input type="text" name="name" id="secname" placeholder="Name">
+            </div>
+            <div class="ui grid"><div class="actions column">
+            <div class="ui positive right floated icon button very padded" id="add-sec">
+                ADD</div>
+            <div class="ui positive right floated icon button very padded" id="edit-sec">
+                SAVE</div>
+            <div class="ui red deny right floated icon button very padded" id="del-sec">
+                Delete</div>
+            </div></div>
+        </div>
+</form>
+
+</html>
+
+<script type ='text/javascript' src='/admininit.js'></script> 
+<script type ='text/javascript' src='/AJAXCALLS.js'></script> 
+<script type ='text/javascript' src='/ADMINAJAX.js'></script> 
+<script type ='text/javascript' src='/Doctor.js'></script> 
+<script type ='text/javascript' src='/Process.js'></script> 
+<script type ='text/javascript' src='/CreateSecretary.js'></script>
+<script type ='text/javascript' src='/Appointment.js'></script> 
+<script type ='text/javascript' src='/TimeGrid.js'></script> 
+<script type ='text/javascript' src='/Admin.js'></script>
