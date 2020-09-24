@@ -26,7 +26,7 @@
         <div class="ui card ten wide column" style = "height: 550px; z-index: 2">
             <div class="ui content"><div id="timetable"></div></div>
         </div>
-        <div class="ui card four wide column">
+        <div class="ui card four wide column" style = "height: 550px;">
             <div class="ui content list">
                     <div class="header">Doctors
                     <span onclick="docform.showAddForm()"><i class="right link plus icon" ></i></span>
@@ -47,19 +47,10 @@
             </div>
 			
 			
-			<div class="ui content list">
-                <div class="header">Patients
-                    <span onclick="procform.showAddForm()"><i class="right link plus icon"></i></span>
-                    <span onclick="procform.showEditForm()"><i class="right samll link write icon"></i></span>
-                </div>
-                    {{#each patient}}
-                        <div class="ui divider item" id="{{username}}"><a>{{username}}</a></div>
-                    {{/each}}
-            </div>
-			<div class="ui content list">
+            <div class="ui content list">
                 <div class="header">Secretaries
-                    <span onclick="procform.showAddForm()"><i class="right link plus icon"></i></span>
-                    <span onclick="procform.showEditForm()"><i class="right samll link write icon"></i></span>
+                    <span onclick="secform.showAddForm()"><i class="right link plus icon"></i></span>
+                    <span onclick="secform.showEditForm()"><i class="right samll link write icon"></i></span>
                 </div>
                     {{#each secretary}}
                         <div class="ui divider item" id="{{username}}"><a>{{username}}</a></div>
@@ -194,55 +185,28 @@
         </div>
 </form>
 
-<form id="secretary-form" class="ui small modal doc-form form" onsubmit = "return true">
+<form id="sec-form" class="ui small modal sec-form form" onsubmit="return true">
     <i class="close icon"></i>
     <div class="header">Secretary</div>
         <div class="content">
-            <div class="required field fieldDoctors" id = "editDoc">
-                <label>Doctor</label>
-                <select name="doctor" class="ui fluid dropdown" id="doctor-edit">
-                      {{#each doctor}}
-                            <option value="{{_id}}-{{name}}">Dr. {{name}}</option>
+            <div class="required field fieldSecretary">
+                <label>Secretary</label>
+                <select name="secretary" class="ui fluid dropdown" id="secretary-edit">
+                     {{#each secretary}}
+                            <option value="{{_id}}-{{username}}">{{username}}</option>
                         {{/each}}
                 </select>
             </div>
             <div class="required field fieldName">
             <label>Name</label>
-            <input type="text" name="name" id="docname" placeholder="Name">
+            <input type="text" name="name" id="secname" placeholder="Name">
             </div>
             <div class="ui grid"><div class="actions column">
-            <div class="ui positive submit right floated icon button very padded" id="add-doc">
+            <div class="ui positive right floated icon button very padded" id="add-sec">
                 ADD</div>
-            <div class="ui positive submit right floated icon button very padded" id="edit-doc">
+            <div class="ui positive right floated icon button very padded" id="edit-sec">
                 SAVE</div>
-            <div class="ui red deny right floated icon button very padded" id="del-doc">
-                Delete</div>
-            </div></div>
-        </div>
-</form>
-
-<form id="patient-form" class="ui small modal doc-form form" onsubmit = "return true">
-    <i class="close icon"></i>
-    <div class="header">Patient</div>
-        <div class="content">
-            <div class="required field fieldDoctors" id = "editDoc">
-                <label>Doctor</label>
-                <select name="doctor" class="ui fluid dropdown" id="doctor-edit">
-                      {{#each doctor}}
-                            <option value="{{_id}}-{{name}}">Dr. {{name}}</option>
-                        {{/each}}
-                </select>
-            </div>
-            <div class="required field fieldName">
-            <label>Name</label>
-            <input type="text" name="name" id="docname" placeholder="Name">
-            </div>
-            <div class="ui grid"><div class="actions column">
-            <div class="ui positive submit right floated icon button very padded" id="add-doc">
-                ADD</div>
-            <div class="ui positive submit right floated icon button very padded" id="edit-doc">
-                SAVE</div>
-            <div class="ui red deny right floated icon button very padded" id="del-doc">
+            <div class="ui red deny right floated icon button very padded" id="del-sec">
                 Delete</div>
             </div></div>
         </div>
@@ -254,6 +218,7 @@
 <script type ='text/javascript' src='/AJAXCALLS.js'></script> 
 <script type ='text/javascript' src='/Doctor.js'></script> 
 <script type ='text/javascript' src='/Process.js'></script> 
+<script type ='text/javascript' src='/CreateSecretary.js'></script>
 <script type ='text/javascript' src='/Appointment.js'></script> 
 <script type ='text/javascript' src='/TimeGrid.js'></script> 
-<script type ='text/javascript' src='/Secretary.js'></script>
+<script type ='text/javascript' src='/Admin.js'></script>

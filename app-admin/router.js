@@ -27,6 +27,78 @@ router.get("/createaccount", isAdmin, async function(req,res) {
 	res.render('createaccount.hbs');
 });
 
+
+router.post("/addsec", isAdmin, async function (req, res) {
+	console.log("Adding secretary...");
+	console.log(req.body);
+	
+	const { username, password, accountType } = req.body;
+	
+	try {
+		let user = await Account.findOne({username});
+		if(user) {
+			return res.status(400).send({message: "Username taken."})
+		}
+		
+		account = new Account({
+			username,
+			password,
+			accountType
+		});
+		
+		const salt = await bcrypt.genSalt(10);
+		account.password = await bcrypt.hash(password, salt);
+		
+		account.acountType="secretary";
+		
+		await account.save();
+		
+	} catch (err) {
+		console.log(err.message);
+		res.status(500).send("Could not save.");
+	}
+});
+
+router.post("/editsec", isAdmin, async function (req, res) {
+
+});
+
+router.post("/deletesec", isAdmin, async function (req, res) {
+
+});
+
+router.post("/addpat", isAdmin, async function (req, res) {
+	console.log("Adding patient...");
+	console.log(req.body);
+	
+	const { username, password, accountType } = req.body;
+	
+	try {
+		let user = await Account.findOne({username});
+		if(user) {
+			return res.status(400).send({message: "Username taken."})
+		}
+		
+		account = new Account({
+			username,
+			password,
+			accountType
+		});
+		
+		const salt = await bcrypt.genSalt(10);
+		account.password = await bcrypt.hash(password, salt);
+		
+		account.acountType="patient";
+		
+		await account.save();
+		
+	} catch (err) {
+		console.log(err.message);
+		res.status(500).send("Could not save.");
+	}
+});
+
+/*
 router.post("/addaccount", isAdmin, async function (req, res) {
 	console.log("Adding account...");
 	console.log(req.body);
@@ -55,5 +127,6 @@ router.post("/addaccount", isAdmin, async function (req, res) {
 		res.status(500).send("Could not save.");
 	}
 });
+*/
 
 module.exports = router;

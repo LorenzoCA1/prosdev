@@ -18,6 +18,9 @@ let docform = new DoctorForm(doc)
 let proc = new ProcessController()
 let procform = new ProcessForm(proc)
 
+let sec = new SecretaryController()
+let secform = new SecretaryForm(sec)
+
 timegrid.setShowAddForm(appform)
 timegrid.setShowEditForm(appform)
 

@@ -1,15 +1,15 @@
-$.fn.form.settings.rules.uniqueProcedureName = function(param,) {
-  let names = ComponentMap.selProcess.children('option')
+$.fn.form.settings.rules.uniqueSecretaryName = function(param,) {
+  let names = ComponentMap.selSec.children('option')
   .map((i, e)=>{return e.innerText.toLowerCase().trim()}).get(); console.log(names)
-  return names.indexOf(ComponentMap.txtProc.val().trim().toLowerCase()) === -1;
+  return names.indexOf(ComponentMap.txtSec.val().trim().toLowerCase()) === -1;
 }
 
 
-class ProcessController{
+class SecretaryController{
 
    constructor(){
-      this.selection = ComponentMap.selProcess
-      this.server = PROC_AJAX
+      this.selection = ComponentMap.selSec
+      this.server = SEC_AJAX
       this.update_views();
    }
     update_views(){
@@ -24,16 +24,16 @@ class ProcessController{
         
     }
     add(data){
-        console.log("++++++ADDING PROCESS++++++"); console.log(data);
+        console.log("++++++ADDING SECRETARY++++++"); console.log(data);
         this.server.add(data);
     }
     edit(data){
-        console.log("++++++EDITING PROCESS++++++"); console.log(data);
+        console.log("++++++EDITING SECRETARY++++++"); console.log(data);
         this.server.edit({_id: data._id, update: data.update});
         // this.update_views()
     }
     delete(data){
-        console.log("++++++DELETING PROCESS++++++"); console.log(data);
+        console.log("++++++DELETING SECRETARY++++++"); console.log(data);
         this.server.delete(data);
         // this.update_views()
     }
@@ -43,15 +43,15 @@ class ProcessController{
 
 
 
-class ProcessForm{
+class SecretaryForm{
     constructor(controller){
       this.controller = controller
-      this.view = ComponentMap.frmProc
-      this.textfield = ComponentMap.txtProc
-      this.selection= ComponentMap.selProcess
-      this.btnDel = ComponentMap.btnDelProc
-      this.btnAdd = ComponentMap.btnAddProc
-      this.btnEdit = ComponentMap.btnEditProc
+      this.view = ComponentMap.frmSec
+      this.textfield = ComponentMap.txtSec
+      this.selection= ComponentMap.selSec
+      this.btnDel = ComponentMap.btnDelSec
+      this.btnAdd = ComponentMap.btnAddSec
+      this.btnEdit = ComponentMap.btnEditSec
      
       this.init()
     }
@@ -59,33 +59,33 @@ class ProcessForm{
         return this.view.form('validate form')
     }
     isAddForm(){
-        return  !$('.fieldProcedures').is(":visible")
+        return  !$('.fieldSecretary').is(":visible")
     }
     init(){
         this.add_validation = {
           fields:{
           name: {
-            identifier: 'procname',
-            rules: [{type: 'uniqueProcedureName', prompt: 'Procedure name exists'}]
+            identifier: 'secname',
+            rules: [{type: 'uniqueSecretaryName', prompt: 'Secretary name exists'}]
           }
         }
         }
         this.edit_validation =  {
           fields:{
-            process: {
-              identifier: 'process-edit',
+            secretary: {
+              identifier: 'secretary-edit',
               rules: [{type: 'empty'}]
             },
             name: {
-              identifier: 'procname',
-              rules: [{type: 'uniqueProcedureName', prompt: 'Procedure name exists'}]
+              identifier: 'secname',
+              rules: [{type: 'uniqueSecretaryName', prompt: 'Secretary name exists'}]
             }
           }
         }
         this.delete_validation =  {
           fields:{
-            process: {
-              identifier: 'process-edit',
+            secretary: {
+              identifier: 'secretary-edit',
               rules: [{type: 'empty'}]
             }
           }
@@ -123,7 +123,7 @@ class ProcessForm{
       showAddForm(){
         console.log("++++SHOWING ADD FORM+++++");  
         this.clearForm();
-        $('.fieldProcedures').hide()
+        $('.fieldSecretary').hide()
         this.btnDel.hide()
         this.btnEdit.hide()
         this.btnAdd.show()
@@ -137,7 +137,7 @@ class ProcessForm{
       showEditForm(){
         console.log("++++SHOWING EDIT FORM+++++");
         this.clearForm()
-        $('.fieldProcedures').show()
+        $('.fieldSecretary').show()
         this.btnDel.show()
         this.btnEdit.show()
         this.btnAdd.hide()
