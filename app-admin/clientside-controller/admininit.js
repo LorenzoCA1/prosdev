@@ -48,7 +48,18 @@ const ComponentMap = {
   frmProc: $('#proc-form'),
 
   txtNotes: $('#notes'),
- 
+  
+  // SECRETARY
+  selSec: $(".fieldSecretary .dropdown"),
+  
+  txtSec: $("#secname"),
+  
+  btnEditSec: $("#edit-sec"),
+  btnAddSec:  $("#add-sec"),
+  btnDelSec: $("#del-sec"),
+  
+  frmSec: $("#sec-form"),
+  
 }
 
 let sample_database = {
