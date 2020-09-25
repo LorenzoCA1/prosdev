@@ -6,7 +6,6 @@ const urlencoder = bodyParser.urlencoded({
     useUnifiedTopology: true,
 }) 
 
-const port = process.env.PORT || 3000
 
 const session = require("express-session");
 const path = require("path");
@@ -53,7 +52,7 @@ app.use(require("./app-secretary/router"),
 //docs on regex route parameters https://stackoverflow.com/questions/51144781/route-parameters-in-express-js
 
 
-app.listen(port, function(){
+app.listen(3000, function(){
     console.log("Server is running at port 3000...");
 })
 

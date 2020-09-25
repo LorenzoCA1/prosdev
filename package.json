@@ -4,8 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --color",
-    "start": "node server.js"
+    "test": "jest --color"
   },
   "repository": {
     "type": "git",
