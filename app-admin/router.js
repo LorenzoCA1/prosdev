@@ -26,40 +26,37 @@ router.get("/admin", isAdmin, async function(req, res) {
 	res.render('admin.hbs', {doctor: doctors, process: processes, account: accounts, appointment:appointments});
 });
 
-router.get("/createaccount", isAdmin, async function(req,res) {
-	res.render('createaccount.hbs');
-});
 
-
-router.post("/addsec", isAdmin, async function (req, res) {
+router.post("/addAccount", isAdmin, async function (req, res) {
 	console.log("Adding secretary...");
 	console.log(req.body);
-	
 	const { username, password, accountType } = req.body;
 	
 	try {
 		let user = await Account.findOne({username});
 		if(user) {
 			return res.status(400).send({message: "Username taken."})
-		}
-		
-		account = new Account({
-			username,
-			password,
-			accountType
-		});
-		
-		const salt = await bcrypt.genSalt(10);
-		account.password = await bcrypt.hash(password, salt);
-		
-		account.acountType="secretary";
-		
-		await account.save();
-		
-	} catch (err) {
-		console.log(err.message);
-		res.status(500).send("Could not save.");
+		}else{
+
+			account = new Account({
+				username,
+				password,
+				accountType
+			});
+			
+			const salt = await bcrypt.genSalt(10);
+			account.password = await bcrypt.hash(password, salt);
+			
+			account.acountType= accountType;
+			
+			await account.save();
+			res.status(300).send({message: "Success"})
+		} 
+		}catch (err) {
+			console.log(err.message);
+			res.status(500).send("Could not save.");
 	}
+
 });
 
 router.post("/editsec", isAdmin, async function (req, res) {
