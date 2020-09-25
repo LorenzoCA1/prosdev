@@ -124,12 +124,11 @@
     }}
    
    view.form(form_rules);
-
     function submit(){
         if(!view.form('validate form')) 
             return false;
         else{
-            $.post("/addAccount", $("form").serializeArray()).always((res)=>{
+            $.post("/addaccount", $("form").serializeArray()).always((res)=>{
                 console.log(res.responseJSON)
                 if(res.responseJSON.message != "Success"){
                     if(res.responseJSON.errors){
@@ -139,7 +138,6 @@
                     
                         $(".negative").show()
                         $(".negative").html(JSON.stringify(res.responseJSON.message))
-
                     }
                 }else{
                     $("#frmCreate").form("clear")
@@ -150,14 +148,10 @@
             return false
         }
     }
-
     function showAddForm(){
          $(".negative").hide()
         $("#frmCreate").form("clear")
         $("#frmCreate").modal("show")
     }
-
     view.modal({onApprove: submit})
 </script>
-
-
