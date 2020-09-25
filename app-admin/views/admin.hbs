@@ -85,7 +85,7 @@
 
 </body>
 
-   <form id = "frmCreate" class = "ui centered ui modal small form" method = "POST" action = '/addaccount'>
+   <form id = "frmCreate" class = "ui centered ui modal small form" onsubmit= "return false">
         <div class="ui content">
             <div class="field" id="fieldUsername">
                 <label>Username</label>
@@ -102,10 +102,14 @@
 					<option value="secretary">Secretary</option>
 				</select>
 			</div>
+            <div class="ui negative message" id = 'msgError' hidden = "true">
             
+            </div>
             <div class="ui grid"><div class="actions column">
-            <input type = "submit" id = "btn-create" value = "Create"class="ui right primary floated submit icon button fluid"></input>
-            </input></div></div>
+            <div type = "submit" id = "btn-create" value = "Create" class="ui primary positive right floated button fluid">
+                Create
+            </div>
+            </div></div>
         </div>
     </form>
 
@@ -119,19 +123,35 @@
     accountType: 'empty',
     }}
    
-
+   view.form(form_rules);
     function submit(){
         if(!view.form('validate form')) 
             return false;
-        else
-            return true
+        else{
+            $.post("/addaccount", $("form").serializeArray()).always((res)=>{
+                console.log(res.responseJSON)
+                if(res.responseJSON.message != "Success"){
+                    if(res.responseJSON.errors){
+                        $(".negative").show()
+                        $(".negative").html(JSON.stringify(res.responseJSON.errors[0].msg))
+                    }else if(res.responseJSON.message){
+                    
+                        $(".negative").show()
+                        $(".negative").html(JSON.stringify(res.responseJSON.message))
+                    }
+                }else{
+                    $("#frmCreate").form("clear")
+                    $("#frmCreate").modal("hide")
+                    location.reload();
+                }
+            })
+            return false
+        }
     }
     function showAddForm(){
-        $("#frmCreate").modal("clear")
+         $(".negative").hide()
+        $("#frmCreate").form("clear")
         $("#frmCreate").modal("show")
     }
-
-    view.modal({onApprove: submit()})
+    view.modal({onApprove: submit})
 </script>
-
-
