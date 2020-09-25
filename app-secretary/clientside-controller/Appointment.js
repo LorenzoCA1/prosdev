@@ -69,7 +69,7 @@ const AppParser = {
         doctor: event._def.extendedProps.doctor,
         process: event._def.extendedProps.process,
         time: moment(event.start.getHours() + ":" + event.start.getMinutes(), "HH:mm").format("HH:mm"),
-        date: moment(event.start.getFullYear() + "-"  + (event.start.getMonth()+1) + "-" + event.start.getDate(), 'YYYY-MM-DD').format('YYYY-MM-DD'),
+        date: event.start.getFullYear() + "-"  + ((event.start.getMonth() + 1) < 10 ? '0' : '') + (event.start.getMonth() + 1) + "-" + event.start.getDate(),
         notes: event._def.extendedProps.notes
     }
   },
@@ -114,7 +114,7 @@ const AppParser = {
          process: arr_procID,
          doctor: arr_docID,
         time: data.time,
-        date: data.date,
+        date:  moment(data.date, "YYYY-MM-DD").format("YYYY-MM-DD"),
         notes: data.notes
       },
       api:{

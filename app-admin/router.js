@@ -18,9 +18,12 @@ router.get("/admin", isAdmin, async function(req, res) {
 	console.log("Admin login");
 	let doctors = await Doctor.getAll();
 	let processes = await Process.getAll();
-	let secretaries = await Account.getSecretaries();
-	let patients = await Account.getPatients();
-	res.render('admin.hbs', {doctor: doctors, process: processes, secretary: secretaries, patient: patients});
+	let accounts = await Account.find()
+	let appointments = await Appointment.find()
+						.populate('doctor')
+						.populate('process')
+						.exec()
+	res.render('admin.hbs', {doctor: doctors, process: processes, account: accounts, appointment:appointments});
 });
 
 router.get("/createaccount", isAdmin, async function(req,res) {

@@ -14,8 +14,9 @@ var appointmentSchema = new Schema({
     notes: String,
     time: String,
     date: String,
+    datetime: Date,
     doctor: [{type: Schema.Types.ObjectId,ref: Doctor}],
-    patient:  /*[{type: Schema.Types.ObjectId, ref: Account}]*/ String,
+    patient: {type: Schema.Types.ObjectId, ref: Account},
     status: String,  //approved, cancelled, pending
     notes: String,
 

@@ -18,25 +18,32 @@ const bad_request = (err, res) => {let x = ''; if(err)for(field in err.errors) x
                                      console.log(err); res.status(400).send(x)}
 const ok_request = (data, res) => { console.log("sending back to client"); console.log(data); res.status(300).send(data) }
 
-router.get("/", isPatient, async function(req, res) {
-    let doctors =   await Doctor.getAll();
-    let processes = await Process.getAll();
+router.get("/", isPatient, async(req, res)=> {
+
     res.redirect("/appointments");
 });
 
-  router.get("/history", isPatient, (req, res) => {
-    res.render('patient-history.hbs');
-  })
+
+  function encodeJSON(obj){
+
+    obj = JSON.stringify(obj);
+
+    return encodeURI(obj);
+};
 
   router.get("/request", isPatient, loggedIn, async(req,res)=>{
-    let doctors =   await Doctor.getAll(); let processes = await Process.getAll();
-	accountId = req.account.id;
-	console.log("Account ID: " + accountId);
-    res.render('patient-request.hbs',  {doctor: doctors, process: processes});
+  let doctors =   await Doctor.getAll(); 
+  let processes = await Process.getAll();
+  let appointment = await Appointment.find({status: 'approved', datetime: {$gt: moment().format()}}, ['date', 'time'])
+	  accountId = req.account.id;
+	  console.log("Account ID: " + accountId);
+    res.render('patient-request.hbs',  {doctor: doctors, process: processes, appointment: encodeJSON(appointment)});
   })
 
+  
+
   router.get("/appointments", isPatient, async(req, res) => {
-    let appointments = await Appointment.find({patient: req.account.id})
+    let appointments = await Appointment.find({patient: req.account.id, datetime: {$gt: moment().subtract(1, "days").format()}})
           .populate('doctor')
           .populate('process')
           .exec()
@@ -44,12 +51,23 @@ router.get("/", isPatient, async function(req, res) {
     res.render('patient-appointment.hbs', {appointment: appointments})
  
   })
+
+  router.get("/history", isPatient, async(req, res) => {
+    let appointments = await Appointment.find({patient: req.account.id, status: 'approved', datetime: {$lt: moment().format()}})
+          .populate('doctor')
+          .populate('process')
+          .exec()
+    res.render('patient-history.hbs', {appointment: appointments})
+ 
+  })
   
   router.post("/request", isPatient, (req, res) => {
       console.log(req.body)
       req.body.patient = 	req.account.id;
       req.body.status = "pending"
-
+      req.body.time = moment(req.body.time, ["h:mm A"]).format("HH:mm") + ':00'
+      req.body.datetime = req.body.date
+    
       Appointment.add(req.body)
       .then(result =>{
       Appointment.findById(result._id).populate('doctor').populate('process')

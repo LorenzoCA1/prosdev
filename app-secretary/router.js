@@ -69,8 +69,11 @@ router.get("/getapps",(req, res) => {
 
 router.post("/addapp", (req, res) => {
     console.log("adding app")
-    console.log(req.body)
+   
     req.body.status = "approved"
+    req.body.time = moment(req.body.time, ["h:mm A"]).format("HH:mm") + ':00'
+    req.body.datetime = req.body.date
+    console.log(req.body)
     Appointment.add(req.body)
                .then(result =>{
     Appointment.findById(result._id).populate('doctor').populate('process')

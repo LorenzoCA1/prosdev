@@ -49,16 +49,16 @@
                     </div>
                     <div class="required field" id="fieldDateCalendar">
                         <label>Date</label>
-                            <div class="ui fluid input left icon">
+                            <div class="ui calendar fluid input left icon">
                                 <i id="calendaricon" class="calendar icon"></i>
-                                <input type="date" id="date" name="date" placeholder="Date">
+                                <input type = "text" id="date" name="date"  placeholder="Date">
                             </div>
                     </div>
-                    <div class="required field" id="fieldTimeCalendar">
+                    <div class="required field" id="fieldTime">
                         <label>Time</label>
-                            <div class="ui fluid input left icon">
-                                <i class="time icon"></i>
-                                <input type="time" id="time" name="time" placeholder="Time">
+                            <div class="ui time fluid input left icon">
+                                <i id="calendaricon" class="time icon"></i>
+                                <input type = "text" id="time" name="time" placeholder="Time">
                             </div>
                     </div>
                 </div>
@@ -102,32 +102,59 @@
 </html>
 
 
-
+<script type ='text/javascript' src='/main.js'></script> 
 <script>
-     $(".dropdown").dropdown()
+//https://stackoverflow.com/questions/29470389/how-can-i-pass-variable-when-render-view-to-script-tag-in-node-js
+let appointments = JSON.parse(decodeURI('{{appointment}}'))
+console.log(appointments)
+let dates = []
+appointments.forEach(function (app, i) {
+    if(app.date != "" && app.time != "" )
+        dates.push({date: app.date, time: app.time})
+});
 
+console.log(dates)
 
-function cancel(){
-    $.post("/requestapp", {_id: data.name, status: "cancelled"})
-    .always((res)=>{ console.log('client recieving data'); 
-               console.log(res.responseJSON); 
-               window.location.reload(true);
-               /*callback(data)*/ })
-    .fail((xhr, status,err)=>{ console.log(err); })
+function isDisabledTime(date, mode){
+   let sel = moment($('#date').val(), 'YYYY-MM-DD').format('YYYY-MM-DD')
+   let time = moment(date).format("HH:mm:ss")
+   let disabled = false;
 
-    return false;
+   dates.forEach((date) => {
+       if(date.date === sel)
+            if(date.time === time)
+                disabled = true
+   });
+   
+   return disabled
 }
 
-const appoinment_field_rules = {
-  fields:{
-    firstname: 'empty',
-    lastname: 'empty',
-    date: 'empty',
-    time: 'empty',
-    doctor: ['minLength[1]','empty'],
-    process: ['minLength[1]','empty'],
-  }
+function value_changed(date, text, mode){
+   $('.ui.time').calendar({
+        type: 'time',
+        ampm: true,
+        onChange: value_changed,
+        isDisabled: isDisabledTime,
+        disableMinute: true,
+        minDate: new Date(moment('7:00', 'HH:mm')),     
+        maxDate: new Date(moment('18:00', 'HH:mm')),
+    });
 }
 
-$(".form").form(appoinment_field_rules)
+$('.ui.calendar').calendar({
+  monthFirst: false,
+  type: 'date',
+  formatter: {
+    date: function (date, settings) {
+      if (!date) return '';
+      var day = date.getDate();
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+      return year + '-' + month + '-' + day;
+    }
+  },
+   minDate: new Date(moment().add(1,'days')),
+   onChange: value_changed,
+});
+
 </script>

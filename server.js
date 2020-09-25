@@ -31,6 +31,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, '/app-secretary/clientside-controller')));
 app.use(express.static(path.join(__dirname, '/app-admin/clientside-controller')));
+app.use(express.static(path.join(__dirname, '/app-patient/views')));
 
 //SET TEMPLATE ENGINE
 app.set('view engine', 'hbs');

@@ -5,50 +5,146 @@
         <meta http-equiv='X-UA-Compatible' content='IE=edge'>
         <title>Page Title</title>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <meta http-equiv='cache-control' content='no-cache'> 
-        <meta http-equiv='expires' content='0'> 
-        <meta http-equiv='pragma' content='no-cache'> 
-        <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
+         <link rel='stylesheet' type = 'text/css'media='screen' href='/semantic/dist/semantic.css'>
         <link rel='stylesheet' type = 'text/css'media='screen' href='/fullcalendar-api/lib/main.min.css'>
         <script type ='text/javascript' src='/javascript/jquery.js'></script>
         <script type ='text/javascript' src='/javascript/moment.js'></script>
         <script type ='text/javascript' src='/javascript/moment.js'></script>
         <script type ='text/javascript' src='/fullcalendar-api/lib/main.min.js'></script>
-        <script type ='text/javascript'src='/semantic/dist/semantic.js'></script> 
-
-        <meta http-equiv="Expires" content="-1">
+        <script type ='text/javascript'src='/semantic/dist/semantic.js'></script>
 
     </head>
 
     <style>
         .ui.cards { display: inline-block; overflow-x: scroll; }
-        
-                </style>
+    </style>
 <body>
     <nav class="ui secondary pointing menu">
-        <a href = "/appointments" class = "item">Appointments</a>
+        <a href = "/appointments" class="item">Appointments</a>
         <a href = "/request" class="item">Requests</a>
-        <a href = "/history" class="item active" >History</a>
-        <div class="right menu"><a href = "/logout"  class="ui item">Logout</a></div>
+         <a class="item active" href = "/history" class="item">History</a>
+        <div class="right menu"><a href = "/logout" class="ui item">Logout</a></div>
     </nav>
     
     <div class="ui centered">
-            <div class="ui container cards sixteen column grid centered">
-                {{#each appointment}}
-                   <div class="card eight wide column">
-                     <b>{{date}} @{{time}}</b>
-                     <div class="content">
-                       <a class="header">
-                           {{process}}
-                       </a>   
-                       <div class = "description"><b>
-                        {{doctor}}</b></div>
-                     </div>
-                   </div>
-                {{/each}}
-             </div>
-    </div>
-    
+        <div class="ui container cards sixteen column grid centered">
 
+           {{#each appointment}}
+              <div class="ui card eight wide column">
+                <div>
+                
+                {{#ifeq status "approved"}}
+                <span class="ui top teal attached label">
+                     <span  id = "status" class="ui">
+                         completed |
+                    </span>
+                    <span class = 'datetime' id = "datetime">{{date}}@{{time}} </span>
+                 </span>
+                 
+                {{/ifeq}}
+
+                 {{#ifeq status "cancelled"}}
+                <span class="ui top red attached label">
+                     <span  id = "status" class="ui">
+                         cancelled request |
+                    </span>
+                    <span class = 'datetime' id = "datetime">{{date}}@{{time}} </span>
+                 </span>
+                {{/ifeq}}
+
+                 {{#ifeq status "cancelled"}}
+                <span class="ui top red attached label">
+                     <span  id = "status" class="ui">
+                         cancelled |
+                    </span>
+                    <span class = 'datetime' id = "datetime">{{date}}@{{time}} </span>
+                 </span>
+                {{/ifeq}}
+
+                {{#ifeq status "approved"}}
+                    <a style = "color: teal" class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
+                    </a>
+                {{/ifeq}}
+
+                {{#ifeq status "pending"}}
+                     <a style = "color: red" class="ui icon right floated white" onclick="return remove(this)" name = "{{_id}}"> 
+                    <i class="trash icon"></i>remove
+                    </a>
+                {{/ifeq}}
+
+                 {{#ifeq status "cancelled"}}
+                    <a style = "color: red" class="ui icon right floated white" onclick="return remove(this)" name = "{{_id}}"> 
+                    <i class="trash icon"></i>remove
+                    </a>
+                {{/ifeq}}
+               
+                </div>
+                <br>
+                <div class="content">
+                
+                    <span id ="processes" style = "color: teal;" class="header">
+                     {{#each process}}
+                        {{name}}, 
+                    {{/each}}
+                    </span>   
+                   
+                  <div id = "doctors"class = "meta"><b>
+                      {{#each doctor}}
+                        Dr. {{name}}
+                      {{/each}}
+                     </b></div> 
+
+                    {{#if notes}}
+                      <div id = "notes"class = "description"><b>
+                       Notes: {{notes}}
+                     </b></div> 
+                    {{/if}}
+
+                     
+                </div>
+              </div>
+           {{/each}}
+        </div>
+    </div>
 </body>
 </html>
+
+<script>
+const format1 = "YYYY-MM-d@HH:mm:ss"
+const format2 = "MMM-d-YYY@hh:mm a"
+const datetimes = $(".datetime")
+
+for(let i=0; i<datetimes.length; i++){
+    let temp = moment(datetimes[i].innerHTML,  'YYYY-MM-DD@HH:mm')
+    console.log(temp)
+    datetimes[i].innerHTML = `<b> ${temp.format('MMM. DD, YYYY')}</b> <span> | ${temp.format('hh:mm A')} <span>`
+} 
+
+function cancel(data){
+    console.log(data.name)
+    $.post("/cancelapp", {_id: data.name, status: "cancelled"})
+    .always((res)=>{ console.log('client recieving data'); 
+               console.log(res.responseJSON); 
+               window.location.reload(true);
+               /*callback(data)*/ })
+    .fail((xhr, status,err)=>{ console.log(err); })
+
+    return false;
+}
+
+function remove(data){
+    console.log(data.name)
+    $.post("/deleteapp", {_id: data.name})
+    .always((res)=>{ console.log('client recieving data'); 
+               console.log(res.responseJSON); 
+               window.location.reload(true);
+               /*callback(data)*/ })
+    .fail((xhr, status,err)=>{ console.log(err); })
+
+    return false;
+}
+
+
+
+</script>
+

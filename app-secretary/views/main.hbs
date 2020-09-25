@@ -65,19 +65,19 @@
                     <input type="text" name="firstname" id="firstname" placeholder="First Name">
                 </div>
                 <div class="required field" id="fieldDateCalendar">
-                    <label>Date</label>
-                        <div class="ui fluid input left icon">
-                            <i id="calendaricon" class="calendar icon"></i>
-                            <input type="date" id="date" name="date" placeholder="Date">
-                        </div>
-                </div>
-                <div class="required field" id="fieldTimeCalendar">
-                    <label>Time</label>
-                        <div class="ui fluid input left icon">
-                            <i class="time icon"></i>
-                            <input type="time" id="time" name="time" placeholder="Time">
-                        </div>
-                </div>
+                        <label>Date</label>
+                            <div class="ui calendar fluid input left icon">
+                                <i id="calendaricon" class="calendar icon"></i>
+                                <input type = "text" id="date" name="date"  placeholder="Date">
+                            </div>
+                    </div>
+                    <div class="required field" id="fieldTime">
+                        <label>Time</label>
+                            <div class="ui time fluid input left icon">
+                                <i id="calendaricon" class="time icon"></i>
+                                <input type = "text" id="time" name="time" placeholder="Time">
+                            </div>
+                    </div>
             </div>
 
             <div class="ten wide column ui form">
@@ -183,3 +183,61 @@
 <script type ='text/javascript' src='/Appointment.js'></script> 
 <script type ='text/javascript' src='/TimeGrid.js'></script> 
 <script type ='text/javascript' src='/Secretary.js'></script>
+
+<script>
+
+function value_changed(){
+    console.log("chaned")
+}
+
+function check_available(date, mode){
+    let d2 = new Date(date)
+    /*return dates.some(function(el) {
+        return ! (el === d2);
+    }); */
+    return false
+}
+function isDisabled(date, mode){
+    let dt = moment(new Date(date))
+    let hr = dt.hours()
+    //always +1 month sa Date object
+    //console.log(d2.getMonth())
+
+
+    /*
+    return dates.some(function(el) {
+        console.log(el)
+        return  (el === d2);
+    });*/ 
+    return false
+}
+
+$('.ui.calendar').calendar({
+  monthFirst: false,
+  type: 'date',
+  formatter: {
+    date: function (date, settings) {
+      if (!date) return '';
+      var day = date.getDate();
+      var month = date.getMonth() + 1;
+      var year = date.getFullYear();
+      return year + '-' + month + '-' + day;
+    }
+  },
+   minDate: new Date(moment().add(1,'days')),
+   onChange: value_changed,
+   isDisabled: isDisabled,
+});
+
+$('.ui.time').calendar({
+   type: 'time',
+   ampm: true,
+   onChange: value_changed,
+   isDisabled: isDisabled,
+   disableMinute: true,
+   minDate: new Date(moment('7:00', 'HH:mm')),     
+   maxDate: new Date(moment('18:00', 'HH:mm')),
+});
+
+
+</script>
