@@ -101,7 +101,7 @@ router.post("/addpat", isAdmin, async function (req, res) {
 	}
 });
 
-/*
+
 router.post("/addaccount", isAdmin, async function (req, res) {
 	console.log("Adding account...");
 	console.log(req.body);
@@ -124,12 +124,13 @@ router.post("/addaccount", isAdmin, async function (req, res) {
 		account.password = await bcrypt.hash(password, salt);
 		
 		await account.save();
+		res.redirect("/admin");
 		
 	} catch (err) {
 		console.log(err.message);
 		res.status(500).send("Could not save.");
 	}
 });
-*/
+
 
 module.exports = router;
