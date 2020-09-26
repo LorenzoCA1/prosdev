@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const moment = require('moment');
 
+const { check, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const auth = require("../auth-account/auth.js");
 
@@ -30,34 +31,49 @@ router.get("/createaccount", isAdmin, async function(req,res) {
 	res.render('createaccount.hbs');
 });
 
-router.post("/addaccount", isAdmin, async function (req, res) {
-	console.log("Adding account...");
-	console.log(req.body);
-	
-	const { username, password, accountType } = req.body;
-	
-	try {
-		let user = await Account.findOne({username});
-		if(user) {
-			return res.status(400).send({message: "Username taken."})
+router.post(
+	"/addaccount", 
+	[
+		check("username", "Please Enter a Valid Username").not().isEmpty(),
+        check("password", "Please enter a valid password (At least 6 characters)").isLength({ min: 6 })
+	],
+	isAdmin, 
+	async function (req, res) {
+		console.log("Adding account...");
+		console.log(req.body);
+		
+		const errors = validationResult(req);
+		if(!errors.isEmpty()) {
+			return res.status(400).json({
+				//errors: errors.array()
+				message: "Invalid input. Please enter a valid username or password."
+			});
 		}
 		
-		account = new Account({
-			username,
-			password,
-			accountType
-		});
+		const { username, password, accountType } = req.body;
 		
-		const salt = await bcrypt.genSalt(10);
-		account.password = await bcrypt.hash(password, salt);
-		
-		await account.save();
-		//res.redirect("/admin");
-		res.status(300).send({message: "Success"});
-	} catch (err) {
-		console.log(err.message);
-		res.status(500).send("Could not save.");
-	}
+		try {
+			let user = await Account.findOne({username});
+			if(user) {
+				return res.status(400).send({message: "Username taken."})
+			}
+			
+			account = new Account({
+				username,
+				password,
+				accountType
+			});
+			
+			const salt = await bcrypt.genSalt(10);
+			account.password = await bcrypt.hash(password, salt);
+			
+			await account.save();
+			//res.redirect("/admin");
+			res.status(300).send({message: "Success"});
+		} catch (err) {
+			console.log(err.message);
+			res.status(500).send("Could not save.");
+		}
 });
 
 
