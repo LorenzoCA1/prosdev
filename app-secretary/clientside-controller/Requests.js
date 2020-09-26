@@ -4,7 +4,7 @@ function approve(data){
      .always((res)=>{ console.log('client recieving data'); 
                       console.log(res.responseJSON); 
                       
-                    window.location.reload(true);
+                      location.reload();
                 /*callback(data)*/ })
      .fail((xhr, status,err)=>{ console.log(err); })
 
@@ -15,7 +15,7 @@ function decline(data){
     $.post("/requestapp", {_id: data.name, status: "cancelled"})
     .always((res)=>{ console.log('client recieving data'); 
                console.log(res.responseJSON); 
-               window.location.reload(true);
+               location.reload();
                /*callback(data)*/ })
     .fail((xhr, status,err)=>{ console.log(err); })
 
