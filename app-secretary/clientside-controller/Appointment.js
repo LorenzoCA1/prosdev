@@ -49,11 +49,11 @@ class AppointmentController {
 //functions for Parsing View, Database, Form Data
 const AppParser = {
   parseDatabaseObj: (data) =>{  //DatabaseObject to FullCalendar API EventObject
-    console.log(data.date, data.time)
+    
     return{                
       id: data._id, 
       title: "Title",
-      start: data.date + "T" + moment(data.time, "HH:mm:ss").format("h:mm A"),
+      start: data.date + "T" + moment(data.time, "HH:mm:ss").format("HH:mm"),
       extendedProps:{ firstname: data.firstname, 
                       lastname: data.lastname, 
                       doctor: data.doctor, 
@@ -69,7 +69,7 @@ const AppParser = {
         lastname: event._def.extendedProps.lastname,
         doctor: event._def.extendedProps.doctor,
         process: event._def.extendedProps.process,
-        time: moment(event.start.getHours() + ":" + event.start.getMinutes(), "h:mm A").format("HH:mm"),
+        time: moment(event.start.getHours() + ":" + event.start.getMinutes(), "HH:mm").format("HH:mm"),
         date: event.start.getFullYear() + "-"  + ((event.start.getMonth() + 1) < 10 ? '0' : '') + (event.start.getMonth() + 1) + "-" + event.start.getDate(),
         notes: event._def.extendedProps.notes
     }
