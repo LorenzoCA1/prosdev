@@ -7,7 +7,6 @@ const urlencoder = bodyParser.urlencoded({
 }) 
 
 const port = process.env.PORT || 3000
-
 const session = require("express-session");
 const path = require("path");
 var app = new express();

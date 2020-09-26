@@ -52,17 +52,19 @@
             console.log(res.responseJSON)
             if(res.responseJSON){
                 if(res.responseJSON.errors){
+					$(".negative").empty()
                     $(".negative").show()
                     $(".negative").append(JSON.stringify(res.responseJSON.errors[0].msg))
                     return false;
                 }else if(res.responseJSON.message){
+					$(".negative").empty()
                     $(".negative").show()
                     $(".negative").append(JSON.stringify(res.responseJSON.message))
                     return false;
                 }
             }
             
-            window.location.href = "/patientLogin"
+            window.location.href = "/me"
                 
         })
         .fail((xhr, status,err)=>{ /*console.log(err);*/ })

@@ -15,17 +15,22 @@
 
     </head>
 <body style = "background-color:steelblue">
-    <form class = "ui centered card form" style = "margin-top: 20px;" method = "POST" action = "/login">
+    <form id = "frmLogin" class = "ui centered card form" style = "margin-top: 20px;" method = "POST" onsubmit = "return login()">
         <div class="ui content">
             <div class="field" id="fieldUsername">
                 <label>Username</label>
-                <input type="text" name="username" id="username" placeholder="Username">
+                <input class = "inputfield" type="text" name="username" id="username" placeholder="Username">
             </div>
             <div class="field" id="fieldPassword">
                 <label>Password</label>
-                <input type="password" name="password" id="password" placeholder="Password">
+                <input class = "inputfield" type="password" name="password" id="password" placeholder="Password">
             </div>
-			<input type="hidden" name="accountType" id="accountType" value="{{loginType}}">
+			<input class = "inputfield" type="hidden" name="accountType" id="accountType" value="{{loginType}}">
+			
+			
+            <div class="ui negative message" id = 'msgError' hidden = "true">
+            
+            </div>
 			
                  <div class="ui grid"><div class="actions column">
                 <input type = "submit" value = "Sign in"id = "btn-signin" class="ui right primary floated submit icon button fluid">
@@ -38,3 +43,39 @@
 
 </body>
 </html>
+
+<script>
+    function login(){
+        let $inputs = $("#frmLogin .inputfield")
+        var values = {};
+        let response = false;
+
+        $inputs.each(function() {
+            values[this.name] = $(this).val();
+        });
+        
+        $.post("/login",values).always((res)=>{
+            console.log(res.responseJSON)
+            if(res.responseJSON){
+                if(res.responseJSON.errors){
+					$(".negative").empty()
+                    $(".negative").show()
+                    $(".negative").append(JSON.stringify(res.responseJSON.errors[0].msg))
+                    return false;
+                }else if(res.responseJSON.message){
+					$(".negative").empty()
+                    $(".negative").show()
+                    $(".negative").append(JSON.stringify(res.responseJSON.message))
+                    return false;
+                }
+            }
+                
+            window.location.href = "/me"
+				
+        })
+        .fail((xhr, status,err)=>{ /*console.log(err);*/ })
+        return response
+    }
+   
+
+</script>
