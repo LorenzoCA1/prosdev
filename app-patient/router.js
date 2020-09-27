@@ -65,7 +65,8 @@ router.get("/", isPatient, async(req, res)=> {
       console.log(req.body)
       req.body.patient = 	req.account.id;
       req.body.status = "pending"
-      req.body.time = moment(req.body.time, ["h:mm A"]).format("HH:mm") + ':00'
+      req.body.date = moment(req.body.date , "YYYY-MM-DD").format("YYYY-MM-DD")
+      req.body.time = moment(req.body.time, "h:mm A").format("HH:mm") + ':00'
       req.body.datetime = req.body.date
     
       Appointment.add(req.body)

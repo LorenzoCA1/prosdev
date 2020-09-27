@@ -101,10 +101,13 @@ router.get("/requestapp", async(req,res)=>{
     .populate('doctor')
     .populate('process')
     .exec()
+    console.log("Get all requests: ", appointments)
     res.render('requests.hbs', {appointment: appointments})
 })
 router.post("/requestapp", async(req,res)=>{
     console.log(req.body)
+    console.log("approving or rejecting requests: ", req.body)
+    
     Appointment.findOneAndUpdate(
         { _id: req.body._id },
         { $set: { status: req.body.status} }, 

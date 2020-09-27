@@ -49,10 +49,11 @@ class AppointmentController {
 //functions for Parsing View, Database, Form Data
 const AppParser = {
   parseDatabaseObj: (data) =>{  //DatabaseObject to FullCalendar API EventObject
+    
     return{                
       id: data._id, 
       title: "Title",
-      start: data.date + "T" + moment(data.time, ["h:mm A"]).format("HH:mm"),
+      start: data.date + "T" + moment(data.time, "HH:mm:ss").format("HH:mm"),
       extendedProps:{ firstname: data.firstname, 
                       lastname: data.lastname, 
                       doctor: data.doctor, 
@@ -113,14 +114,14 @@ const AppParser = {
         lastname: data.lastname,
          process: arr_procID,
          doctor: arr_docID,
-        time: data.time,
+        time: moment(data.time, "h:mm A").format("HH:mm:ss"),
         date:  moment(data.date, "YYYY-MM-DD").format("YYYY-MM-DD"),
         notes: data.notes
       },
       api:{
         id: data.id,
         title: "Title",
-        start: data.date + "T" + moment(data.time, ["h:mm A"]).format("HH:mm"),
+        start: data.date + "T" + moment(data.time, "h:mm A").format("HH:mm"),
         extendedProps:{
           firstname: data.firstname,
           lastname: data.lastname,
@@ -209,7 +210,7 @@ class AppointmentForm{
     this.textfieldfn.val(info.firstname);
     this.textfieldln.val(info.lastname);
     this.datepicker.val(info.date); 
-    this.timepicker.val(info.time)
+    this.timepicker.val(moment(info.time, "HH:mm:ss").format("h:mm A"))
     const process = []; info.process.forEach(e=>{ process.push(e._id+'-' + e.name)})
     const doctor = []; info.doctor.forEach(e=>{ doctor.push(e._id+'-' + e.name)})
     this.selection_process.dropdown('set selected', process)
