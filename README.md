@@ -40,7 +40,7 @@ node server.js
 Enter link in browser:
 > If secretary account
 ```sh
-http://localhost:3000/secretaryLogin
+https://holdap-clinic.herokuapp.com/secretaryLogin
 ```
 >> Log in with these secretary credentials
 ```sh
@@ -49,12 +49,21 @@ Password : regpagetest
 ```
 > If patient account
 ```sh
-http://localhost:3000/patientLogin
+https://holdap-clinic.herokuapp.com/patientLogin
 ```
 >> Log in with these patient credentials
 ```sh
-Username : feebeef
-Password : 5527834
+Username : testpatient
+Password : password
+```
+> If admin account
+```sh
+https://holdap-clinic.herokuapp.com/adminLogin
+```
+>> Log in with these admin credentials
+```sh
+Username : admin
+Password : regpagetest
 ```
 ## Unit Testing
 
@@ -69,15 +78,22 @@ python testsuite.py
 ## Roadmap
 
 Sprint 1
-* User Authentication for the secretary
-* Adding, Editing, Deleting Records
+* Secretary Log-in and Log-out
+* Adding, Editing, Deleting Records(Appointments, Doctors and Processes)
 * Viewing of Appointments
 
 Sprint 2
-* Patient Log-In and Log-out
+* Patient Log-in and Log-out
 * Patient requests for Appointment
 * Patient View User Appointment Details
 * Secretary - Accept/Decline Patient Appointment Request
+
+Sprint 3
+* Admin Log-in and Log-out
+* Admin can Create Secretary and Patient Accounts
+* Admin View All Appointments, Doctors, Patients, Processes and Secretaries
+* Patient View Available Dates, Doctors and Processes
+* Patient See Appointment History
 
 ## Contact
 
