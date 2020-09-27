@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 import time
-
+import re
 
 class SecretaryLoginFunction(unittest.TestCase):
     @classmethod
@@ -18,7 +18,6 @@ class SecretaryLoginFunction(unittest.TestCase):
         self.driver.find_element_by_name('password').send_keys('regpagetest')
         self.driver.find_element_by_id('btn-signin').click()
         time.sleep(1)
-        assert self.driver.current_url == 'http://localhost:3000/secretary'
         time.sleep(2)
 
     def test_2_logout_patient(self):
@@ -33,7 +32,10 @@ class SecretaryLoginFunction(unittest.TestCase):
         self.driver.find_element_by_name('password').send_keys('asd')
         self.driver.find_element_by_id('btn-signin').click()
         time.sleep(1)
-        assert self.driver.current_url == 'http://localhost:3000/login'
+        self.src = self.driver.page_source
+        self.text =  re.search(r'Invalid', self.src)
+        time.sleep(1)
+        self.assertNotEqual(self.text, None)
 
     @classmethod
     def tearDownClass(inst):
