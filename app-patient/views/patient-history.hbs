@@ -34,7 +34,7 @@
                 <div>
                 
                 {{#ifeq status "approved"}}
-                <span class="ui top teal attached label">
+                <span class="ui top blue attached label">
                      <span  id = "status" class="ui">
                          completed |
                     </span>
@@ -62,7 +62,7 @@
                 {{/ifeq}}
 
                 {{#ifeq status "approved"}}
-                    <a style = "color: teal" class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
+                    <a style = "color: steelblue" class="ui icon right floated white" onclick="return cancel(this)" name = "{{_id}}"> 
                     </a>
                 {{/ifeq}}
 
@@ -82,9 +82,9 @@
                 <br>
                 <div class="content">
                 
-                    <span id ="processes" style = "color: teal;" class="header">
+                    <span id ="processes" style = "color: steelblue;" class="header">
                      {{#each process}}
-                        {{name}}, 
+                        {{name}} 
                     {{/each}}
                     </span>   
                    
