@@ -26,7 +26,7 @@ npm install npm@latest -g
  
 1. Clone the repo
 ```sh
-git clone https://github.com/feebeef/prosdev.git
+git clone https://github.com/LorenzoCA1/prosdev.git
 ```
 2. Install NPM packages
 ```sh
